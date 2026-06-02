@@ -157,16 +157,15 @@ The orchestrator can aggregate L1 from all squads with `/status`.
 
 ### 3. Hooks automate the housekeeping
 
-Nine hooks handle the operational plumbing without manual intervention:
+Five hooks handle the operational plumbing without manual intervention:
 
 | Hook | What it does |
 |---|---|
 | `PreToolUse` | Creates a `session/YYYY-MM-DD-HHMM` branch on first edit |
-| `PostToolUse` | Marks STATE.md dirty when a squad file changes |
-| `Stop` | Auto-commits and merges session branch to main |
-| `UserPromptSubmit` | Detects squad keywords and loads squad context |
-| `UserPromptSubmit` | Runs knowledge lookup before sensitive operations |
-| `UserPromptSubmit` | Recovers incomplete session context |
+| `PostToolUse` | Marks the session dirty when a write tool runs |
+| `Stop` | Auto-commits and merges the session branch to `main` (skips files with obvious secrets) |
+| `UserPromptSubmit` | Detects squad keywords in the prompt and hints which squad context to load |
+| `UserPromptSubmit` | Runs the knowledge lookup before sensitive operations (deploy, DNS, migration…) |
 
 You never manage branches or session state manually.
 
@@ -190,11 +189,23 @@ HIVE ships with **50 skills** across all squads. Invoke with `/skill-name`:
 /competitive-analysis    ← research competitor and map threats
 ```
 
-→ **[Full skills catalog](docs/skills-catalog.md)** — all 43 skills with descriptions, usage guidance, and instructions for adding custom ones.
+→ **[Full skills catalog](docs/skills-catalog.md)** — all 50 skills with descriptions, usage guidance, and instructions for adding custom ones.
 
-### 5. Workers run on cron, independent of AI
+### 5. Workers run independent of AI
 
-Scripts in `workers/` run on schedule via `_core/harness.sh`. They write to `STATE.md` and `memory/` — no AI in the loop, deterministic outputs.
+Scripts in `workers/` are plain Python — they write to `STATE.md` and `memory/` with deterministic outputs, no AI in the loop.
+
+`_core/harness.sh` is a **stateless runner**: it executes every registered worker once per invocation. The `schedule` argument in `register_worker` is metadata (used in logs) — actual scheduling is delegated to the OS:
+
+```cron
+# Run all HIVE workers every day at 09:00
+0 9 * * * bash /path/to/hive/_core/harness.sh
+
+# Or run a single worker on its own schedule
+*/30 * * * * bash /path/to/hive/_core/harness.sh workers/health-check.py
+```
+
+This keeps the harness simple and lets you use the scheduler you already trust (cron, systemd timers, Windows Task Scheduler).
 
 ---
 

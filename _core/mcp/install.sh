@@ -21,6 +21,10 @@
 set -euo pipefail
 
 MCP_DIR="${HOME}/.local/share/hive/multi_mcp"
+# Pinned commit of religa/multi_mcp — bump deliberately after auditing upstream changes.
+# Do not change without reviewing the diff at:
+#   https://github.com/religa/multi_mcp/compare/<old>...<new>
+MCP_PIN="6a69e55f3ede0d6505d09e5d3b64873076c7c05c"
 
 ok()   { echo -e "\033[32m✓\033[0m $*"; }
 warn() { echo -e "\033[33m⚠\033[0m $*"; }
@@ -65,12 +69,18 @@ ok "OPENROUTER_API_KEY is set (len=${#OPENROUTER_API_KEY})"
 step "3/5 — multi_mcp in $MCP_DIR"
 mkdir -p "$(dirname "$MCP_DIR")"
 if [[ -d "$MCP_DIR/.git" ]]; then
-  ok "Already cloned, pulling latest"
-  git -C "$MCP_DIR" pull --rebase --quiet
+  ok "Already cloned, fetching pinned commit"
+  git -C "$MCP_DIR" fetch --quiet origin
 else
   ok "Cloning religa/multi_mcp"
   git clone --quiet https://github.com/religa/multi_mcp.git "$MCP_DIR"
 fi
+ok "Checking out pinned commit $MCP_PIN"
+git -C "$MCP_DIR" checkout --quiet "$MCP_PIN" || {
+  err "Pinned commit $MCP_PIN not found in religa/multi_mcp"
+  err "Upstream may have force-pushed. Audit before bumping MCP_PIN in this script."
+  exit 1
+}
 
 # ── 4. Venv + deps ──
 step "4/5 — Virtualenv + Python deps"
