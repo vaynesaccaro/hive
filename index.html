@@ -534,28 +534,99 @@
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px 0;
+      padding: 56px 0 32px;
+      background: var(--surface);
     }
-    .footer-inner {
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .footer-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 260px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .footer-social-link:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-bg);
+      text-decoration: none;
+    }
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+    .footer-col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col ul li a {
+      font-size: 14px;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-col ul li a:hover { color: var(--primary); }
+    .footer-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
-    }
-    .footer-brand {
-      display: flex;
-      align-items: center;
       gap: 8px;
     }
-    .footer-text { font-size: 14px; color: var(--muted); }
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      font-size: 14px;
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-copy a { color: var(--muted); }
+    .footer-copy a:hover { color: var(--text); text-decoration: none; }
+    @media (max-width: 640px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
     }
-    .footer-links a { color: var(--muted); }
-    .footer-links a:hover { color: var(--text); text-decoration: none; }
+    @media (max-width: 420px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -852,15 +923,62 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <div class="nav-logo-icon" style="width:22px;height:22px;font-size:12px;">🐝</div>
-        <span class="footer-text">HIVE — MIT License · Built by <a href="https://github.com/felipeluissalgueiro">@felipeluissalgueiro</a></span>
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <div class="nav-logo-icon" style="width:22px;height:22px;font-size:12px;">🐝</div>
+            HIVE
+          </a>
+          <p class="footer-desc">Open-source harness for running a full company with AI agents. Built for Claude Code.</p>
+          <div class="footer-socials">
+            <!-- Threads -->
+            <a href="https://www.threads.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="Threads">
+              <svg width="16" height="16" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M141.537 88.988a66.667 66.667 0 0 0-2.518-1.143c-1.482-27.307-16.403-42.94-41.457-43.1h-.34c-14.986 0-27.449 6.396-35.12 18.036l13.779 9.452c5.73-8.695 14.724-10.548 21.348-10.548h.229c8.249.053 14.474 2.452 18.503 7.129 2.932 3.405 4.893 8.111 5.864 14.05-7.314-1.243-15.224-1.626-23.68-1.14-23.82 1.371-39.134 15.264-38.105 34.568.522 9.792 5.4 18.216 13.735 23.719 7.047 4.652 16.124 6.927 25.557 6.412 12.458-.683 22.231-5.436 29.049-14.127 5.178-6.6 8.453-15.153 9.899-25.93 5.937 3.583 10.337 8.298 12.767 13.966 4.132 9.674 4.373 25.581-8.529 38.383C129.221 163.1 113.515 169 95.961 169c-19.951-.14-35.117-6.532-45.088-18.987-9.372-11.713-14.214-28.618-14.399-50.24.185-21.623 5.027-38.527 14.399-50.24C60.844 37.532 76.01 31.14 95.96 31c20.083.14 35.503 6.568 45.833 19.117 5.09 6.23 8.945 14.086 11.501 23.336l16.152-4.312c-3.112-11.42-8.082-21.312-14.883-29.516C138.896 23.345 120.16 14.82 96.1 14.667h-.186c-23.908.152-43.136 8.73-57.157 25.496C26.581 54.426 20.529 74.028 20.333 96.003c.196 21.975 6.248 41.577 18.424 55.84 14.021 16.765 33.249 25.344 57.157 25.496h.186c21.41-.138 39.935-6.604 53.76-20.197 17.621-17.354 17.066-39.14 11.243-52.498-4.246-9.932-12.43-17.88-19.566-21.656Z" fill="currentColor"/></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/felipe-luis-salgueiro" target="_blank" rel="noopener" class="footer-social-link" title="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <!-- TikTok -->
+            <a href="https://www.tiktok.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <!-- GitHub -->
+            <a href="https://github.com/felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- HIVE links -->
+        <div class="footer-col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="https://github.com/felipeluissalgueiro/hive">GitHub</a></li>
+            <li><a href="https://github.com/felipeluissalgueiro/hive/blob/main/docs/getting-started.md">Docs</a></li>
+            <li><a href="https://github.com/felipeluissalgueiro/hive/blob/main/docs/skills-catalog.md">Skills Catalog</a></li>
+            <li><a href="https://claude.ai/code">Claude Code</a></li>
+          </ul>
+        </div>
+
+        <!-- Felipe's projects -->
+        <div class="footer-col">
+          <h4>By Felipe</h4>
+          <ul>
+            <li><a href="https://cadencia.ia.br" target="_blank" rel="noopener">Cadência</a></li>
+            <li><a href="https://insightartificial.posicionamentodigital.com" target="_blank" rel="noopener">Insight Artificial</a></li>
+            <li><a href="#" title="Em breve">felipeluissalgueiro.com</a></li>
+          </ul>
+        </div>
+
       </div>
-      <div class="footer-links">
-        <a href="https://github.com/felipeluissalgueiro/hive">GitHub</a>
-        <a href="https://github.com/felipeluissalgueiro/hive/blob/main/docs/getting-started.md">Docs</a>
-        <a href="https://claude.ai/code">Claude Code</a>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 HIVE · MIT License · Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+        <span class="footer-copy">Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
       </div>
     </div>
   </footer>
