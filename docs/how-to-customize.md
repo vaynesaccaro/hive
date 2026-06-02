@@ -169,6 +169,46 @@ To adapt for another tool:
 
 Hook scripts (`.claude/hooks/`) are Claude Code-specific and would need reimplementation for other environments.
 
+### Writing custom stop hooks
+
+If you add a stop hook that warns the user about something (e.g., missing session log, uncommitted state), use a **sentinel file** to avoid repeating the warning every session:
+
+```python
+from datetime import date
+from pathlib import Path
+
+ROOT = Path(__file__).parent.parent.parent  # adjust to your repo root
+TODAY = date.today().isoformat()
+
+def get_sentinel_path():
+    # Per-day sentinel: warn at most once per day
+    return ROOT / ".git" / f"stop-warned-{TODAY}"
+
+def sentinel_exists():
+    return get_sentinel_path().exists()
+
+def write_sentinel():
+    try:
+        get_sentinel_path().write_text(TODAY, encoding="utf-8")
+    except Exception:
+        pass
+
+def main():
+    if sentinel_exists():
+        sys.exit(0)  # already warned today
+
+    # ... your checks ...
+
+    if warnings:
+        write_sentinel()
+        print("\n".join(warnings), file=sys.stderr)
+        sys.exit(2)  # non-blocking: shows warning but doesn't stop Claude
+
+    sys.exit(0)
+```
+
+**Common mistake:** keying the sentinel to the session branch name instead of the date. Each Claude Code session creates a new branch (`session/YYYY-MM-DD-HHMM`), so a per-branch sentinel never suppresses — the warning fires on every session. See `squads/dev/memory/gotchas.md` → G001.
+
 ---
 
 ## Keep upstream changes

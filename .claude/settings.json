@@ -28,6 +28,10 @@
           {
             "type": "command",
             "command": "python .claude/hooks/stop-session-branch.py"
+          },
+          {
+            "type": "command",
+            "command": "python .claude/hooks/stop-state-check.py"
           }
         ]
       }
