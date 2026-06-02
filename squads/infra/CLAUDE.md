@@ -82,6 +82,10 @@ Quiet, methodical, never panics. Keeps the lights on. If production is down, Dea
 - `/open-squad infra` — load this squad
 - `/close-squad infra` — update STATE + propagate L1
 - `/status` — infrastructure health snapshot
+- `/infra-debate` — infrastructure decision roundtable
+- `/hardening-check` — periodic server hardening audit
+- `/restart-service` — safely restart a service on a remote server
+- `/rotate-credential` — rotate an API key, secret, or password
 
 ---
 

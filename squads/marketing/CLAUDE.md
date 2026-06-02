@@ -82,6 +82,17 @@ Strategic, creative, and brutally analytical. Doesn't create content for the sak
 - `/open-squad marketing` — load this squad
 - `/close-squad marketing` — update STATE + propagate L1
 - `/status` — campaign and content snapshot
+- `/marketing-debate` — marketing decision roundtable
+- `/lookup-brand` — retrieve brand guidelines before creating content
+- `/content-ideas` — generate content ideas aligned with ICP
+- `/linkedin-post` — adapt content to LinkedIn executive format
+- `/write-headline` — generate 5 headline variants
+- `/write-caption` — write an Instagram/social media caption
+- `/write-thread` — write a Twitter/X or Threads thread
+- `/youtube-script` — write a YouTube video script
+- `/analyze-post` — analyze a published post for performance
+- `/improve-post` — rewrite a post to improve its performance
+- `/email-reactivation` — write a reactivation email sequence
 
 ---
 

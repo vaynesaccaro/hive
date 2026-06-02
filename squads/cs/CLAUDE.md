@@ -82,6 +82,8 @@ Warm but rigorous. Clients love her because she actually delivers, not because s
 - `/open-squad cs` — load this squad
 - `/close-squad cs` — update STATE + propagate L1
 - `/status` — client health snapshot
+- `/cs-debate` — roundtable for CS decisions
+- `/log-kpi` — log a CS metric to STATE.md
 
 ---
 

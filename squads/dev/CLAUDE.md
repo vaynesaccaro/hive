@@ -92,6 +92,10 @@ Never assume default. Decide per epic.
 - `/open-squad dev` — load this squad
 - `/close-squad dev` — update STATE + propagate L1
 - `/status` — dev sprint snapshot
+- `/dev-debate` — architecture roundtable
+- `/quick-dev` — rapid throwaway prototype mode
+- `/challenge` — independent second opinion on a technical decision
+- `/document` — generate documentation after a feature ships
 
 ---
 
