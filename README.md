@@ -172,7 +172,7 @@ You never manage branches or session state manually.
 
 ### 4. Skills are reusable commands
 
-HIVE ships with **43 skills** across all squads. Invoke with `/skill-name`:
+HIVE ships with **50 skills** across all squads. Invoke with `/skill-name`:
 
 ```
 /hive-setup              ← first-time company onboarding
@@ -252,11 +252,48 @@ See [docs/how-to-customize.md](docs/how-to-customize.md) for the full guide.
 
 ---
 
+## Multi-Model via OpenRouter (optional)
+
+HIVE ships with 7 skills that let you query **any model** (Kimi, GPT-5, Grok, Gemini, Qwen, DeepSeek, and more) without leaving Claude Code — for second opinions, consensus panels, ICP simulation, anti-bubble checks, and cost/quality comparisons.
+
+**Setup in 3 steps:**
+
+```bash
+# 1. Get a key at https://openrouter.ai/settings/keys
+export OPENROUTER_API_KEY="sk-or-your-key-here"
+
+# 2. Run the install script (clones multi_mcp, creates venv, smoke test)
+bash _core/mcp/install.sh
+
+# 3. Test
+claude
+/second-opinion kimi "what do you think about this architecture decision?"
+```
+
+The `.mcp.json` in the root wires everything up — Claude Code loads the MCP automatically when you open any HIVE directory.
+
+**The 7 multi-model skills:**
+
+| Skill | Use when |
+|---|---|
+| `/second-opinion` | One model's raw perspective on a question |
+| `/consensus` | N models on the same question + overlap/divergence synthesis |
+| `/anti-bubble` | Outsider reads an asset without company context |
+| `/icp-check` | Simulate your ICP reading a piece of copy |
+| `/dod-check` | Cheap model validates a PR against Linear acceptance criteria |
+| `/cost-compare` | Find the cheapest model that works for a recurring worker |
+| `/code-review-model` | Code review from any OpenRouter model |
+
+All skills ask which model to use — zero defaults. See `_core/MODELS-MAP.md` for the full catalog with prices and benchmarks, and `_core/mcp/README.md` for the full setup guide.
+
+---
+
 ## Requirements
 
 - [Claude Code](https://claude.ai/code) — CLI or desktop app
 - Git
 - Python 3.8+ (for `_core/` scripts)
+- **Optional:** Python 3.11+ + OpenRouter API key (for multi-model skills)
 
 No framework dependencies. No npm. No Docker. It's markdown files and Python scripts.
 
