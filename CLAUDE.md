@@ -73,8 +73,8 @@ Global memory lives in `memory/` at the root. Squad memory lives in `squads/<nam
 HIVE hooks handle sessions automatically:
 
 - **On first edit:** a `session/YYYY-MM-DD-HHMM` branch is created
-- **On stop:** changes are committed and merged to `main`
-- **On prompt:** squad routing detects the squad in your message and loads its context
+- **On stop:** changes are committed and merged to `main` (files containing obvious secrets are skipped)
+- **On prompt:** squad routing detects squad keywords and hints which squad context to load; a separate hook runs the knowledge lookup before sensitive operations
 
 You never need to manage branches manually.
 

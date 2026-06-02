@@ -20,8 +20,9 @@ def main():
     prompt=data.get("prompt","")
     if not prompt or not is_sensitive(prompt): sys.exit(0)
     found=[k for k in SENSITIVE if k in prompt.lower()]
-    kw=" ".join(found[:3])+" "+" ".join(w for w in prompt.split() if len(w)>4)[:3]
-    results=lookup(kw.strip())
+    extra=[w for w in prompt.split() if len(w)>4][:3]
+    kw=" ".join(found[:3]+extra).strip()
+    results=lookup(kw)
     if results and "No results" not in results:
         print("[hive/knowledge-check] Relevant past context found:")
         print(results)
