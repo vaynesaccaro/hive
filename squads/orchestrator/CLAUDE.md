@@ -95,9 +95,10 @@ Output shows each squad's L1 with timestamp. Read-only — never writes.
 - `/close-squad <name>` — update STATE + decisions + propagate L1 to parent
 - `/status` — aggregate L1 from all active squads
 - `/hive-setup` — first-time onboarding
-- `/linear-create-issue` — create issue with full description
-- `/linear-start-issue` — checkout correct branch + status → In Progress
-- `/linear-close-issue` — merge + status → Done
+- `/create-issue` — guided issue creation with full description template
+- `/plan-issue` — technical plan before execution, requires approval before coding
+- `/start-issue` — checkout correct branch + mark In Progress in Linear
+- `/close-issue` — quality cycle (review → build → test) + merge + mark Done in Linear
 
 ---
 

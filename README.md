@@ -172,14 +172,25 @@ You never manage branches or session state manually.
 
 ### 4. Skills are reusable commands
 
-Invoke with `/skill-name`:
+HIVE ships with **43 skills** across all squads. Invoke with `/skill-name`:
 
 ```
-/hive-setup          ← first-time company onboarding
-/open-squad dev      ← load Dev squad context
-/close-squad dev     ← update STATE + propagate L1
-/status              ← aggregate L1 from all squads
+/hive-setup              ← first-time company onboarding
+/open-squad dev          ← load Dev squad context
+/close-squad dev         ← update STATE + propagate L1
+/status                  ← aggregate L1 from all squads
+/log-incident            ← log an incident to the hub
+/create-issue            ← guided Linear issue creation
+/plan-issue              ← technical plan + approval gate
+/start-issue             ← checkout branch + mark In Progress
+/close-issue             ← quality cycle + merge + mark Done
+/sales-call              ← 7-part Challenger Sale framework
+/debug                   ← Pólya 4-phase debug framework
+/codex-review            ← P1/P2/P3 code review via Codex CLI
+/competitive-analysis    ← research competitor and map threats
 ```
+
+→ **[Full skills catalog](docs/skills-catalog.md)** — all 43 skills with descriptions, usage guidance, and instructions for adding custom ones.
 
 ### 5. Workers run on cron, independent of AI
 
@@ -203,7 +214,7 @@ Victor, I have 3 leads from last week I haven't followed up on.
 
 **Log an incident:**
 ```
-/registrar-incidente production API down since 14:00
+/log-incident production API down since 14:00
 ```
 
 **Run the knowledge lookup before a risky operation:**
