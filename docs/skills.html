@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills — HIVE Docs</title>
+  <meta name="description" content="Complete reference for all 50 skills in HIVE. Global, squad-specific, and OpenRouter multi-model commands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --indigo: #4F46E5;
+      --indigo-light: #EEF2FF;
+      --indigo-dark: #3730A3;
+      --indigo-mid: #6366F1;
+      --bg: #F9FAFB;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --sidebar-w: 260px;
+      --header-h: 60px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { color: var(--indigo); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Header ── */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .header-brand:hover { text-decoration: none; }
+
+    .header-brand .logo {
+      width: 32px;
+      height: 32px;
+      background: var(--indigo);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-nav a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .header-nav a:hover { background: var(--bg); color: var(--text); text-decoration: none; }
+    .header-nav .btn-github { background: var(--text); color: #fff; padding: 6px 14px; }
+    .header-nav .btn-github:hover { background: #374151; color: #fff; }
+
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      padding-top: var(--header-h);
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+    }
+
+    .sidebar-section { margin-bottom: 28px; }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      padding: 0 8px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: all 0.12s;
+      line-height: 1.4;
+    }
+    .sidebar-link:hover { background: var(--indigo-light); color: var(--indigo); text-decoration: none; }
+    .sidebar-link.active { background: var(--indigo-light); color: var(--indigo); font-weight: 600; }
+
+    .sidebar-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bg);
+      color: var(--text-light);
+      padding: 1px 6px;
+      border-radius: 100px;
+      margin-left: auto;
+    }
+
+    .sidebar-link.active .sidebar-badge {
+      background: rgba(79,70,229,0.12);
+      color: var(--indigo);
+    }
+
+    /* ── Main ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 48px 96px;
+    }
+
+    /* ── Page hero ── */
+    .page-hero {
+      padding: 40px 0 36px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: var(--text-light); }
+    .breadcrumb a:hover { color: var(--indigo); }
+
+    .page-hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .page-hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 580px;
+      line-height: 1.65;
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .stat strong {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ── Section headers ── */
+    .squad-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 28px 0 16px;
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+    }
+
+    .squad-header:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 8px;
+    }
+
+    .squad-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .squad-icon.global   { background: #F3F4F6; }
+    .squad-icon.openrouter { background: #FDF2F8; }
+    .squad-icon.orch     { background: #EEF2FF; }
+    .squad-icon.comm     { background: #FFFBEB; }
+    .squad-icon.cs       { background: #ECFDF5; }
+    .squad-icon.dev      { background: #F0F9FF; }
+    .squad-icon.finance  { background: #FFF7ED; }
+    .squad-icon.infra    { background: #F5F3FF; }
+    .squad-icon.intel    { background: #FEF2F2; }
+    .squad-icon.mkt      { background: #FFF1F2; }
+
+    .squad-header-info {}
+    .squad-header-info h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      letter-spacing: -0.01em;
+    }
+    .squad-header-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .squad-count {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-light);
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Sub-section labels ── */
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 24px 0 12px;
+    }
+
+    /* ── Skills table ── */
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .skills-table thead th {
+      text-align: left;
+      padding: 9px 14px;
+      background: var(--bg);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .skills-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .skills-table tbody tr:last-child td { border-bottom: none; }
+    .skills-table tbody tr:hover td { background: var(--indigo-light); }
+
+    .skill-cmd {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--indigo-dark);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .skill-name {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .skill-desc {
+      color: var(--text-muted);
+    }
+
+    .skill-cost {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ── Priority badges ── */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .badge-p1 { background: #FEE2E2; color: #991B1B; }
+    .badge-p2 { background: #FEF3C7; color: #92400E; }
+    .badge-p3 { background: #D1FAE5; color: #065F46; }
+
+    /* ── Info box ── */
+    .info-box {
+      background: var(--indigo-light);
+      border-left: 4px solid var(--indigo);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: var(--indigo-dark);
+      line-height: 1.6;
+    }
+
+    .info-box code {
+      background: rgba(79,70,229,0.12);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* ── Workflow steps ── */
+    .workflow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .workflow-step {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--indigo-dark);
+      background: var(--indigo-light);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .workflow-arrow {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    /* ── Code block ── */
+    .code-block {
+      background: #1E1E2E;
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #CDD6F4;
+    }
+    .code-block pre .comment { color: #585B70; }
+    .code-block pre .key { color: #CBA6F7; }
+
+    /* ── Summary table ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .summary-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .summary-card .sum-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--indigo);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .summary-card .sum-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ── Add custom skill ── */
+    .add-skill-box {
+      background: var(--surface);
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .add-skill-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .add-skill-box p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Doc footer ── */
+    .doc-footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 0;
+      margin-top: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer p { font-size: 13px; color: var(--text-light); margin: 0; }
+    .doc-footer a { color: var(--text-muted); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .content { padding: 32px 24px 64px; }
+      .stats-row { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="header">
+  <a href="index.html" class="header-brand">
+    <div class="logo">🐝</div>
+    HIVE
+  </a>
+  <nav class="header-nav">
+    <a href="index.html">Docs</a>
+    <a href="skills.html" style="color:var(--indigo);font-weight:600;">Skills</a>
+    <a href="../_core/MODELS-MAP.md">Models</a>
+    <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </nav>
+</header>
+
+<!-- ── Layout ── -->
+<div class="layout">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <a href="index.html" class="sidebar-link">← Back to Docs</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Skills by Squad</div>
+      <a href="#global" class="sidebar-link active">
+        ⚡ Global
+        <span class="sidebar-badge">5</span>
+      </a>
+      <a href="#openrouter" class="sidebar-link">
+        🤖 OpenRouter
+        <span class="sidebar-badge">7</span>
+      </a>
+      <a href="#orchestrator" class="sidebar-link">
+        🧠 Orchestrator
+        <span class="sidebar-badge">4</span>
+      </a>
+      <a href="#commercial" class="sidebar-link">
+        💼 Commercial
+        <span class="sidebar-badge">4</span>
+      </a>
+      <a href="#cs" class="sidebar-link">
+        🤝 Customer Success
+        <span class="sidebar-badge">2</span>
+      </a>
+      <a href="#dev" class="sidebar-link">
+        ⌨️ Dev
+        <span class="sidebar-badge">8</span>
+      </a>
+      <a href="#finance" class="sidebar-link">
+        💰 Finance
+        <span class="sidebar-badge">3</span>
+      </a>
+      <a href="#infra" class="sidebar-link">
+        🖥️ Infra
+        <span class="sidebar-badge">4</span>
+      </a>
+      <a href="#intelligence" class="sidebar-link">
+        🔍 Intelligence
+        <span class="sidebar-badge">2</span>
+      </a>
+      <a href="#marketing" class="sidebar-link">
+        📣 Marketing
+        <span class="sidebar-badge">11</span>
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Reference</div>
+      <a href="#add-custom" class="sidebar-link">Add custom skill</a>
+      <a href="../_core/MODELS-MAP.md" class="sidebar-link">Models Map</a>
+      <a href="../_core/mcp/README.md" class="sidebar-link">OpenRouter setup</a>
+    </div>
+
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <div class="content">
+
+      <!-- ── Page hero ── -->
+      <div class="page-hero">
+        <div class="breadcrumb">
+          <a href="index.html">Docs</a> / Skills
+        </div>
+        <h1>⚡ Skills Catalog</h1>
+        <p>All 50 reusable commands across HIVE. Invoke any skill with <code style="background:var(--indigo-light);color:var(--indigo-dark);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:14px;">/skill-name</code> inside Claude Code.</p>
+        <div class="stats-row">
+          <div class="stat"><strong>50</strong> total skills</div>
+          <div class="stat" style="color:var(--border);font-size:18px;">·</div>
+          <div class="stat"><strong>10</strong> squads</div>
+          <div class="stat" style="color:var(--border);font-size:18px;">·</div>
+          <div class="stat"><strong>7</strong> multi-model (OpenRouter)</div>
+        </div>
+      </div>
+
+      <!-- ── Summary ── -->
+      <div class="summary-grid">
+        <div class="summary-card"><div class="sum-num">5</div><div class="sum-label">Global</div></div>
+        <div class="summary-card"><div class="sum-num">7</div><div class="sum-label">OpenRouter</div></div>
+        <div class="summary-card"><div class="sum-num">4</div><div class="sum-label">Orchestrator</div></div>
+        <div class="summary-card"><div class="sum-num">4</div><div class="sum-label">Commercial</div></div>
+        <div class="summary-card"><div class="sum-num">8</div><div class="sum-label">Dev</div></div>
+        <div class="summary-card"><div class="sum-num">11</div><div class="sum-label">Marketing</div></div>
+      </div>
+
+      <!-- ────────────────── GLOBAL ────────────────── -->
+      <div class="squad-header" id="global">
+        <div class="squad-icon global">⚡</div>
+        <div class="squad-header-info">
+          <h2>Global Skills</h2>
+          <p>Available in every squad context — from root or any squad folder</p>
+        </div>
+        <span class="squad-count">5 skills</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">HIVE Setup</td>
+            <td class="skill-cmd">/hive-setup</td>
+            <td class="skill-desc">Guided onboarding (~10 min) — fills all squad contexts with your company name, industry, working style, and preferences</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Open Squad</td>
+            <td class="skill-cmd">/open-squad &lt;name&gt;</td>
+            <td class="skill-desc">git pull + load CLAUDE.md + STATE.md; aggregates L1 if squad has children</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Close Squad</td>
+            <td class="skill-cmd">/close-squad &lt;name&gt;</td>
+            <td class="skill-desc">Update STATE.md + decisions log + propagate L1 to parent orchestrator</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Company Status</td>
+            <td class="skill-cmd">/status</td>
+            <td class="skill-desc">Aggregate L1 from all active squads in one view — what's happening now across the company</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Log Incident</td>
+            <td class="skill-cmd">/log-incident</td>
+            <td class="skill-desc">Create structured incident record in <code>incidents/</code> hub with root cause, fix, and prevention notes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── OPENROUTER ────────────────── -->
+      <div class="squad-header" id="openrouter">
+        <div class="squad-icon openrouter">🤖</div>
+        <div class="squad-header-info">
+          <h2>OpenRouter Skills</h2>
+          <p>Multi-model AI queries — Kimi, GPT-5, Grok, Gemini, DeepSeek and more</p>
+        </div>
+        <span class="squad-count">7 skills</span>
+      </div>
+
+      <div class="info-box">
+        <strong>Setup required:</strong> Set <code>OPENROUTER_API_KEY</code> env var, then run <code>bash _core/mcp/install.sh</code>. See <a href="../_core/mcp/README.md">MCP setup guide</a> for details. Model responses are always delivered raw — no editing, no paraphrasing.
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th><th>Est. cost</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Second Opinion</td>
+            <td class="skill-cmd">/second-opinion</td>
+            <td class="skill-desc">Single model query — raw response, zero editing. Asks for model if not specified.</td>
+            <td class="skill-cost">$0.001–$0.05</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Consensus</td>
+            <td class="skill-cmd">/consensus</td>
+            <td class="skill-desc">Same prompt to N models in parallel. Shows raw responses + overlap/divergence synthesis. Optional <code>--deep</code> mode for cross-critique.</td>
+            <td class="skill-cost">$0.01–$0.20</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Anti-Bubble</td>
+            <td class="skill-cmd">/anti-bubble</td>
+            <td class="skill-desc">Neutral model reads copy/pitch with NO company context — pure outsider reaction. Finds jargon and assumptions insiders can't see.</td>
+            <td class="skill-cost">$0.005–$0.05</td>
+          </tr>
+          <tr>
+            <td class="skill-name">ICP Check</td>
+            <td class="skill-cmd">/icp-check</td>
+            <td class="skill-desc">2–3 models simulate your ICP reading a piece of copy, email, or landing page. Cross-cultural triangulation. Reads <code>foundation/icp-audience.md</code> or inline description.</td>
+            <td class="skill-cost">$0.01–$0.15</td>
+          </tr>
+          <tr>
+            <td class="skill-name">DoD Check</td>
+            <td class="skill-cmd">/dod-check</td>
+            <td class="skill-desc">Cheap model validates PR diff vs Linear acceptance criteria. Extracts issue from branch name. Returns READY / ADJUSTMENTS / REDO verdict.</td>
+            <td class="skill-cost">$0.001–$0.01</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Cost Compare</td>
+            <td class="skill-cmd">/cost-compare</td>
+            <td class="skill-desc">Same task across 3–6 models from cheapest to top tier. Real token cost matrix. Helps find the "cheap enough" model for recurring workers.</td>
+            <td class="skill-cost">$0.01–$0.50</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Code Review (model)</td>
+            <td class="skill-cmd">/code-review-model</td>
+            <td class="skill-desc">Code review from any OpenRouter model. Same P1/P2/P3 classification as <code>/codex-review</code>. Use as second opinion or security scan.</td>
+            <td class="skill-cost">$0.01–$0.10</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Model quick reference</h3>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Alias</th><th>Model</th><th>Best for</th><th>Approx price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="skill-cmd">kimi</td><td>Kimi K2.6</td><td>Coding, top open-weight</td><td class="skill-cost">$0.68/$3.42 per M</td></tr>
+          <tr><td class="skill-cmd">gpt5.5</td><td>GPT-5.5</td><td>Reasoning, flagship</td><td class="skill-cost">premium</td></tr>
+          <tr><td class="skill-cmd">grok</td><td>Grok 4.20</td><td>2M context, low cost</td><td class="skill-cost">$0.30/$0.50 per M</td></tr>
+          <tr><td class="skill-cmd">gemini-pro</td><td>Gemini (latest)</td><td>Multimodal, long context</td><td class="skill-cost">$0.25/$0.75 per M</td></tr>
+          <tr><td class="skill-cmd">dsflash</td><td>DeepSeek Flash</td><td>Near-free, 1M ctx</td><td class="skill-cost">$0.10/$0.20 per M</td></tr>
+          <tr><td class="skill-cmd">qwenflash</td><td>Qwen Flash</td><td>Fast, cheap</td><td class="skill-cost">$0.19/$1.13 per M</td></tr>
+          <tr><td class="skill-cmd">granite</td><td>IBM Granite</td><td>Cheapest tier</td><td class="skill-cost">$0.05/$0.10 per M</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">Full catalog (30+ models) with benchmarks and context windows: <a href="../_core/MODELS-MAP.md">_core/MODELS-MAP.md</a></p>
+
+      <!-- ────────────────── ORCHESTRATOR ────────────────── -->
+      <div class="squad-header" id="orchestrator">
+        <div class="squad-icon orch">🧠</div>
+        <div class="squad-header-info">
+          <h2>Orchestrator Skills</h2>
+          <p>Stamper — Chief of Staff · Issue and project lifecycle management</p>
+        </div>
+        <span class="squad-count">4 skills</span>
+      </div>
+
+      <div class="workflow">
+        <span class="workflow-step">/create-issue</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">/plan-issue</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">/start-issue</span>
+        <span class="workflow-arrow">→</span>
+        <span style="font-size:13px;color:var(--text-muted);font-style:italic;">implement</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">/close-issue</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Create Issue</td>
+            <td class="skill-cmd">/create-issue</td>
+            <td class="skill-desc">Guided issue creation with title, description, acceptance criteria, squad assignment, and priority. Writes to Linear.</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Plan Issue</td>
+            <td class="skill-cmd">/plan-issue</td>
+            <td class="skill-desc">Break issue into technical plan with file list and approval gate. No code until plan is confirmed.</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Start Issue</td>
+            <td class="skill-cmd">/start-issue</td>
+            <td class="skill-desc">Checkout branch from Linear <code>branchName</code> + mark issue In Progress + post comment.</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Close Issue</td>
+            <td class="skill-cmd">/close-issue</td>
+            <td class="skill-desc">Full quality cycle (review → build → test) + merge + mark Done in Linear + deploy validation if applicable.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── COMMERCIAL ────────────────── -->
+      <div class="squad-header" id="commercial">
+        <div class="squad-icon comm">💼</div>
+        <div class="squad-header-info">
+          <h2>Commercial Skills</h2>
+          <p>Victor — Head of Sales · Lead pipeline, qualification, and deal closing</p>
+        </div>
+        <span class="squad-count">4 skills</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Sales Call</td>
+            <td class="skill-cmd">/sales-call</td>
+            <td class="skill-desc">7-part Challenger Sale framework: Warm-up → Reframing → Urgency → Emotional → New Path → Solution → Closing</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Handle Objection</td>
+            <td class="skill-cmd">/handle-objection</td>
+            <td class="skill-desc">Surface-to-real objection mapping, diagnostic flow, non-fit signal detection</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Follow Up</td>
+            <td class="skill-cmd">/follow-up</td>
+            <td class="skill-desc">D+0/D+2/D+7/D+14 follow-up sequence + breakup email template</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Commercial Debate</td>
+            <td class="skill-cmd">/commercial-debate</td>
+            <td class="skill-desc">Multi-perspective roundtable: Sales vs CS vs Finance vs Devil's Advocate</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── CS ────────────────── -->
+      <div class="squad-header" id="cs">
+        <div class="squad-icon cs">🤝</div>
+        <div class="squad-header-info">
+          <h2>Customer Success Skills</h2>
+          <p>Leah — Head of CS · Onboarding, retention, and success metrics</p>
+        </div>
+        <span class="squad-count">2 skills</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">CS Debate</td>
+            <td class="skill-cmd">/cs-debate</td>
+            <td class="skill-desc">Roundtable on customer success decisions with multiple perspectives (CSM, Account Manager, Churn Analyst)</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Log KPI</td>
+            <td class="skill-cmd">/log-kpi</td>
+            <td class="skill-desc">Record customer KPI snapshot in <code>data/kpis.md</code> with timestamp</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── DEV ────────────────── -->
+      <div class="squad-header" id="dev">
+        <div class="squad-icon dev">⌨️</div>
+        <div class="squad-header-info">
+          <h2>Dev Skills</h2>
+          <p>Ethan — Tech Lead · Architecture, code review, debugging, and documentation</p>
+        </div>
+        <span class="squad-count">8 skills</span>
+      </div>
+
+      <h3>Code Review Pipeline</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Run cheapest → most expensive. Stop when issues are found and fixed.</p>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>Cost</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Gemini Review</td>
+            <td class="skill-cmd">/gemini-review</td>
+            <td class="skill-cost">Free</td>
+            <td class="skill-desc">Gemini 2.5 Flash via OAuth CLI — structural review, P1/P2/P3 classification</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Codex Review</td>
+            <td class="skill-cmd">/codex-review</td>
+            <td class="skill-cost">~$0.40</td>
+            <td class="skill-desc">OpenAI Codex CLI — security, logic, performance. Classification: <span class="badge badge-p1">P1</span> blocks merge · <span class="badge badge-p2">P2</span> fix before deploy · <span class="badge badge-p3">P3</span> follow-up</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Claude Review</td>
+            <td class="skill-cmd">/claude-review</td>
+            <td class="skill-cost">Subscription</td>
+            <td class="skill-desc">Claude Opus headless — deep architectural review, final gate before merge</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="margin-top:16px;">
+        <strong>When to use which:</strong><br/>
+        Trivial change (copy, isolated CSS) → none · New feature → <code>/codex-review</code> · Logic change → + <code>/claude-review</code> · Critical (auth, billing, migration) → all three + senior approval
+      </div>
+
+      <h3>Development</h3>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Dev Debate</td>
+            <td class="skill-cmd">/dev-debate</td>
+            <td class="skill-desc">Architecture roundtable with multiple tech personas — find blind spots before committing to a design</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Quick Dev</td>
+            <td class="skill-cmd">/quick-dev</td>
+            <td class="skill-desc">Rapid throwaway prototype mode — builds fast, documents nothing, marked as disposable</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Challenge</td>
+            <td class="skill-cmd">/challenge</td>
+            <td class="skill-desc">Independent second opinion on a technical decision without additional context bias</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Document</td>
+            <td class="skill-cmd">/document</td>
+            <td class="skill-desc">Generate documentation after a feature ships — updates code docs and wiki</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Debugging</h3>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Debug</td>
+            <td class="skill-cmd">/debug</td>
+            <td class="skill-desc">Pólya 4-phase framework: Understanding → Investigation Plan → Diagnosis → Fix + Retrospective. Triage levels: TRIVIAL / MEDIUM / CRITICAL</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── FINANCE ────────────────── -->
+      <div class="squad-header" id="finance">
+        <div class="squad-icon finance">💰</div>
+        <div class="squad-header-info">
+          <h2>Finance Skills</h2>
+          <p>Clara — CFO · Runway, reporting, and financial health</p>
+        </div>
+        <span class="squad-count">3 skills</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Finance Debate</td>
+            <td class="skill-cmd">/finance-debate</td>
+            <td class="skill-desc">CFO roundtable on financial decisions — multiple perspectives (conservative, growth, risk)</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Runway</td>
+            <td class="skill-cmd">/runway</td>
+            <td class="skill-desc">Calculate burn rate + months of runway from current squad data</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Monthly Report</td>
+            <td class="skill-cmd">/monthly-report</td>
+            <td class="skill-desc">Generate monthly P&amp;L summary from finance squad data and KPIs</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── INFRA ────────────────── -->
+      <div class="squad-header" id="infra">
+        <div class="squad-icon infra">🖥️</div>
+        <div class="squad-header-info">
+          <h2>Infra Skills</h2>
+          <p>Dean — Head of Infra · Servers, monitoring, security, and credential rotation</p>
+        </div>
+        <span class="squad-count">4 skills</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Infra Debate</td>
+            <td class="skill-cmd">/infra-debate</td>
+            <td class="skill-desc">Infrastructure decision roundtable — cost, reliability, complexity tradeoffs</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Hardening Check</td>
+            <td class="skill-cmd">/hardening-check</td>
+            <td class="skill-desc">Security checklist: open ports, SSH keys, firewall rules, TLS config, env vars, exposed secrets</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Restart Service</td>
+            <td class="skill-cmd">/restart-service</td>
+            <td class="skill-desc">Safe service restart with health check before and after — never blind restart</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Rotate Credential</td>
+            <td class="skill-cmd">/rotate-credential</td>
+            <td class="skill-desc">Guided credential rotation: generate → update services → verify → archive old</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── INTELLIGENCE ────────────────── -->
+      <div class="squad-header" id="intelligence">
+        <div class="squad-icon intel">🔍</div>
+        <div class="squad-header-info">
+          <h2>Intelligence Skills</h2>
+          <p>Rex — Head of Intelligence · Competitive analysis, bias audit, war games</p>
+        </div>
+        <span class="squad-count">2 skills</span>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Competitive Analysis</td>
+            <td class="skill-cmd">/competitive-analysis</td>
+            <td class="skill-desc">Research competitor, map their positioning, identify gaps and threats relative to your company</td>
+          </tr>
+          <tr>
+            <td class="skill-name">War Game</td>
+            <td class="skill-cmd">/war-game</td>
+            <td class="skill-desc">Simulate competitor moves and model your counter-moves — strategy stress test</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── MARKETING ────────────────── -->
+      <div class="squad-header" id="marketing">
+        <div class="squad-icon mkt">📣</div>
+        <div class="squad-header-info">
+          <h2>Marketing Skills</h2>
+          <p>Maya — Head of Marketing · Content, brand, campaigns, and distribution</p>
+        </div>
+        <span class="squad-count">11 skills</span>
+      </div>
+
+      <h3>Brand & Strategy</h3>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Marketing Debate</td>
+            <td class="skill-cmd">/marketing-debate</td>
+            <td class="skill-desc">Multi-persona roundtable on marketing decisions — Brand, Performance, Content, Devil's Advocate</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Lookup Brand</td>
+            <td class="skill-cmd">/lookup-brand</td>
+            <td class="skill-desc">Answer brand questions from foundation docs: colors, tone, archetypes, anti-patterns</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Content Ideas</td>
+            <td class="skill-cmd">/content-ideas</td>
+            <td class="skill-desc">Generate content ideas aligned with ICP, brand voice, and current trends</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Content Creation</h3>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Write Headline</td>
+            <td class="skill-cmd">/write-headline</td>
+            <td class="skill-desc">Generate headline + subheadline + hook variations (4 patterns: curiosity, pain, social proof, direct)</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Write Caption</td>
+            <td class="skill-cmd">/write-caption</td>
+            <td class="skill-desc">Short caption for Instagram/TikTok + LinkedIn variant from the same brief</td>
+          </tr>
+          <tr>
+            <td class="skill-name">LinkedIn Post</td>
+            <td class="skill-cmd">/linkedin-post</td>
+            <td class="skill-desc">Executive LinkedIn format: hook → value bullets → data point → CTA</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Write Thread</td>
+            <td class="skill-cmd">/write-thread</td>
+            <td class="skill-desc">Twitter/Threads thread with reply map and engagement optimization</td>
+          </tr>
+          <tr>
+            <td class="skill-name">YouTube Script</td>
+            <td class="skill-cmd">/youtube-script</td>
+            <td class="skill-desc">Full YouTube script with hook, retention cliffhangers every 2 min, and CTA</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Email Reactivation</td>
+            <td class="skill-cmd">/email-reactivation</td>
+            <td class="skill-desc">SOAP-format reactivation sequence for cold or disengaged leads</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Analysis & Improvement</h3>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Analyze Post</td>
+            <td class="skill-cmd">/analyze-post</td>
+            <td class="skill-desc">Diagnose post performance with composite score — hook strength, clarity, CTA, ICP alignment</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Improve Post</td>
+            <td class="skill-cmd">/improve-post</td>
+            <td class="skill-desc">Critical revision of existing post with ready-to-use improved copy suggestions</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ────────────────── ADD CUSTOM ────────────────── -->
+      <div class="add-skill-box" id="add-custom">
+        <h3>+ Add a custom skill</h3>
+        <p>Place your skill file in the squad's <code>skills/</code> folder, or in the root <code>skills/</code> for global access.</p>
+        <div class="code-block" style="text-align:left;">
+          <pre><span class="comment"># Squad-specific skill</span>
+squads/commercial/skills/my-skill.md
+
+<span class="comment"># Global skill (all squads)</span>
+skills/my-skill.md
+
+<span class="comment"># Skill file template</span>
+---
+name: my-skill
+description: One-line description
+---
+
+# /my-skill
+
+## When to use
+## Inputs
+## Process
+## Output format</pre>
+        </div>
+        <p style="margin-top:12px;font-size:13px;">After adding, register the skill in the squad's <code>CLAUDE.md</code> under <strong>## Skills</strong>. See <a href="how-to-customize.md">how-to-customize.md</a> for the full guide.</p>
+      </div>
+
+      <!-- ── Footer ── -->
+      <div class="doc-footer">
+        <p>HIVE is MIT licensed. Fork it, adapt it, make it yours.</p>
+        <p>Built by <a href="https://felipeluissalgueiro.com">Felipe Luis Salgueiro</a> · <a href="https://github.com/felipeluissalgueiro/hive">GitHub</a></p>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Scroll highlight sidebar
+  const sections = document.querySelectorAll('[id]');
+  const links = document.querySelectorAll('.sidebar-link[href^="#"]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 90) current = s.id;
+    });
+    links.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  }, { passive: true });
+</script>
+
+</body>
+</html>
