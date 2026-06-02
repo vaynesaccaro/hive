@@ -1,0 +1,14 @@
+# Exclude framework internals from Vercel deploy — only the landing/docs (HTML) ships.
+.claude/
+_core/
+squads/
+incidents/
+memory/
+sessions-log/
+workers/
+foundation/
+.git/
+docs/
+*.md
+*.py
+*.sh

@@ -19,7 +19,8 @@ def main():
     if tool not in WRITE_TOOLS: sys.exit(0)
     if tool == "Bash":
         cmd = data.get("tool_input",{}).get("command","")
-        if not any(w in cmd for w in [">","tee","git add","git commit","git merge"]): sys.exit(0)
+        WRITE_PATTERNS = [">","tee ","git add","git commit","git merge","cp ","mv ","rm ","mkdir ","touch ","sed -i","chmod ","chown "]
+        if not any(w in cmd for w in WRITE_PATTERNS): sys.exit(0)
     branch = get_branch()
     if branch in ("main","HEAD"):
         nb = f"session/{datetime.now().strftime('%Y-%m-%d-%H%M')}"

@@ -101,10 +101,13 @@ ok "Venv ready: $MCP_DIR/.venv/bin/python"
 
 # ── 5. Smoke test ──
 step "5/5 — Smoke test (Kimi K2.6, ~\$0.001)"
-RESP=$(curl -s https://openrouter.ai/api/v1/chat/completions \
-  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"moonshotai/kimi-k2.6","messages":[{"role":"user","content":"Reply only the word: pong"}],"max_tokens":10}')
+# Pass the API key via stdin config so it never appears in `ps` output
+RESP=$(curl -s -K - https://openrouter.ai/api/v1/chat/completions <<EOF
+header = "Authorization: Bearer $OPENROUTER_API_KEY"
+header = "Content-Type: application/json"
+data = "{\"model\":\"moonshotai/kimi-k2.6\",\"messages\":[{\"role\":\"user\",\"content\":\"Reply only the word: pong\"}],\"max_tokens\":10}"
+EOF
+)
 ANSWER=$(echo "$RESP" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('choices',[{}])[0].get('message',{}).get('content') or d.get('error',{}).get('message','null'))")
 if [[ "$ANSWER" =~ pong ]]; then
   ok "Smoke test PASSED — Kimi replied: $ANSWER"
