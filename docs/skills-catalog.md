@@ -18,6 +18,37 @@ Available in every squad context.
 
 ---
 
+## Multi-Model Skills (OpenRouter)
+
+> **Requires setup:** `OPENROUTER_API_KEY` env var + `bash _core/mcp/install.sh`
+> See `_core/mcp/README.md` for the full guide.
+
+These skills let you query any model outside Anthropic — Kimi, GPT-5, Grok, Gemini, Qwen, DeepSeek, and more — without leaving Claude Code. All skills ask which model to use (zero defaults). Model responses are always delivered raw, copy-paste, no editing.
+
+| Skill | Invocation | What it does |
+|---|---|---|
+| Second opinion | `/second-opinion` | Single model query — raw response, zero editing |
+| Consensus | `/consensus` | Same prompt to N models in parallel + overlap/divergence synthesis |
+| Anti-bubble | `/anti-bubble` | Neutral model reads asset with no company context — outsider reading |
+| ICP check | `/icp-check` | 2-3 models simulate your ICP reading a piece of copy |
+| DoD check | `/dod-check` | Cheap model validates PR diff vs Linear acceptance criteria |
+| Cost compare | `/cost-compare` | Matrix: same task across cheap→top models, choose "cheap enough" |
+| Code review (model) | `/code-review-model` | Code review from any OpenRouter model, same P1/P2/P3 output as `/codex-review` |
+
+**Quick model reference:**
+
+| Use case | Good choices |
+|---|---|
+| Code review | `kimi`, `gpt5codex`, `qwencoder` |
+| Reasoning / analysis | `gpt5.5`, `grok`, `kimi-think` |
+| Anti-bubble / ICP (diverse corpus) | `gemini-pro`, `kimi`, `glm5.1` |
+| Cheap workers | `dsflash`, `qwenflash`, `granite` |
+| Free tier | `kimi-free`, `dsflash-free` |
+
+Full catalog with prices, benchmarks, and context windows: `_core/MODELS-MAP.md`
+
+---
+
 ## Orchestrator Skills
 
 > **Stamper — Chief of Staff.** Issue and project lifecycle management.
@@ -179,6 +210,7 @@ Run cheapest → most expensive. Stop when issues are found and fixed.
 | Squad | Skills |
 |---|---|
 | Global | 5 |
+| Multi-model (OpenRouter) | 7 |
 | Orchestrator | 4 |
 | Commercial | 4 |
 | CS | 2 |
@@ -187,7 +219,7 @@ Run cheapest → most expensive. Stop when issues are found and fixed.
 | Infra | 4 |
 | Intelligence | 2 |
 | Marketing | 11 |
-| **Total** | **43** |
+| **Total** | **50** |
 
 ---
 
