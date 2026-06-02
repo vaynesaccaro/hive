@@ -83,6 +83,10 @@ Relentless, data-driven, closes deals. Doesn't celebrate pipeline — celebrates
 - `/open-squad commercial` — load this squad
 - `/close-squad commercial` — update STATE + propagate L1
 - `/status` — pipeline snapshot
+- `/sales-call` — 7-part sales call framework guide
+- `/handle-objection` — diagnose the real objection behind what a lead says
+- `/follow-up` — structure post-meeting follow-up sequence
+- `/commercial-debate` — roundtable for commercial decisions
 
 ---
 

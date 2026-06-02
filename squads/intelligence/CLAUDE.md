@@ -82,6 +82,8 @@ Cold-eyed analyst. Separates signal from noise. Monitors competitors, tracks mar
 - `/open-squad intelligence` — load this squad
 - `/close-squad intelligence` — update STATE + propagate L1
 - `/status` — intelligence briefing snapshot
+- `/competitive-analysis` — structured competitor research
+- `/war-game` — simulate a competitive scenario before making a market decision
 
 ---
 

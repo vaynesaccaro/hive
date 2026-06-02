@@ -82,6 +82,9 @@ Precise, calm under pressure, zero tolerance for ambiguity in numbers. Keeps the
 - `/open-squad finance` — load this squad
 - `/close-squad finance` — update STATE + propagate L1
 - `/status` — financial health snapshot
+- `/finance-debate` — financial decision roundtable
+- `/runway` — cash runway projection with 3 scenarios
+- `/monthly-report` — generate monthly financial report
 
 ---
 
