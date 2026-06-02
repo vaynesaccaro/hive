@@ -82,17 +82,16 @@
       letter-spacing: -0.3px;
     }
     .nav-logo-icon {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       background: var(--primary);
-      border-radius: 7px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -1px;
+      font-size: 16px;
+      line-height: 1;
+      box-shadow: 0 2px 6px rgba(79,70,229,0.35);
     }
     .nav-links {
       display: flex;
@@ -204,6 +203,17 @@
       box-shadow: var(--shadow-sm);
     }
     .btn-secondary:hover { border-color: var(--border2); background: var(--bg); }
+    .btn-download {
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(79,70,229,0.4);
+      gap: 10px;
+    }
+    .btn-download:hover { background: #4338CA; box-shadow: 0 6px 24px rgba(79,70,229,0.5); transform: translateY(-1px); }
+    .btn-download:active { transform: translateY(0); }
 
     /* ── SOCIAL PROOF ── */
     .social-proof {
@@ -568,7 +578,7 @@
   <nav>
     <div class="container nav-inner">
       <a href="/" class="nav-logo" style="text-decoration:none;">
-        <div class="nav-logo-icon">H</div>
+        <div class="nav-logo-icon">🐝</div>
         HIVE
       </a>
       <div class="nav-links">
@@ -590,11 +600,11 @@
         and skills — orchestrated by an AI Chief of Staff.
       </p>
       <div class="cta-group">
-        <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-primary">
-          Star on GitHub
+        <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-download">
+          🐝 Download HIVE
         </a>
-        <a href="docs/getting-started.html" class="btn btn-secondary">
-          Read the docs
+        <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-secondary">
+          View on GitHub
         </a>
       </div>
       <div class="social-proof">
@@ -833,8 +843,8 @@
         <h2>Your company deserves better than prompts</h2>
         <p>Clone HIVE, run <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">/hive-setup</code>, and your AI team is ready in under 10 minutes.</p>
         <div class="cta-group">
-          <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-primary">View on GitHub</a>
-          <a href="docs/getting-started.html" class="btn btn-secondary">Read the docs</a>
+          <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-primary">🐝 Download HIVE</a>
+          <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-secondary">View on GitHub</a>
         </div>
       </div>
     </div>
@@ -844,12 +854,12 @@
   <footer>
     <div class="container footer-inner">
       <div class="footer-brand">
-        <div class="nav-logo-icon" style="width:22px;height:22px;font-size:11px;">H</div>
+        <div class="nav-logo-icon" style="width:22px;height:22px;font-size:12px;">🐝</div>
         <span class="footer-text">HIVE — MIT License · Built by <a href="https://github.com/felipeluissalgueiro">@felipeluissalgueiro</a></span>
       </div>
       <div class="footer-links">
         <a href="https://github.com/felipeluissalgueiro/hive">GitHub</a>
-        <a href="docs/getting-started.html">Docs</a>
+        <a href="https://github.com/felipeluissalgueiro/hive/blob/main/docs/getting-started.md">Docs</a>
         <a href="https://claude.ai/code">Claude Code</a>
       </div>
     </div>
