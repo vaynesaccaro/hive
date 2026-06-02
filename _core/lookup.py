@@ -70,14 +70,17 @@ def search_files(directories: list[Path], keywords: list[str], since: str | None
 
 
 def get_directories(source: str | None) -> list[Path]:
+    squads_root = REPO_ROOT / "squads"
+    squad_mem = (
+        [squads_root / sq / "memory"
+         for sq in os.listdir(squads_root)
+         if (squads_root / sq / "memory").exists()]
+        if squads_root.exists() else []
+    )
     all_sources = {
         "incidents": [REPO_ROOT / "incidents"],
         "sessions": [REPO_ROOT / "sessions-log"],
-        "memory": (
-            [REPO_ROOT / "memory"]
-            + [REPO_ROOT / "squads" / sq / "memory" for sq in os.listdir(REPO_ROOT / "squads")
-               if (REPO_ROOT / "squads" / sq / "memory").exists()]
-        ),
+        "memory": [REPO_ROOT / "memory"] + squad_mem,
     }
     if source and source in all_sources:
         return all_sources[source]

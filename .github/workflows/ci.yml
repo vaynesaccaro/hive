@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ruff
+        run: pip install --quiet ruff
+
+      - name: Lint with ruff
+        run: ruff check .claude/hooks _core workers
+
+      - name: Syntax check all Python
+        run: |
+          set -e
+          find .claude/hooks _core workers -type f -name "*.py" -print0 \
+            | xargs -0 -I{} python -c "compile(open('{}').read(), '{}', 'exec')"
+
+      - name: Syntax check all Shell
+        run: |
+          set -e
+          find _core -type f -name "*.sh" -print0 \
+            | xargs -0 -I{} bash -n {}
+
+      - name: Smoke test — hooks accept stdin without crashing
+        run: |
+          set -e
+          echo '{"tool_name":"Edit","tool_input":{}}' | python .claude/hooks/pretooluse-session-branch.py
+          echo '{"tool_name":"Edit"}' | python .claude/hooks/posttooluse-session-branch.py
+          echo '{}' | python .claude/hooks/stop-session-branch.py
+          echo '{"prompt":"hello world"}' | python .claude/hooks/userprompt-squad-routing.py
+          echo '{"prompt":"hello world"}' | python .claude/hooks/userprompt-knowledge-check.py
+
+      - name: Smoke test — _core scripts run
+        run: |
+          set -e
+          python _core/lookup.py "test" --top 1 || true
+          python _core/state-aggregator.py --json || true

@@ -37,8 +37,9 @@ register_worker() {
     REGISTERED_WORKERS+=("$1|$2")
 }
 
-# Register workers below:
-# register_worker "workers/example.py" "daily:09:00"
+# Register workers below. The schedule string is metadata for logs — actual
+# scheduling is delegated to cron / systemd / Task Scheduler (see README §5).
+register_worker "workers/example.py" "daily:09:00"
 
 # ─── Harness logic ────────────────────────────────────────────────
 

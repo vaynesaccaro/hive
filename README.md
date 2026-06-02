@@ -96,9 +96,9 @@ hive/
     intelligence/            ← Rex (Head of Intelligence)
   skills/                    ← Global skills (all squads)
   memory/                    ← Global memory
-  workers/                   ← Deterministic cron scripts
-  incidents/                 ← Incident hub
-  sessions-log/              ← Session history
+  workers/                   ← Deterministic cron scripts (empty by design — add yours)
+  incidents/                 ← Incident hub (populated via /log-incident)
+  sessions-log/              ← Session history (populated automatically)
   docs/                      ← Guides and references
 ```
 
