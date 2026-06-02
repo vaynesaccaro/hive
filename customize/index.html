@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customize — HIVE Docs</title>
+  <meta name="description" content="How to create squads, add sub-squads, rename personas, write custom skills, and adapt HIVE to your company." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --indigo: #4F46E5;
+      --indigo-light: #EEF2FF;
+      --indigo-dark: #3730A3;
+      --bg: #F9FAFB;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --sidebar-w: 260px;
+      --header-h: 60px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+    a { color: var(--indigo); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Header ── */
+    .header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 100; }
+    .header-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+    .header-brand:hover { text-decoration: none; }
+    .header-brand .logo { width: 32px; height: 32px; background: var(--indigo); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .header-nav { display: flex; align-items: center; gap: 8px; }
+    .header-nav a { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; color: var(--text-muted); transition: all 0.15s; }
+    .header-nav a:hover { background: var(--bg); color: var(--text); text-decoration: none; }
+    .header-nav .btn-github { background: var(--text); color: #fff; padding: 6px 14px; }
+    .header-nav .btn-github:hover { background: #374151; color: #fff; }
+
+    /* ── Layout ── */
+    .layout { display: flex; padding-top: var(--header-h); min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar { width: var(--sidebar-w); flex-shrink: 0; position: fixed; top: var(--header-h); left: 0; bottom: 0; overflow-y: auto; background: var(--surface); border-right: 1px solid var(--border); padding: 24px 16px; }
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 8px; padding: 0 8px; }
+    .sidebar-link { display: block; padding: 7px 8px; border-radius: var(--radius-sm); font-size: 14px; color: var(--text-muted); transition: all 0.12s; }
+    .sidebar-link:hover { background: var(--indigo-light); color: var(--indigo); text-decoration: none; }
+    .sidebar-link.active { background: var(--indigo-light); color: var(--indigo); font-weight: 600; }
+
+    /* ── Main ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; min-width: 0; }
+    .content { max-width: 860px; margin: 0 auto; padding: 48px 48px 96px; }
+
+    /* ── Page hero ── */
+    .page-hero { padding: 40px 0 36px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+    .breadcrumb { font-size: 13px; color: var(--text-light); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--text-light); }
+    .breadcrumb a:hover { color: var(--indigo); }
+    .page-hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .page-hero p { font-size: 16px; color: var(--text-muted); max-width: 580px; line-height: 1.65; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 56px; }
+    h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+    h3 { font-size: 16px; font-weight: 600; color: var(--text); margin: 24px 0 10px; }
+    h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 6px; }
+    p { margin-bottom: 14px; color: var(--text-muted); line-height: 1.7; }
+    p strong { color: var(--text); }
+
+    /* ── Divider ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; counter-reset: steps; }
+    .step-list li { display: flex; gap: 16px; margin-bottom: 20px; }
+    .step-num { width: 28px; height: 28px; background: var(--indigo); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-content p { margin-bottom: 8px; }
+
+    /* ── Code block ── */
+    .code-block { background: #1E1E2E; border-radius: var(--radius); padding: 18px 22px; margin: 12px 0 20px; overflow-x: auto; }
+    .code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.75; color: #CDD6F4; white-space: pre; }
+    .code-block pre .comment { color: #585B70; }
+    .code-block pre .cmd { color: #89B4FA; }
+    .code-block pre .str { color: #A6E3A1; }
+    .code-block pre .kw { color: #CBA6F7; }
+
+    /* ── Inline code ── */
+    code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--indigo-light); color: var(--indigo-dark); padding: 2px 6px; border-radius: 4px; }
+
+    /* ── Info / warning box ── */
+    .info-box { background: var(--indigo-light); border-left: 4px solid var(--indigo); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: var(--indigo-dark); line-height: 1.6; }
+    .info-box code { background: rgba(79,70,229,0.12); }
+    .tip-box { background: #F0FDF4; border-left: 4px solid #10B981; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #065F46; line-height: 1.6; }
+
+    /* ── File tree ── */
+    .file-tree { background: #1E1E2E; border-radius: var(--radius); padding: 20px 24px; margin: 12px 0 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.9; color: #CDD6F4; overflow-x: auto; }
+    .file-tree .dir { color: #89B4FA; }
+    .file-tree .file { color: #A6E3A1; }
+    .file-tree .comment { color: #585B70; }
+    .file-tree .highlight { color: #F38BA8; font-weight: 600; }
+
+    /* ── Quick nav cards ── */
+    .nav-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 24px 0 40px; }
+    .nav-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 18px; text-decoration: none; color: inherit; transition: all 0.15s; display: block; }
+    .nav-card:hover { border-color: var(--indigo); box-shadow: 0 4px 16px rgba(79,70,229,0.08); transform: translateY(-1px); text-decoration: none; }
+    .nav-card-emoji { font-size: 22px; margin-bottom: 8px; display: block; }
+    .nav-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .nav-card-desc { font-size: 12px; color: var(--text-muted); }
+
+    /* ── CLAUDE.md template ── */
+    .template-block { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 16px 0 24px; }
+    .template-header { padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .template-header .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .template-header .dot-r { background: #FF5F57; }
+    .template-header .dot-y { background: #FFBD2E; }
+    .template-header .dot-g { background: #28C840; }
+    .template-body { padding: 18px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.75; color: #374151; white-space: pre; overflow-x: auto; }
+    .template-body .section-title { color: var(--indigo-dark); font-weight: 600; }
+    .template-body .placeholder { color: #9CA3AF; font-style: italic; }
+    .template-body .value { color: #059669; }
+
+    /* ── SITE FOOTER ── */
+    .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 56px 0 32px; margin-top: 80px; }
+    .footer-inner { max-width: 900px; margin: 0 auto; padding: 0 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+    .footer-brand { display: flex; flex-direction: column; gap: 12px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .footer-logo:hover { text-decoration: none; }
+    .footer-logo-icon { width: 26px; height: 26px; background: var(--indigo); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .footer-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 260px; }
+    .footer-socials { display: flex; gap: 8px; margin-top: 4px; }
+    .footer-social-link { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); color: var(--text-muted); transition: border-color 0.15s, color 0.15s, background 0.15s; }
+    .footer-social-link:hover { border-color: var(--indigo); color: var(--indigo); background: var(--indigo-light); text-decoration: none; }
+    .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-light); margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 14px; color: var(--text-muted); transition: color 0.15s; }
+    .footer-col ul li a:hover { color: var(--indigo); text-decoration: none; }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .footer-copy { font-size: 13px; color: var(--text-light); }
+    .footer-copy a { color: var(--text-light); }
+    .footer-copy a:hover { color: var(--text-muted); text-decoration: none; }
+    @media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; } .content { padding: 32px 24px 64px; } }
+    @media (max-width: 640px) { .footer-inner { padding: 0 24px; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-brand { grid-column: 1 / -1; } }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a href="/" class="header-brand">
+    <div class="logo">🐝</div>
+    HIVE
+  </a>
+  <nav class="header-nav">
+    <a href="/docs/">Docs</a>
+    <a href="/skills/">Skills</a>
+    <a href="/customize/" style="color:var(--indigo);font-weight:600;">Customize</a>
+    <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <a href="/docs/" class="sidebar-link">← Back to Docs</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">On this page</div>
+      <a href="#squads" class="sidebar-link active">Create a squad</a>
+      <a href="#sub-squads" class="sidebar-link">Add sub-squads</a>
+      <a href="#remove-squad" class="sidebar-link">Remove a squad</a>
+      <a href="#personas" class="sidebar-link">Rename personas</a>
+      <a href="#skills" class="sidebar-link">Custom skills</a>
+      <a href="#workers" class="sidebar-link">Custom workers</a>
+      <a href="#memory" class="sidebar-link">Memory schema</a>
+      <a href="#pm-tool" class="sidebar-link">Switch PM tool</a>
+      <a href="#upstream" class="sidebar-link">Pull upstream updates</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="page-hero">
+        <div class="breadcrumb"><a href="/docs/">Docs</a> / Customize</div>
+        <h1>✏️ Customizing HIVE</h1>
+        <p>HIVE is designed to be forked. Everything is editable — squads, personas, skills, memory schema, and workers. This guide covers all the common adaptations.</p>
+      </div>
+
+      <div class="nav-cards">
+        <a href="#squads" class="nav-card">
+          <span class="nav-card-emoji">🏗️</span>
+          <div class="nav-card-title">Create a squad</div>
+          <div class="nav-card-desc">New specialist agent from scratch</div>
+        </a>
+        <a href="#sub-squads" class="nav-card">
+          <span class="nav-card-emoji">🌿</span>
+          <div class="nav-card-title">Sub-squads</div>
+          <div class="nav-card-desc">Nest squads for specialization</div>
+        </a>
+        <a href="#personas" class="nav-card">
+          <span class="nav-card-emoji">🎭</span>
+          <div class="nav-card-title">Rename personas</div>
+          <div class="nav-card-desc">Match your company culture</div>
+        </a>
+        <a href="#skills" class="nav-card">
+          <span class="nav-card-emoji">⚡</span>
+          <div class="nav-card-title">Custom skills</div>
+          <div class="nav-card-desc">Add /commands for your workflows</div>
+        </a>
+      </div>
+
+      <hr />
+
+      <!-- ── CREATE SQUAD ── -->
+      <div class="section" id="squads">
+        <h2>🏗️ Creating a new squad</h2>
+        <p>A squad is a folder with a <code>CLAUDE.md</code>, a <code>memory/</code> directory, and optionally <code>foundation/</code>, <code>skills/</code>, and <code>workers/</code>. Claude Code loads it when you navigate to that folder.</p>
+
+        <h3>Step 1 — Create the folder structure</h3>
+        <div class="code-block"><pre><span class="cmd">mkdir -p</span> squads/my-squad/{context,memory,foundation,skills,workers,data}</pre></div>
+
+        <h3>Step 2 — Create the CLAUDE.md</h3>
+        <p>This is the core file. It defines the persona, scope, and rules. Copy the structure from an existing squad and adapt it.</p>
+
+        <div class="template-block">
+          <div class="template-header">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            squads/my-squad/CLAUDE.md
+          </div>
+          <div class="template-body"><span class="section-title"># [Squad Name] — CLAUDE.md</span>
+
+<span class="section-title">## Persona</span>
+
+<span class="value">**[Name]** — [Role title].</span>
+<span class="placeholder">[2-3 sentences describing personality, communication style, and operating principles.
+Example: Direct, data-driven, never sugarcoats. Thinks in systems.
+Asks "what does the data say?" before forming opinions.]</span>
+
+<span class="section-title">## Scope</span>
+
+<span class="value">**Owns:**</span> <span class="placeholder">[list what this squad is responsible for]</span>
+<span class="value">**Does NOT own:**</span> <span class="placeholder">[what to defer to other squads]</span>
+<span class="value">**Defers to:**</span> <span class="placeholder">[which squad for which topic]</span>
+
+<span class="section-title">## Foundation</span>
+
+<span class="placeholder">Read before every session:</span>
+<span class="value">- `foundation/[doc-name].md` — [what it contains]</span>
+<span class="value">- `context/squad-context.md` — company context for this squad</span>
+
+<span class="section-title">## Memory schema</span>
+
+<span class="value">`memory/STATE.md`:</span>
+<span class="placeholder">- **L1:** [what the 1-3 line status should contain]
+- **L2:** [what in-progress items look like]
+- **L3:** [what the backlog contains]</span>
+
+<span class="section-title">## Skills</span>
+
+<span class="placeholder">- `/my-skill` — brief description</span>
+
+<span class="section-title">## Absolute rules</span>
+
+<span class="placeholder">1. [Non-negotiable behavior #1]
+2. [Non-negotiable behavior #2]
+3. Never declare work done without validating it.</span></div>
+        </div>
+
+        <h3>Step 3 — Initialize STATE.md</h3>
+        <div class="code-block"><pre><span class="comment"># squads/my-squad/memory/STATE.md</span>
+
+[L1]
+<span class="str">Squad bootstrapped. No active work yet.</span>
+
+[L2]
+
+[L3]</pre></div>
+
+        <h3>Step 4 — Register in root CLAUDE.md</h3>
+        <p>Open the root <code>CLAUDE.md</code> and add your squad to the squads table:</p>
+        <div class="code-block"><pre><span class="comment"># In root CLAUDE.md — squads table</span>
+
+| Squad | Folder | Persona | Scope |
+|---|---|---|---|
+| ... existing squads ... |
+| <span class="str">My Squad</span>  | `squads/my-squad/` | <span class="str">[Name]</span> | <span class="str">[one-line scope]</span> |</pre></div>
+
+        <h3>Step 5 — Fill context</h3>
+        <p>Create <code>squads/my-squad/context/squad-context.md</code> with company-specific data this squad needs. Or run <code>/hive-setup</code> — it will ask questions and fill it automatically.</p>
+
+        <div class="tip-box">
+          <strong>Tip:</strong> The fastest way to bootstrap a new squad is to open the root HIVE folder in Claude Code and say: <em>"Create a squad for [purpose] — follow the pattern of the commercial squad."</em> The agent will generate the full folder structure.
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ── SUB-SQUADS ── -->
+      <div class="section" id="sub-squads">
+        <h2>🌿 Adding sub-squads</h2>
+        <p>Sub-squads are nested folders inside a parent squad. Use them when a squad needs specialization — multiple products under Product, multiple regions under CS, multiple clients under Operations.</p>
+
+        <p>Claude Code's <code>CLAUDE.md</code> cascade means opening a sub-squad loads <strong>three</strong> contexts: root + parent + sub-squad.</p>
+
+        <h3>Structure</h3>
+        <div class="file-tree">squads/<span class="dir">product/</span>
+  <span class="file">CLAUDE.md</span>            <span class="comment">← Owen — Head of Product (parent, acts as router)</span>
+  memory/<span class="file">STATE.md</span>      <span class="comment">← aggregated L1 from both sub-squads</span>
+  <span class="dir highlight">saas/</span>
+    <span class="highlight">CLAUDE.md</span>        <span class="comment">← Owen-SaaS — focused only on SaaS product</span>
+    memory/<span class="file">STATE.md</span>
+    foundation/
+    skills/
+  <span class="dir highlight">services/</span>
+    <span class="highlight">CLAUDE.md</span>        <span class="comment">← Owen-Services — focused only on services</span>
+    memory/<span class="file">STATE.md</span>
+    foundation/
+    skills/</div>
+
+        <h3>Parent CLAUDE.md — router pattern</h3>
+        <p>The parent's <code>CLAUDE.md</code> describes what each child handles and when to use each:</p>
+        <div class="code-block"><pre><span class="comment"># squads/product/CLAUDE.md</span>
+
+<span class="kw">## Sub-squads</span>
+
+This squad has two specializations. Navigate to the right one:
+
+| Sub-squad | Folder | When to use |
+|---|---|---|
+| SaaS Product | `squads/product/saas/` | Platform features, subscriptions, self-serve |
+| Services Product | `squads/product/services/` | Custom projects, enterprise delivery |
+
+<span class="comment"># Parent STATE.md aggregates L1 from both children</span>
+<span class="comment"># Run: python _core/state-aggregator.py squads/product/</span></pre></div>
+
+        <h3>Create a sub-squad</h3>
+        <div class="code-block"><pre><span class="comment"># Create the folder</span>
+<span class="cmd">mkdir -p</span> squads/product/saas/{memory,foundation,skills}
+
+<span class="comment"># Create CLAUDE.md for the sub-squad (same structure as a regular squad)</span>
+<span class="comment"># Persona section should be more specific than the parent</span>
+
+<span class="comment"># Initialize STATE.md</span>
+<span class="cmd">echo</span> <span class="str">"[L1]\nSub-squad bootstrapped.\n\n[L2]\n\n[L3]"</span> > squads/product/saas/memory/STATE.md</pre></div>
+
+        <div class="info-box">
+          <strong>Depth limit:</strong> HIVE supports up to 3 levels (root → squad → sub-squad). Deeper nesting creates context overload. If you need more granularity, use tags in STATE.md instead of more folders.
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ── REMOVE SQUAD ── -->
+      <div class="section" id="remove-squad">
+        <h2>🗑️ Removing a squad</h2>
+        <p>If you don't need a squad (e.g., no Dev squad because you're non-technical, no Finance squad at early stage):</p>
+
+        <ul class="step-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Remove it from the squads table in root <code>CLAUDE.md</code></p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>Update <code>squads/&lt;name&gt;/memory/STATE.md</code> L1 to mark it inactive:</p>
+              <div class="code-block"><pre><span class="str">Squad inactive — not used in this installation.</span></pre></div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>Optionally delete the folder entirely. If you might need it later, keep it but mark inactive — reactivating is one line in root <code>CLAUDE.md</code>.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <!-- ── PERSONAS ── -->
+      <div class="section" id="personas">
+        <h2>🎭 Renaming personas</h2>
+        <p>The default personas (Victor, Leah, Maya, Ethan…) are generic placeholders. Replace them with names that fit your company culture, or use role titles instead of names.</p>
+
+        <p>Edit the persona section at the top of <code>squads/&lt;name&gt;/CLAUDE.md</code>:</p>
+
+        <div class="code-block"><pre><span class="comment"># Before</span>
+<span class="kw">## Persona</span>
+<span class="str">**Victor** — Head of Sales.</span>
+Challenger Sale methodology. Direct, numbers-driven...
+
+<span class="comment"># After — with your name</span>
+<span class="kw">## Persona</span>
+<span class="str">**Rafael** — Head of Sales.</span>
+Challenger Sale methodology. Direct, numbers-driven...</pre></div>
+
+        <div class="tip-box">
+          The persona name appears only inside the <code>CLAUDE.md</code> — no other files reference it. A single find-and-replace in the file is all you need.
+        </div>
+
+        <h3>Personality customization</h3>
+        <p>Beyond the name, edit the 2-3 sentences that describe how the persona communicates. This directly affects tone and style:</p>
+
+        <div class="code-block"><pre><span class="comment"># More formal/conservative culture</span>
+<span class="str">**Marcus** — Head of Sales.</span>
+Methodical, evidence-based, prefers written summaries over verbal briefings.
+Asks for data before forming opinions. Never oversells.
+
+<span class="comment"># More startup/aggressive culture</span>
+<span class="str">**Jake** — Head of Sales.</span>
+High-energy, moves fast, comfortable with ambiguity.
+Bias to action. Will push back on "let's wait and see".</pre></div>
+      </div>
+
+      <hr />
+
+      <!-- ── CUSTOM SKILLS ── -->
+      <div class="section" id="skills">
+        <h2>⚡ Writing custom skills</h2>
+        <p>Skills are markdown files that define a repeatable behavior. Any squad member invokes them with <code>/skill-name</code> in Claude Code.</p>
+
+        <h3>Where to put them</h3>
+        <div class="code-block"><pre><span class="comment"># Available globally (all squads)</span>
+skills/my-skill.md
+
+<span class="comment"># Available only in one squad</span>
+squads/commercial/skills/my-skill.md</pre></div>
+
+        <h3>Skill file format</h3>
+        <div class="template-block">
+          <div class="template-header">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            skills/my-skill.md
+          </div>
+          <div class="template-body">---
+name: my-skill
+description: <span class="placeholder">One-line description — shown in sidebar and catalog</span>
+---
+
+# /my-skill
+
+<span class="placeholder">Brief description of what this skill does and when to use it.</span>
+
+<span class="section-title">## When to activate</span>
+
+<span class="placeholder">- User says "X" or "Y"
+- Explicitly invoked with /my-skill
+- [trigger conditions]</span>
+
+<span class="section-title">## Arguments</span>
+
+<span class="placeholder">- `[arg1]` — optional. What it controls.
+- `[arg2]` — required. The input.
+If missing → ask the user.</span>
+
+<span class="section-title">## Steps</span>
+
+<span class="placeholder">1. [First action]
+2. [Second action]
+3. [Output format]</span>
+
+<span class="section-title">## Rules</span>
+
+<span class="placeholder">1. [Absolute guardrail]
+2. [Non-negotiable behavior]</span></div>
+        </div>
+
+        <h3>Register in squad CLAUDE.md</h3>
+        <p>After creating the file, add it to the squad's <code>## Skills</code> section so the agent knows it exists:</p>
+        <div class="code-block"><pre><span class="comment"># In squads/commercial/CLAUDE.md</span>
+
+<span class="kw">## Skills</span>
+
+- `/sales-call` — Challenger Sale 7-part framework
+- `/handle-objection` — objection mapping flow
+- <span class="str">`/my-skill` — [brief description]</span>   <span class="comment">← add this line</span></pre></div>
+
+        <div class="info-box">
+          Skills don't need to be complex. A skill can be as simple as: <em>"Ask for the customer name, query their STATE.md entry, and summarize the last 3 interactions."</em> The key is making it repeatable.
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ── WORKERS ── -->
+      <div class="section" id="workers">
+        <h2>⚙️ Custom workers</h2>
+        <p>Workers are Python scripts that run on a schedule and update squad state — no AI in the loop. They pull data from your tools and write to <code>STATE.md</code>.</p>
+
+        <h3>Create a worker</h3>
+        <div class="code-block"><pre><span class="comment"># workers/daily-pipeline.py</span>
+
+import json, subprocess
+from pathlib import Path
+from datetime import date
+
+<span class="kw">def</span> get_pipeline_value():
+    <span class="comment"># Query your CRM API, database, etc.</span>
+    <span class="comment"># Return a dict with the data you need</span>
+    <span class="kw">return</span> {<span class="str">"hot_leads"</span>: 3, <span class="str">"pipeline_value"</span>: 42000}
+
+<span class="kw">def</span> update_state(data):
+    state_path = Path(<span class="str">"squads/commercial/memory/STATE.md"</span>)
+    content = state_path.read_text()
+    l1_line = (
+        f<span class="str">"Victor (Commercial) — {data['hot_leads']} hot leads, "</span>
+        f<span class="str">"pipeline ${data['pipeline_value']:,}. Updated {date.today()}."</span>
+    )
+    <span class="comment"># Replace the L1 block</span>
+    content = re.sub(r<span class="str">r'\[L1\]\n.*?\n\n'</span>, f<span class="str">'[L1]\n{l1_line}\n\n'</span>, content, flags=re.DOTALL)
+    state_path.write_text(content)
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    data = get_pipeline_value()
+    update_state(data)
+    print(<span class="str">"Pipeline state updated"</span>)</pre></div>
+
+        <h3>Register in harness.sh</h3>
+        <div class="code-block"><pre><span class="comment"># _core/harness.sh</span>
+
+run_worker <span class="str">"workers/daily-pipeline.py"</span>  <span class="str">"09:00"</span>       <span class="comment"># daily at 9am</span>
+run_worker <span class="str">"workers/health-check.py"</span>    <span class="str">"every:1h"</span>    <span class="comment"># every hour</span>
+run_worker <span class="str">"workers/weekly-report.py"</span>   <span class="str">"monday:08:00"</span> <span class="comment"># every Monday</span></pre></div>
+
+        <p><strong>Rules for workers:</strong> deterministic (no randomness, no LLM calls) · write only to <code>STATE.md</code> · exit 0 on success · fail loudly on error.</p>
+      </div>
+
+      <hr />
+
+      <!-- ── MEMORY SCHEMA ── -->
+      <div class="section" id="memory">
+        <h2>🧠 Customizing the memory schema</h2>
+        <p>Each squad's <code>## Memory schema</code> section in <code>CLAUDE.md</code> tells the agent what to track in L1, L2, and L3. Change this to match what actually matters for your squad.</p>
+
+        <div class="code-block"><pre><span class="comment"># Default (generic)</span>
+<span class="kw">## Memory schema</span>
+- <span class="str">**L1:**</span> Current status — 1-3 lines
+- <span class="str">**L2:**</span> In progress
+- <span class="str">**L3:**</span> Backlog
+
+<span class="comment"># CS squad (customer-centric)</span>
+<span class="kw">## Memory schema</span>
+- <span class="str">**L1:**</span> Active customers (N), churn risk (N), open onboardings (N)
+- <span class="str">**L2:**</span> In-flight onboardings, at-risk accounts being worked
+- <span class="str">**L3:**</span> Expansion opportunities, churn post-mortems pending
+
+<span class="comment"># Finance squad (numbers-first)</span>
+<span class="kw">## Memory schema</span>
+- <span class="str">**L1:**</span> MRR ($N), burn ($N/mo), runway (N months), cash ($N)
+- <span class="str">**L2:**</span> Open invoices, pending payroll, tax deadlines
+- <span class="str">**L3:**</span> Annual report, pricing review, investor update</pre></div>
+
+        <div class="tip-box">
+          L1 is read by <code>/status</code> to aggregate company state. Keep it machine-scannable — facts and numbers, not prose. Good L1: <em>"3 hot leads, pipeline $42k, 1 proposal out."</em> Bad L1: <em>"Things are going well in commercial this week."</em>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ── PM TOOL ── -->
+      <div class="section" id="pm-tool">
+        <h2>🔧 Switching project management tools</h2>
+        <p>HIVE ships with <strong>Linear</strong> as default because its Claude Code MCP integration is the deepest available. Here's how to switch.</p>
+
+        <h3>GitHub Issues</h3>
+        <div class="code-block"><pre><span class="comment"># In root CLAUDE.md, replace the PM section:</span>
+
+<span class="kw">## Project management</span>
+HIVE uses <span class="str">**GitHub Issues**</span>. Reference issues as `#123`.
+Use labels for squad routing: `commercial`, `cs`, `dev`, etc.
+Use <span class="str">`gh`</span> CLI to create and update issues.</pre></div>
+
+        <h3>No PM tool (STATE.md only)</h3>
+        <div class="code-block"><pre><span class="comment"># Remove the PM section from root CLAUDE.md entirely</span>
+<span class="comment"># Use L2 in STATE.md as your task list</span>
+<span class="comment"># Use memory/decisions.md for decision logs</span>
+
+<span class="comment"># L2 becomes your sprint board:</span>
+[L2]
+- [ ] Build landing page — due Friday
+- [ ] Review proposal for Acme Corp
+- [x] Update ICP profile</pre></div>
+
+        <h3>Jira / Notion / other</h3>
+        <p>Update the PM section in root <code>CLAUDE.md</code> with your tool's conventions. Wire an MCP if available, or create a skill that calls the REST API. The agent follows whatever instructions are in the CLAUDE.md.</p>
+      </div>
+
+      <hr />
+
+      <!-- ── UPSTREAM ── -->
+      <div class="section" id="upstream">
+        <h2>🔄 Pulling upstream HIVE updates</h2>
+        <p>If you forked HIVE and want framework improvements without losing your customizations:</p>
+
+        <div class="code-block"><pre><span class="comment"># Add upstream remote (once)</span>
+<span class="cmd">git remote add</span> upstream https://github.com/felipeluissalgueiro/hive.git
+
+<span class="comment"># Pull updates</span>
+<span class="cmd">git fetch</span> upstream
+<span class="cmd">git merge</span> upstream/main --no-ff</pre></div>
+
+        <p>Conflicts will appear in <code>squads/&lt;name&gt;/context/</code> and <code>memory/</code> — those are your customizations. <strong>Always resolve in your favor</strong> for those files. Accept upstream changes for <code>_core/</code>, root <code>skills/</code>, and framework <code>CLAUDE.md</code> files.</p>
+
+        <div class="info-box">
+          <strong>Safe files to always accept upstream:</strong> <code>_core/lookup.py</code>, <code>_core/state-aggregator.py</code>, <code>_core/harness.sh</code>, <code>.claude/hooks/</code>, root <code>CLAUDE.md</code> (merge carefully — don't overwrite your squads table).<br/><br/>
+          <strong>Always keep yours:</strong> <code>squads/*/context/</code>, <code>squads/*/memory/</code>, <code>squads/*/foundation/</code>, <code>CNAME</code>.
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <div class="footer-logo-icon">🐝</div>
+          HIVE
+        </a>
+        <p class="footer-desc">Open-source harness for running a full company with AI agents. Built for Claude Code.</p>
+        <div class="footer-socials">
+          <a href="https://www.threads.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="Threads">
+            <svg width="15" height="15" viewBox="0 0 192 192" fill="none"><path d="M141.537 88.988a66.667 66.667 0 0 0-2.518-1.143c-1.482-27.307-16.403-42.94-41.457-43.1h-.34c-14.986 0-27.449 6.396-35.12 18.036l13.779 9.452c5.73-8.695 14.724-10.548 21.348-10.548h.229c8.249.053 14.474 2.452 18.503 7.129 2.932 3.405 4.893 8.111 5.864 14.05-7.314-1.243-15.224-1.626-23.68-1.14-23.82 1.371-39.134 15.264-38.105 34.568.522 9.792 5.4 18.216 13.735 23.719 7.047 4.652 16.124 6.927 25.557 6.412 12.458-.683 22.231-5.436 29.049-14.127 5.178-6.6 8.453-15.153 9.899-25.93 5.937 3.583 10.337 8.298 12.767 13.966 4.132 9.674 4.373 25.581-8.529 38.383C129.221 163.1 113.515 169 95.961 169c-19.951-.14-35.117-6.532-45.088-18.987-9.372-11.713-14.214-28.618-14.399-50.24.185-21.623 5.027-38.527 14.399-50.24C60.844 37.532 76.01 31.14 95.96 31c20.083.14 35.503 6.568 45.833 19.117 5.09 6.23 8.945 14.086 11.501 23.336l16.152-4.312c-3.112-11.42-8.082-21.312-14.883-29.516C138.896 23.345 120.16 14.82 96.1 14.667h-.186c-23.908.152-43.136 8.73-57.157 25.496C26.581 54.426 20.529 74.028 20.333 96.003c.196 21.975 6.248 41.577 18.424 55.84 14.021 16.765 33.249 25.344 57.157 25.496h.186c21.41-.138 39.935-6.604 53.76-20.197 17.621-17.354 17.066-39.14 11.243-52.498-4.246-9.932-12.43-17.88-19.566-21.656Z" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/felipe-luis-salgueiro" target="_blank" rel="noopener" class="footer-social-link" title="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="TikTok">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://github.com/felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="GitHub">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/felipeluissalgueiro/hive">GitHub</a></li>
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/skills/">Skills</a></li>
+          <li><a href="/customize/">Customize</a></li>
+          <li><a href="https://claude.ai/code">Claude Code</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>By Felipe</h4>
+        <ul>
+          <li><a href="https://cadencia.ia.br" target="_blank" rel="noopener">Cadência</a></li>
+          <li><a href="https://insightartificial.ia.br" target="_blank" rel="noopener">Insight Artificial</a></li>
+          <li><a href="#" title="Em breve">felipeluissalgueiro.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 HIVE &middot; MIT License &middot; Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+      <span class="footer-copy">Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('[id]');
+  const links = document.querySelectorAll('.sidebar-link[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  }, { passive: true });
+</script>
+
+</body>
+</html>
