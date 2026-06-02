@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skills — HIVE Docs</title>
-  <meta name="description" content="Complete reference for all 50 skills in HIVE. Global, squad-specific, and OpenRouter multi-model commands." />
+  <title>Skills — Documentação HIVE</title>
+  <meta name="description" content="Referência completa das 50 skills do HIVE. Comandos globais, por squad e multi-modelo via OpenRouter." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -573,17 +573,17 @@
 
 <!-- ── Header ── -->
 <header class="header">
-  <a href="/docs/" class="header-brand">
+  <a href="/pt/docs/" class="header-brand">
     <div class="logo">🐝</div>
     HIVE
   </a>
   <nav class="header-nav">
-    <a href="/docs/">Docs</a>
-    <a href="/skills/" style="color:var(--indigo);font-weight:600;">Skills</a>
-    <a href="/customize/">Customize</a>
-    <a href="/_core/MODELS-MAP.md">Models</a>
-    <a href="/pt/skills/" style="background:var(--bg,#F9FAFB);border:1px solid var(--border,#E5E7EB);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted,#6B7280);text-decoration:none;">&#x1F1E7;&#x1F1F7; PT</a>
-        <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
+    <a href="/pt/docs/">Docs</a>
+    <a href="/pt/skills/" style="color:var(--indigo);font-weight:600;">Skills</a>
+    <a href="/pt/customize/">Personalizar</a>
+    <a href="/_core/MODELS-MAP.md">Modelos</a>
+    <a href="/skills/" style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted);">🇺🇸 EN</a>
+    <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
       GitHub
     </a>
@@ -597,12 +597,12 @@
   <aside class="sidebar">
 
     <div class="sidebar-section">
-      <div class="sidebar-label">Navigation</div>
-      <a href="/docs/" class="sidebar-link">← Back to Docs</a>
+      <div class="sidebar-label">Navegação</div>
+      <a href="/pt/docs/" class="sidebar-link">← Voltar para Docs</a>
     </div>
 
     <div class="sidebar-section">
-      <div class="sidebar-label">Skills by Squad</div>
+      <div class="sidebar-label">Skills por Squad</div>
       <a href="#global" class="sidebar-link active">
         ⚡ Global
         <span class="sidebar-badge">5</span>
@@ -646,10 +646,10 @@
     </div>
 
     <div class="sidebar-section">
-      <div class="sidebar-label">Reference</div>
-      <a href="#add-custom" class="sidebar-link">Add custom skill</a>
-      <a href="/_core/MODELS-MAP.md" class="sidebar-link">Models Map</a>
-      <a href="/_core/mcp/README.md" class="sidebar-link">OpenRouter setup</a>
+      <div class="sidebar-label">Referência</div>
+      <a href="#add-custom" class="sidebar-link">Adicionar skill customizada</a>
+      <a href="/_core/MODELS-MAP.md" class="sidebar-link">Mapa de Modelos</a>
+      <a href="/_core/mcp/README.md" class="sidebar-link">Configuração OpenRouter</a>
     </div>
 
   </aside>
@@ -661,16 +661,16 @@
       <!-- ── Page hero ── -->
       <div class="page-hero">
         <div class="breadcrumb">
-          <a href="/docs/">Docs</a> / Skills
+          <a href="/pt/docs/">Docs</a> / Skills
         </div>
-        <h1>⚡ Skills Catalog</h1>
-        <p>All 50 reusable commands across HIVE. Invoke any skill with <code style="background:var(--indigo-light);color:var(--indigo-dark);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:14px;">/skill-name</code> inside Claude Code.</p>
+        <h1>⚡ Catálogo de Skills</h1>
+        <p>Todos os 50 comandos reutilizáveis do HIVE. Invoque qualquer skill com <code style="background:var(--indigo-light);color:var(--indigo-dark);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:14px;">/skill-name</code> dentro do Claude Code.</p>
         <div class="stats-row">
-          <div class="stat"><strong>50</strong> total skills</div>
+          <div class="stat"><strong>50</strong> skills no total</div>
           <div class="stat" style="color:var(--border);font-size:18px;">·</div>
           <div class="stat"><strong>10</strong> squads</div>
           <div class="stat" style="color:var(--border);font-size:18px;">·</div>
-          <div class="stat"><strong>7</strong> multi-model (OpenRouter)</div>
+          <div class="stat"><strong>7</strong> multi-modelo (OpenRouter)</div>
         </div>
       </div>
 
@@ -688,41 +688,41 @@
       <div class="squad-header" id="global">
         <div class="squad-icon global">⚡</div>
         <div class="squad-header-info">
-          <h2>Global Skills</h2>
-          <p>Available in every squad context — from root or any squad folder</p>
+          <h2>Skills Globais</h2>
+          <p>Disponível em todo contexto de squad — na raiz ou em qualquer pasta de squad</p>
         </div>
         <span class="squad-count">5 skills</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">HIVE Setup</td>
             <td class="skill-cmd">/hive-setup</td>
-            <td class="skill-desc">Guided onboarding (~10 min) — fills all squad contexts with your company name, industry, working style, and preferences</td>
+            <td class="skill-desc">Onboarding guiado (~10 min) — preenche todos os contextos de squad com nome da empresa, setor, estilo de trabalho e preferências</td>
           </tr>
           <tr>
             <td class="skill-name">Open Squad</td>
             <td class="skill-cmd">/open-squad &lt;name&gt;</td>
-            <td class="skill-desc">git pull + load CLAUDE.md + STATE.md; aggregates L1 if squad has children</td>
+            <td class="skill-desc">git pull + carrega CLAUDE.md + STATE.md; agrega L1 se o squad tiver squads filhos</td>
           </tr>
           <tr>
             <td class="skill-name">Close Squad</td>
             <td class="skill-cmd">/close-squad &lt;name&gt;</td>
-            <td class="skill-desc">Update STATE.md + decisions log + propagate L1 to parent orchestrator</td>
+            <td class="skill-desc">Atualiza STATE.md + log de decisões + propaga L1 para o orchestrator pai</td>
           </tr>
           <tr>
             <td class="skill-name">Company Status</td>
             <td class="skill-cmd">/status</td>
-            <td class="skill-desc">Aggregate L1 from all active squads in one view — what's happening now across the company</td>
+            <td class="skill-desc">Agrega L1 de todos os squads ativos em uma visão única — o que está acontecendo agora em toda a empresa</td>
           </tr>
           <tr>
             <td class="skill-name">Log Incident</td>
             <td class="skill-cmd">/log-incident</td>
-            <td class="skill-desc">Create structured incident record in <code>incidents/</code> hub with root cause, fix, and prevention notes</td>
+            <td class="skill-desc">Cria registro estruturado de incidente no hub <code>incidents/</code> com causa raiz, correção e notas de prevenção</td>
           </tr>
         </tbody>
       </table>
@@ -731,89 +731,89 @@
       <div class="squad-header" id="openrouter">
         <div class="squad-icon openrouter">🤖</div>
         <div class="squad-header-info">
-          <h2>OpenRouter Skills</h2>
-          <p>Multi-model AI queries — Kimi, GPT-5, Grok, Gemini, DeepSeek and more</p>
+          <h2>Skills OpenRouter</h2>
+          <p>Consultas a múltiplos modelos de IA — Kimi, GPT-5, Grok, Gemini, DeepSeek e mais</p>
         </div>
         <span class="squad-count">7 skills</span>
       </div>
 
       <div class="info-box">
-        <strong>Setup required:</strong> Set <code>OPENROUTER_API_KEY</code> env var, then run <code>bash _core/mcp/install.sh</code>. See <a href="/_core/mcp/README.md">MCP setup guide</a> for details. Model responses are always delivered raw — no editing, no paraphrasing.
+        <strong>Configuração necessária:</strong> Defina a variável de ambiente <code>OPENROUTER_API_KEY</code> e execute <code>bash _core/mcp/install.sh</code>. Veja o <a href="/_core/mcp/README.md">guia de configuração MCP</a> para detalhes. As respostas dos modelos são sempre entregues brutas — sem edição, sem paráfrase.
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th><th>Est. cost</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th><th>Custo est.</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Second Opinion</td>
             <td class="skill-cmd">/second-opinion</td>
-            <td class="skill-desc">Single model query — raw response, zero editing. Asks for model if not specified.</td>
+            <td class="skill-desc">Consulta a um único modelo — resposta bruta, zero edição. Pergunta qual modelo usar se não especificado.</td>
             <td class="skill-cost">$0.001–$0.05</td>
           </tr>
           <tr>
             <td class="skill-name">Consensus</td>
             <td class="skill-cmd">/consensus</td>
-            <td class="skill-desc">Same prompt to N models in parallel. Shows raw responses + overlap/divergence synthesis. Optional <code>--deep</code> mode for cross-critique.</td>
+            <td class="skill-desc">Mesmo prompt para N modelos em paralelo. Exibe respostas brutas + síntese de convergências/divergências. Modo <code>--deep</code> opcional para crítica cruzada entre modelos.</td>
             <td class="skill-cost">$0.01–$0.20</td>
           </tr>
           <tr>
             <td class="skill-name">Anti-Bubble</td>
             <td class="skill-cmd">/anti-bubble</td>
-            <td class="skill-desc">Neutral model reads copy/pitch with NO company context — pure outsider reaction. Finds jargon and assumptions insiders can't see.</td>
+            <td class="skill-desc">Modelo neutro lê copy ou pitch SEM contexto da empresa — reação pura de quem está de fora. Identifica jargões e suposições que insiders não enxergam.</td>
             <td class="skill-cost">$0.005–$0.05</td>
           </tr>
           <tr>
             <td class="skill-name">ICP Check</td>
             <td class="skill-cmd">/icp-check</td>
-            <td class="skill-desc">2–3 models simulate your ICP reading a piece of copy, email, or landing page. Cross-cultural triangulation. Reads <code>foundation/icp-audience.md</code> or inline description.</td>
+            <td class="skill-desc">2–3 modelos simulam seu ICP lendo um copy, e-mail ou landing page. Triangulação multicultural. Lê <code>foundation/icp-audience.md</code> ou descrição inline.</td>
             <td class="skill-cost">$0.01–$0.15</td>
           </tr>
           <tr>
             <td class="skill-name">DoD Check</td>
             <td class="skill-cmd">/dod-check</td>
-            <td class="skill-desc">Cheap model validates PR diff vs Linear acceptance criteria. Extracts issue from branch name. Returns READY / ADJUSTMENTS / REDO verdict.</td>
+            <td class="skill-desc">Modelo barato valida diff do PR contra critérios de aceite do Linear. Extrai a issue pelo nome da branch. Retorna veredicto PRONTO / AJUSTES / REFAZER.</td>
             <td class="skill-cost">$0.001–$0.01</td>
           </tr>
           <tr>
             <td class="skill-name">Cost Compare</td>
             <td class="skill-cmd">/cost-compare</td>
-            <td class="skill-desc">Same task across 3–6 models from cheapest to top tier. Real token cost matrix. Helps find the "cheap enough" model for recurring workers.</td>
+            <td class="skill-desc">Mesma tarefa em 3–6 modelos do mais barato ao topo de linha. Matriz de custo real em tokens. Ajuda a encontrar o modelo "barato o suficiente" para workers recorrentes.</td>
             <td class="skill-cost">$0.01–$0.50</td>
           </tr>
           <tr>
             <td class="skill-name">Code Review (model)</td>
             <td class="skill-cmd">/code-review-model</td>
-            <td class="skill-desc">Code review from any OpenRouter model. Same P1/P2/P3 classification as <code>/codex-review</code>. Use as second opinion or security scan.</td>
+            <td class="skill-desc">Code review por qualquer modelo OpenRouter. Mesma classificação P1/P2/P3 do <code>/codex-review</code>. Use como segunda opinião ou varredura de segurança.</td>
             <td class="skill-cost">$0.01–$0.10</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Model quick reference</h3>
+      <h3>Referência rápida de modelos</h3>
       <table class="skills-table">
         <thead>
-          <tr><th>Alias</th><th>Model</th><th>Best for</th><th>Approx price</th></tr>
+          <tr><th>Alias</th><th>Modelo</th><th>Melhor para</th><th>Preço aprox.</th></tr>
         </thead>
         <tbody>
-          <tr><td class="skill-cmd">kimi</td><td>Kimi K2.6</td><td>Coding, top open-weight</td><td class="skill-cost">$0.68/$3.42 per M</td></tr>
-          <tr><td class="skill-cmd">gpt5.5</td><td>GPT-5.5</td><td>Reasoning, flagship</td><td class="skill-cost">premium</td></tr>
-          <tr><td class="skill-cmd">grok</td><td>Grok 4.20</td><td>2M context, low cost</td><td class="skill-cost">$0.30/$0.50 per M</td></tr>
-          <tr><td class="skill-cmd">gemini-pro</td><td>Gemini (latest)</td><td>Multimodal, long context</td><td class="skill-cost">$0.25/$0.75 per M</td></tr>
-          <tr><td class="skill-cmd">dsflash</td><td>DeepSeek Flash</td><td>Near-free, 1M ctx</td><td class="skill-cost">$0.10/$0.20 per M</td></tr>
-          <tr><td class="skill-cmd">qwenflash</td><td>Qwen Flash</td><td>Fast, cheap</td><td class="skill-cost">$0.19/$1.13 per M</td></tr>
-          <tr><td class="skill-cmd">granite</td><td>IBM Granite</td><td>Cheapest tier</td><td class="skill-cost">$0.05/$0.10 per M</td></tr>
+          <tr><td class="skill-cmd">kimi</td><td>Kimi K2.6</td><td>Código, top open-weight</td><td class="skill-cost">$0.68/$3.42 por M</td></tr>
+          <tr><td class="skill-cmd">gpt5.5</td><td>GPT-5.5</td><td>Raciocínio, flagship</td><td class="skill-cost">premium</td></tr>
+          <tr><td class="skill-cmd">grok</td><td>Grok 4.20</td><td>Contexto 2M, baixo custo</td><td class="skill-cost">$0.30/$0.50 por M</td></tr>
+          <tr><td class="skill-cmd">gemini-pro</td><td>Gemini (latest)</td><td>Multimodal, contexto longo</td><td class="skill-cost">$0.25/$0.75 por M</td></tr>
+          <tr><td class="skill-cmd">dsflash</td><td>DeepSeek Flash</td><td>Quase gratuito, ctx 1M</td><td class="skill-cost">$0.10/$0.20 por M</td></tr>
+          <tr><td class="skill-cmd">qwenflash</td><td>Qwen Flash</td><td>Rápido e barato</td><td class="skill-cost">$0.19/$1.13 por M</td></tr>
+          <tr><td class="skill-cmd">granite</td><td>IBM Granite</td><td>Nível mais barato</td><td class="skill-cost">$0.05/$0.10 por M</td></tr>
         </tbody>
       </table>
-      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">Full catalog (30+ models) with benchmarks and context windows: <a href="/_core/MODELS-MAP.md">_core/MODELS-MAP.md</a></p>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">Catálogo completo (30+ modelos) com benchmarks e janelas de contexto: <a href="/_core/MODELS-MAP.md">_core/MODELS-MAP.md</a></p>
 
       <!-- ────────────────── ORCHESTRATOR ────────────────── -->
       <div class="squad-header" id="orchestrator">
         <div class="squad-icon orch">🧠</div>
         <div class="squad-header-info">
-          <h2>Orchestrator Skills</h2>
-          <p>Stamper — Chief of Staff · Issue and project lifecycle management</p>
+          <h2>Skills do Orchestrator</h2>
+          <p>Stamper — Chief of Staff · Gestão do ciclo de vida de issues e projetos</p>
         </div>
         <span class="squad-count">4 skills</span>
       </div>
@@ -825,35 +825,35 @@
         <span class="workflow-arrow">→</span>
         <span class="workflow-step">/start-issue</span>
         <span class="workflow-arrow">→</span>
-        <span style="font-size:13px;color:var(--text-muted);font-style:italic;">implement</span>
+        <span style="font-size:13px;color:var(--text-muted);font-style:italic;">implementar</span>
         <span class="workflow-arrow">→</span>
         <span class="workflow-step">/close-issue</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Create Issue</td>
             <td class="skill-cmd">/create-issue</td>
-            <td class="skill-desc">Guided issue creation with title, description, acceptance criteria, squad assignment, and priority. Writes to Linear.</td>
+            <td class="skill-desc">Criação guiada de issue com título, descrição, critérios de aceite, atribuição de squad e prioridade. Grava no Linear.</td>
           </tr>
           <tr>
             <td class="skill-name">Plan Issue</td>
             <td class="skill-cmd">/plan-issue</td>
-            <td class="skill-desc">Break issue into technical plan with file list and approval gate. No code until plan is confirmed.</td>
+            <td class="skill-desc">Quebra a issue em plano técnico com lista de arquivos e gate de aprovação. Nenhum código é escrito antes de o plano ser confirmado.</td>
           </tr>
           <tr>
             <td class="skill-name">Start Issue</td>
             <td class="skill-cmd">/start-issue</td>
-            <td class="skill-desc">Checkout branch from Linear <code>branchName</code> + mark issue In Progress + post comment.</td>
+            <td class="skill-desc">Faz checkout da branch a partir do <code>branchName</code> do Linear + marca issue como Em Progresso + posta comentário.</td>
           </tr>
           <tr>
             <td class="skill-name">Close Issue</td>
             <td class="skill-cmd">/close-issue</td>
-            <td class="skill-desc">Full quality cycle (review → build → test) + merge + mark Done in Linear + deploy validation if applicable.</td>
+            <td class="skill-desc">Ciclo completo de qualidade (review → build → teste) + merge + marca como Concluída no Linear + validação de deploy se aplicável.</td>
           </tr>
         </tbody>
       </table>
@@ -862,36 +862,36 @@
       <div class="squad-header" id="commercial">
         <div class="squad-icon comm">💼</div>
         <div class="squad-header-info">
-          <h2>Commercial Skills</h2>
-          <p>Victor — Head of Sales · Lead pipeline, qualification, and deal closing</p>
+          <h2>Skills Comerciais</h2>
+          <p>Victor — Head de Vendas · Pipeline de leads, qualificação e fechamento</p>
         </div>
         <span class="squad-count">4 skills</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Sales Call</td>
             <td class="skill-cmd">/sales-call</td>
-            <td class="skill-desc">7-part Challenger Sale framework: Warm-up → Reframing → Urgency → Emotional → New Path → Solution → Closing</td>
+            <td class="skill-desc">Framework Challenger Sale em 7 etapas: Aquecimento → Reframing → Urgência → Emocional → Novo Caminho → Solução → Fechamento</td>
           </tr>
           <tr>
             <td class="skill-name">Handle Objection</td>
             <td class="skill-cmd">/handle-objection</td>
-            <td class="skill-desc">Surface-to-real objection mapping, diagnostic flow, non-fit signal detection</td>
+            <td class="skill-desc">Mapeamento de objeção superficial para real, fluxo de diagnóstico, detecção de sinal de não-fit</td>
           </tr>
           <tr>
             <td class="skill-name">Follow Up</td>
             <td class="skill-cmd">/follow-up</td>
-            <td class="skill-desc">D+0/D+2/D+7/D+14 follow-up sequence + breakup email template</td>
+            <td class="skill-desc">Sequência de follow-up D+0/D+2/D+7/D+14 + template de e-mail de breakup</td>
           </tr>
           <tr>
             <td class="skill-name">Commercial Debate</td>
             <td class="skill-cmd">/commercial-debate</td>
-            <td class="skill-desc">Multi-perspective roundtable: Sales vs CS vs Finance vs Devil's Advocate</td>
+            <td class="skill-desc">Mesa-redonda multi-perspectiva: Vendas vs CS vs Financeiro vs Advogado do Diabo</td>
           </tr>
         </tbody>
       </table>
@@ -900,26 +900,26 @@
       <div class="squad-header" id="cs">
         <div class="squad-icon cs">🤝</div>
         <div class="squad-header-info">
-          <h2>Customer Success Skills</h2>
-          <p>Leah — Head of CS · Onboarding, retention, and success metrics</p>
+          <h2>Skills de Customer Success</h2>
+          <p>Leah — Head de CS · Onboarding, retenção e métricas de sucesso</p>
         </div>
         <span class="squad-count">2 skills</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">CS Debate</td>
             <td class="skill-cmd">/cs-debate</td>
-            <td class="skill-desc">Roundtable on customer success decisions with multiple perspectives (CSM, Account Manager, Churn Analyst)</td>
+            <td class="skill-desc">Mesa-redonda sobre decisões de customer success com múltiplas perspectivas (CSM, Account Manager, Analista de Churn)</td>
           </tr>
           <tr>
             <td class="skill-name">Log KPI</td>
             <td class="skill-cmd">/log-kpi</td>
-            <td class="skill-desc">Record customer KPI snapshot in <code>data/kpis.md</code> with timestamp</td>
+            <td class="skill-desc">Registra snapshot de KPI do cliente em <code>data/kpis.md</code> com timestamp</td>
           </tr>
         </tbody>
       </table>
@@ -928,71 +928,71 @@
       <div class="squad-header" id="dev">
         <div class="squad-icon dev">⌨️</div>
         <div class="squad-header-info">
-          <h2>Dev Skills</h2>
-          <p>Ethan — Tech Lead · Architecture, code review, debugging, and documentation</p>
+          <h2>Skills de Dev</h2>
+          <p>Ethan — Tech Lead · Arquitetura, code review, debugging e documentação</p>
         </div>
         <span class="squad-count">8 skills</span>
       </div>
 
-      <h3>Code Review Pipeline</h3>
-      <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Run cheapest → most expensive. Stop when issues are found and fixed.</p>
+      <h3>Pipeline de Code Review</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Execute do mais barato ao mais caro. Pare quando encontrar e corrigir problemas.</p>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>Cost</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>Custo</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Gemini Review</td>
             <td class="skill-cmd">/gemini-review</td>
-            <td class="skill-cost">Free</td>
-            <td class="skill-desc">Gemini 2.5 Flash via OAuth CLI — structural review, P1/P2/P3 classification</td>
+            <td class="skill-cost">Gratuito</td>
+            <td class="skill-desc">Gemini 2.5 Flash via OAuth CLI — revisão estrutural, classificação P1/P2/P3</td>
           </tr>
           <tr>
             <td class="skill-name">Codex Review</td>
             <td class="skill-cmd">/codex-review</td>
             <td class="skill-cost">~$0.40</td>
-            <td class="skill-desc">OpenAI Codex CLI — security, logic, performance. Classification: <span class="badge badge-p1">P1</span> blocks merge · <span class="badge badge-p2">P2</span> fix before deploy · <span class="badge badge-p3">P3</span> follow-up</td>
+            <td class="skill-desc">OpenAI Codex CLI — segurança, lógica, performance. Classificação: <span class="badge badge-p1">P1</span> bloqueia merge · <span class="badge badge-p2">P2</span> corrigir antes de deploy · <span class="badge badge-p3">P3</span> follow-up</td>
           </tr>
           <tr>
             <td class="skill-name">Claude Review</td>
             <td class="skill-cmd">/claude-review</td>
-            <td class="skill-cost">Subscription</td>
-            <td class="skill-desc">Claude Opus headless — deep architectural review, final gate before merge</td>
+            <td class="skill-cost">Assinatura</td>
+            <td class="skill-desc">Claude Opus headless — revisão arquitetural profunda, gate final antes do merge</td>
           </tr>
         </tbody>
       </table>
 
       <div class="info-box" style="margin-top:16px;">
-        <strong>When to use which:</strong><br/>
-        Trivial change (copy, isolated CSS) → none · New feature → <code>/codex-review</code> · Logic change → + <code>/claude-review</code> · Critical (auth, billing, migration) → all three + senior approval
+        <strong>Quando usar qual:</strong><br/>
+        Mudança trivial (copy, CSS isolado) → nenhum · Nova feature → <code>/codex-review</code> · Mudança de lógica → + <code>/claude-review</code> · Crítico (auth, cobrança, migration) → os três + aprovação sênior
       </div>
 
-      <h3>Development</h3>
+      <h3>Desenvolvimento</h3>
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Dev Debate</td>
             <td class="skill-cmd">/dev-debate</td>
-            <td class="skill-desc">Architecture roundtable with multiple tech personas — find blind spots before committing to a design</td>
+            <td class="skill-desc">Mesa-redonda de arquitetura com múltiplas personas técnicas — identifique pontos cegos antes de se comprometer com um design</td>
           </tr>
           <tr>
             <td class="skill-name">Quick Dev</td>
             <td class="skill-cmd">/quick-dev</td>
-            <td class="skill-desc">Rapid throwaway prototype mode — builds fast, documents nothing, marked as disposable</td>
+            <td class="skill-desc">Modo de prototipagem rápida descartável — constrói rápido, não documenta nada, marcado como descartável</td>
           </tr>
           <tr>
             <td class="skill-name">Challenge</td>
             <td class="skill-cmd">/challenge</td>
-            <td class="skill-desc">Independent second opinion on a technical decision without additional context bias</td>
+            <td class="skill-desc">Segunda opinião independente sobre uma decisão técnica, sem viés de contexto adicional</td>
           </tr>
           <tr>
             <td class="skill-name">Document</td>
             <td class="skill-cmd">/document</td>
-            <td class="skill-desc">Generate documentation after a feature ships — updates code docs and wiki</td>
+            <td class="skill-desc">Gera documentação após uma feature ser entregue — atualiza docs de código e wiki</td>
           </tr>
         </tbody>
       </table>
@@ -1000,13 +1000,13 @@
       <h3>Debugging</h3>
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Debug</td>
             <td class="skill-cmd">/debug</td>
-            <td class="skill-desc">Pólya 4-phase framework: Understanding → Investigation Plan → Diagnosis → Fix + Retrospective. Triage levels: TRIVIAL / MEDIUM / CRITICAL</td>
+            <td class="skill-desc">Framework Pólya em 4 fases: Entendimento → Plano de Investigação → Diagnóstico → Correção + Retrospectiva. Níveis de triagem: TRIVIAL / MÉDIO / CRÍTICO</td>
           </tr>
         </tbody>
       </table>
@@ -1015,31 +1015,31 @@
       <div class="squad-header" id="finance">
         <div class="squad-icon finance">💰</div>
         <div class="squad-header-info">
-          <h2>Finance Skills</h2>
-          <p>Clara — CFO · Runway, reporting, and financial health</p>
+          <h2>Skills de Financeiro</h2>
+          <p>Clara — CFO · Runway, relatórios e saúde financeira</p>
         </div>
         <span class="squad-count">3 skills</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Finance Debate</td>
             <td class="skill-cmd">/finance-debate</td>
-            <td class="skill-desc">CFO roundtable on financial decisions — multiple perspectives (conservative, growth, risk)</td>
+            <td class="skill-desc">Mesa-redonda de CFO sobre decisões financeiras — múltiplas perspectivas (conservadora, crescimento, risco)</td>
           </tr>
           <tr>
             <td class="skill-name">Runway</td>
             <td class="skill-cmd">/runway</td>
-            <td class="skill-desc">Calculate burn rate + months of runway from current squad data</td>
+            <td class="skill-desc">Calcula burn rate + meses de runway a partir dos dados atuais do squad</td>
           </tr>
           <tr>
             <td class="skill-name">Monthly Report</td>
             <td class="skill-cmd">/monthly-report</td>
-            <td class="skill-desc">Generate monthly P&amp;L summary from finance squad data and KPIs</td>
+            <td class="skill-desc">Gera resumo mensal de P&amp;L a partir dos dados e KPIs do squad financeiro</td>
           </tr>
         </tbody>
       </table>
@@ -1048,36 +1048,36 @@
       <div class="squad-header" id="infra">
         <div class="squad-icon infra">🖥️</div>
         <div class="squad-header-info">
-          <h2>Infra Skills</h2>
-          <p>Dean — Head of Infra · Servers, monitoring, security, and credential rotation</p>
+          <h2>Skills de Infra</h2>
+          <p>Dean — Head de Infra · Servidores, monitoramento, segurança e rotação de credenciais</p>
         </div>
         <span class="squad-count">4 skills</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Infra Debate</td>
             <td class="skill-cmd">/infra-debate</td>
-            <td class="skill-desc">Infrastructure decision roundtable — cost, reliability, complexity tradeoffs</td>
+            <td class="skill-desc">Mesa-redonda de decisões de infraestrutura — tradeoffs de custo, confiabilidade e complexidade</td>
           </tr>
           <tr>
             <td class="skill-name">Hardening Check</td>
             <td class="skill-cmd">/hardening-check</td>
-            <td class="skill-desc">Security checklist: open ports, SSH keys, firewall rules, TLS config, env vars, exposed secrets</td>
+            <td class="skill-desc">Checklist de segurança: portas abertas, chaves SSH, regras de firewall, config TLS, variáveis de ambiente, segredos expostos</td>
           </tr>
           <tr>
             <td class="skill-name">Restart Service</td>
             <td class="skill-cmd">/restart-service</td>
-            <td class="skill-desc">Safe service restart with health check before and after — never blind restart</td>
+            <td class="skill-desc">Restart seguro de serviço com health check antes e depois — nunca reinicia às cegas</td>
           </tr>
           <tr>
             <td class="skill-name">Rotate Credential</td>
             <td class="skill-cmd">/rotate-credential</td>
-            <td class="skill-desc">Guided credential rotation: generate → update services → verify → archive old</td>
+            <td class="skill-desc">Rotação guiada de credencial: gerar → atualizar serviços → verificar → arquivar a antiga</td>
           </tr>
         </tbody>
       </table>
@@ -1086,26 +1086,26 @@
       <div class="squad-header" id="intelligence">
         <div class="squad-icon intel">🔍</div>
         <div class="squad-header-info">
-          <h2>Intelligence Skills</h2>
-          <p>Rex — Head of Intelligence · Competitive analysis, bias audit, war games</p>
+          <h2>Skills de Inteligência</h2>
+          <p>Rex — Head de Inteligência · Análise competitiva, auditoria de viés, war games</p>
         </div>
         <span class="squad-count">2 skills</span>
       </div>
 
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Competitive Analysis</td>
             <td class="skill-cmd">/competitive-analysis</td>
-            <td class="skill-desc">Research competitor, map their positioning, identify gaps and threats relative to your company</td>
+            <td class="skill-desc">Pesquisa concorrente, mapeia o posicionamento deles, identifica lacunas e ameaças em relação à sua empresa</td>
           </tr>
           <tr>
             <td class="skill-name">War Game</td>
             <td class="skill-cmd">/war-game</td>
-            <td class="skill-desc">Simulate competitor moves and model your counter-moves — strategy stress test</td>
+            <td class="skill-desc">Simula movimentos do concorrente e modela suas contra-medidas — teste de stress estratégico</td>
           </tr>
         </tbody>
       </table>
@@ -1114,106 +1114,106 @@
       <div class="squad-header" id="marketing">
         <div class="squad-icon mkt">📣</div>
         <div class="squad-header-info">
-          <h2>Marketing Skills</h2>
-          <p>Maya — Head of Marketing · Content, brand, campaigns, and distribution</p>
+          <h2>Skills de Marketing</h2>
+          <p>Maya — Head de Marketing · Conteúdo, marca, campanhas e distribuição</p>
         </div>
         <span class="squad-count">11 skills</span>
       </div>
 
-      <h3>Brand & Strategy</h3>
+      <h3>Marca &amp; Estratégia</h3>
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Marketing Debate</td>
             <td class="skill-cmd">/marketing-debate</td>
-            <td class="skill-desc">Multi-persona roundtable on marketing decisions — Brand, Performance, Content, Devil's Advocate</td>
+            <td class="skill-desc">Mesa-redonda multi-persona sobre decisões de marketing — Marca, Performance, Conteúdo, Advogado do Diabo</td>
           </tr>
           <tr>
             <td class="skill-name">Lookup Brand</td>
             <td class="skill-cmd">/lookup-brand</td>
-            <td class="skill-desc">Answer brand questions from foundation docs: colors, tone, archetypes, anti-patterns</td>
+            <td class="skill-desc">Responde perguntas de marca a partir dos docs de foundation: cores, tom, arquétipos, anti-padrões</td>
           </tr>
           <tr>
             <td class="skill-name">Content Ideas</td>
             <td class="skill-cmd">/content-ideas</td>
-            <td class="skill-desc">Generate content ideas aligned with ICP, brand voice, and current trends</td>
+            <td class="skill-desc">Gera ideias de conteúdo alinhadas com ICP, voz da marca e tendências atuais</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Content Creation</h3>
+      <h3>Criação de Conteúdo</h3>
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Write Headline</td>
             <td class="skill-cmd">/write-headline</td>
-            <td class="skill-desc">Generate headline + subheadline + hook variations (4 patterns: curiosity, pain, social proof, direct)</td>
+            <td class="skill-desc">Gera headline + subheadline + variações de hook (4 padrões: curiosidade, dor, prova social, direto)</td>
           </tr>
           <tr>
             <td class="skill-name">Write Caption</td>
             <td class="skill-cmd">/write-caption</td>
-            <td class="skill-desc">Short caption for Instagram/TikTok + LinkedIn variant from the same brief</td>
+            <td class="skill-desc">Caption curta para Instagram/TikTok + variante para LinkedIn a partir do mesmo briefing</td>
           </tr>
           <tr>
             <td class="skill-name">LinkedIn Post</td>
             <td class="skill-cmd">/linkedin-post</td>
-            <td class="skill-desc">Executive LinkedIn format: hook → value bullets → data point → CTA</td>
+            <td class="skill-desc">Formato executivo LinkedIn: hook → bullets de valor → dado com dados → CTA</td>
           </tr>
           <tr>
             <td class="skill-name">Write Thread</td>
             <td class="skill-cmd">/write-thread</td>
-            <td class="skill-desc">Twitter/Threads thread with reply map and engagement optimization</td>
+            <td class="skill-desc">Thread para Twitter/Threads com mapa de respostas e otimização de engajamento</td>
           </tr>
           <tr>
             <td class="skill-name">YouTube Script</td>
             <td class="skill-cmd">/youtube-script</td>
-            <td class="skill-desc">Full YouTube script with hook, retention cliffhangers every 2 min, and CTA</td>
+            <td class="skill-desc">Script completo para YouTube com hook, cliffhangers de retenção a cada 2 min e CTA</td>
           </tr>
           <tr>
             <td class="skill-name">Email Reactivation</td>
             <td class="skill-cmd">/email-reactivation</td>
-            <td class="skill-desc">SOAP-format reactivation sequence for cold or disengaged leads</td>
+            <td class="skill-desc">Sequência de reativação no formato SOAP para leads frios ou desengajados</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Analysis & Improvement</h3>
+      <h3>Análise &amp; Melhoria</h3>
       <table class="skills-table">
         <thead>
-          <tr><th>Skill</th><th>Command</th><th>What it does</th></tr>
+          <tr><th>Skill</th><th>Comando</th><th>O que faz</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="skill-name">Analyze Post</td>
             <td class="skill-cmd">/analyze-post</td>
-            <td class="skill-desc">Diagnose post performance with composite score — hook strength, clarity, CTA, ICP alignment</td>
+            <td class="skill-desc">Diagnostica performance de post com pontuação composta — força do hook, clareza, CTA, alinhamento com ICP</td>
           </tr>
           <tr>
             <td class="skill-name">Improve Post</td>
             <td class="skill-cmd">/improve-post</td>
-            <td class="skill-desc">Critical revision of existing post with ready-to-use improved copy suggestions</td>
+            <td class="skill-desc">Revisão crítica de post existente com sugestões de copy melhorado prontas para uso</td>
           </tr>
         </tbody>
       </table>
 
       <!-- ────────────────── ADD CUSTOM ────────────────── -->
       <div class="add-skill-box" id="add-custom">
-        <h3>+ Add a custom skill</h3>
-        <p>Place your skill file in the squad's <code>skills/</code> folder, or in the root <code>skills/</code> for global access.</p>
+        <h3>+ Adicionar skill customizada</h3>
+        <p>Coloque o arquivo da skill na pasta <code>skills/</code> do squad, ou na <code>skills/</code> raiz para acesso global.</p>
         <div class="code-block" style="text-align:left;">
-          <pre><span class="comment"># Squad-specific skill</span>
+          <pre><span class="comment"># Skill específica de squad</span>
 squads/commercial/skills/my-skill.md
 
-<span class="comment"># Global skill (all squads)</span>
+<span class="comment"># Skill global (todos os squads)</span>
 skills/my-skill.md
 
-<span class="comment"># Skill file template</span>
+<span class="comment"># Template de arquivo de skill</span>
 ---
 name: my-skill
 description: One-line description
@@ -1226,7 +1226,7 @@ description: One-line description
 ## Process
 ## Output format</pre>
         </div>
-        <p style="margin-top:12px;font-size:13px;">After adding, register the skill in the squad's <code>CLAUDE.md</code> under <strong>## Skills</strong>. See <a href="/docs/how-to-customize.md">how-to-customize.md</a> for the full guide.</p>
+        <p style="margin-top:12px;font-size:13px;">Após adicionar, registre a skill no <code>CLAUDE.md</code> do squad em <strong>## Skills</strong>. Veja <a href="/pt/docs/how-to-customize.md">how-to-customize.md</a> para o guia completo.</p>
       </div>
     </div>
   </main>
@@ -1254,11 +1254,11 @@ description: One-line description
       <div class="footer-grid">
 
         <div class="footer-brand">
-          <a href="/" class="footer-logo">
+          <a href="/pt/" class="footer-logo">
             <div class="footer-logo-icon">&#x1F41D;</div>
             HIVE
           </a>
-          <p class="footer-desc">Open-source harness for running a full company with AI agents. Built for Claude Code.</p>
+          <p class="footer-desc">Harness open-source para rodar uma empresa inteira com agentes de IA. Feito para o Claude Code.</p>
           <div class="footer-socials">
             <a href="https://www.threads.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="Threads">
               <svg width="15" height="15" viewBox="0 0 192 192" fill="none"><path d="M141.537 88.988a66.667 66.667 0 0 0-2.518-1.143c-1.482-27.307-16.403-42.94-41.457-43.1h-.34c-14.986 0-27.449 6.396-35.12 18.036l13.779 9.452c5.73-8.695 14.724-10.548 21.348-10.548h.229c8.249.053 14.474 2.452 18.503 7.129 2.932 3.405 4.893 8.111 5.864 14.05-7.314-1.243-15.224-1.626-23.68-1.14-23.82 1.371-39.134 15.264-38.105 34.568.522 9.792 5.4 18.216 13.735 23.719 7.047 4.652 16.124 6.927 25.557 6.412 12.458-.683 22.231-5.436 29.049-14.127 5.178-6.6 8.453-15.153 9.899-25.93 5.937 3.583 10.337 8.298 12.767 13.966 4.132 9.674 4.373 25.581-8.529 38.383C129.221 163.1 113.515 169 95.961 169c-19.951-.14-35.117-6.532-45.088-18.987-9.372-11.713-14.214-28.618-14.399-50.24.185-21.623 5.027-38.527 14.399-50.24C60.844 37.532 76.01 31.14 95.96 31c20.083.14 35.503 6.568 45.833 19.117 5.09 6.23 8.945 14.086 11.501 23.336l16.152-4.312c-3.112-11.42-8.082-21.312-14.883-29.516C138.896 23.345 120.16 14.82 96.1 14.667h-.186c-23.908.152-43.136 8.73-57.157 25.496C26.581 54.426 20.529 74.028 20.333 96.003c.196 21.975 6.248 41.577 18.424 55.84 14.021 16.765 33.249 25.344 57.157 25.496h.186c21.41-.138 39.935-6.604 53.76-20.197 17.621-17.354 17.066-39.14 11.243-52.498-4.246-9.932-12.43-17.88-19.566-21.656Z" fill="currentColor"/></svg>
@@ -1276,18 +1276,18 @@ description: One-line description
         </div>
 
         <div class="footer-col">
-          <h4>Project</h4>
+          <h4>Projeto</h4>
           <ul>
             <li><a href="https://github.com/felipeluissalgueiro/hive">GitHub</a></li>
-            <li><a href="/docs/">Docs</a></li>
-            <li><a href="/skills/">Skills</a></li>
-            <li><a href="/customize/">Customize</a></li>
+            <li><a href="/pt/docs/">Docs</a></li>
+            <li><a href="/pt/skills/">Skills</a></li>
+            <li><a href="/pt/customize/">Personalizar</a></li>
             <li><a href="https://claude.ai/code">Claude Code</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>By Felipe</h4>
+          <h4>Por Felipe</h4>
           <ul>
             <li><a href="https://cadencia.ia.br" target="_blank" rel="noopener">Cad&#234;ncia</a></li>
             <li><a href="https://insightartificial.ia.br" target="_blank" rel="noopener">Insight Artificial</a></li>
@@ -1298,7 +1298,7 @@ description: One-line description
       </div>
 
       <div class="footer-bottom">
-        <span class="footer-copy">&copy; 2026 HIVE &middot; MIT License &middot; Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+        <span class="footer-copy">&copy; 2026 HIVE &middot; MIT License &middot; Criado por <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
         <span class="footer-copy">Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
       </div>
     </div>

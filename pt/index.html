@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIVE — Opere sua empresa com agentes de IA</title>
+  <meta name="description" content="HIVE é um harness open-source para operar uma empresa completa com squads de IA especializados — cada um com sua própria persona, memória e skills." />
+  <meta property="og:title" content="HIVE — Harness for Intelligent Virtual Enterprises" />
+  <meta property="og:description" content="Opere sua empresa inteira com agentes de IA. Open source. Feito para o Claude Code." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#4F46E5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary:       #4F46E5;
+      --primary-light: #818CF8;
+      --primary-bg:    #EEF2FF;
+      --primary-border:#C7D2FE;
+
+      --bg:     #F9FAFB;
+      --surface:#FFFFFF;
+      --border: #E5E7EB;
+      --border2: #D1D5DB;
+
+      --text:   #111827;
+      --text2:  #374151;
+      --muted:  #6B7280;
+      --subtle: #9CA3AF;
+
+      --green:  #10B981;
+      --green-bg: #D1FAE5;
+      --amber:  #F59E0B;
+
+      --radius-sm: 8px;
+      --radius:    12px;
+      --radius-lg: 16px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow:    0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      box-shadow: 0 2px 6px rgba(79,70,229,0.35);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-links a:hover { background: var(--bg); color: var(--text); text-decoration: none; }
+    .nav-links .btn-nav {
+      background: var(--primary);
+      color: white;
+      padding: 7px 14px;
+    }
+    .nav-links .btn-nav:hover { background: #4338CA; color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 88px 0 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(79,70,229,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-bg);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary);
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: -0.1px;
+    }
+    .btn:hover { text-decoration: none; }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 1px 3px rgba(79,70,229,0.3);
+    }
+    .btn-primary:hover { background: #4338CA; box-shadow: 0 4px 12px rgba(79,70,229,0.35); }
+    .btn-secondary {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover { border-color: var(--border2); background: var(--bg); }
+    .btn-download {
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(79,70,229,0.4);
+      gap: 10px;
+    }
+    .btn-download:hover { background: #4338CA; box-shadow: 0 6px 24px rgba(79,70,229,0.5); transform: translateY(-1px); }
+    .btn-download:active { transform: translateY(0); }
+
+    /* ── SOCIAL PROOF ── */
+    .social-proof {
+      margin-top: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .proof-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border2);
+    }
+
+    /* ── SECTION ── */
+    section { padding: 80px 0; }
+    section + section { border-top: 1px solid var(--border); }
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .section-lead {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 48px;
+      line-height: 1.65;
+    }
+
+    /* ── PHASES ── */
+    .phases {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .phase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: box-shadow 0.2s;
+    }
+    .phase-card:hover { box-shadow: var(--shadow); }
+    .phase-card.active {
+      border-color: var(--primary-border);
+      background: linear-gradient(135deg, #FAFBFF 0%, #F0F1FF 100%);
+    }
+    .phase-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 10px;
+    }
+    .phase-card.active .phase-tag { color: var(--primary); }
+    .phase-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .phase-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .phase-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--primary);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    /* ── ARCHITECTURE ── */
+    .arch-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .arch-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #FCA5A5; }
+    .dot-y { background: #FCD34D; }
+    .dot-g { background: #6EE7B7; }
+    .arch-header-label {
+      margin-left: 6px;
+      font-size: 12px;
+      color: var(--subtle);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .arch-diagram {
+      padding: 24px 28px;
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+      overflow-x: auto;
+      background: #1E1E2E;
+      color: #CDD6F4;
+    }
+    .t-dir  { color: #89B4FA; }
+    .t-orch { color: #CBA6F7; font-weight: 600; }
+    .t-squad{ color: #89DCEB; }
+    .t-file { color: #A6E3A1; }
+    .t-cmt  { color: #585B70; }
+    .t-main { color: #F38BA8; font-weight: 600; }
+
+    /* ── SQUADS ── */
+    .squads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .squad-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .squad-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--border2);
+    }
+    .squad-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .sq-orch  { background: #EDE9FE; }
+    .sq-comm  { background: #FEF3C7; }
+    .sq-cs    { background: #D1FAE5; }
+    .sq-mkt   { background: #FEE2E2; }
+    .sq-prod  { background: #DBEAFE; }
+    .sq-fin   { background: #D1FAE5; }
+    .sq-dev   { background: #E0E7FF; }
+    .sq-infra { background: #F3F4F6; }
+    .sq-ops   { background: #FEF3C7; }
+    .sq-qual  { background: #D1FAE5; }
+    .sq-intel { background: #FEE2E2; }
+    .squad-info { flex: 1; }
+    .squad-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+    .squad-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .squad-persona {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .squad-scope {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary-bg);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .step-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .step-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── QUICKSTART ── */
+    .code-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .code-header-label {
+      margin-left: 6px;
+      font-size: 12px;
+      color: var(--subtle);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    pre {
+      padding: 24px 28px;
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+      overflow-x: auto;
+      background: #1E1E2E;
+      color: #CDD6F4;
+    }
+    .c-cmd   { color: #89B4FA; }
+    .c-cmt   { color: #585B70; }
+    .c-skill { color: #CBA6F7; font-weight: 600; }
+    .c-url   { color: #A6E3A1; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      text-align: center;
+      color: white;
+      box-shadow: var(--shadow-lg);
+    }
+    .cta-banner h2 {
+      color: white;
+      font-size: clamp(22px, 3vw, 30px);
+      margin-bottom: 12px;
+    }
+    .cta-banner p {
+      color: rgba(255,255,255,0.75);
+      font-size: 16px;
+      margin-bottom: 32px;
+    }
+    .cta-banner .btn-primary {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .cta-banner .btn-primary:hover { background: #F3F4F6; }
+    .cta-banner .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.25);
+      color: white;
+    }
+    .cta-banner .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 56px 0 32px;
+      background: var(--surface);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .footer-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 260px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .footer-social-link:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-bg);
+      text-decoration: none;
+    }
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+    .footer-col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col ul li a {
+      font-size: 14px;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-col ul li a:hover { color: var(--primary); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-copy a { color: var(--muted); }
+    .footer-copy a:hover { color: var(--text); text-decoration: none; }
+    @media (max-width: 640px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 420px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .phases { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .nav-links .hide-mobile { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 64px 0 48px; }
+      .social-proof { gap: 16px; }
+      .proof-dot { display: none; }
+      .squads-grid { grid-template-columns: 1fr; }
+      .cta-banner { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">
+        <div class="nav-logo-icon">🐝</div>
+        HIVE
+      </a>
+      <div class="nav-links">
+        <a href="#how-it-works" class="hide-mobile">Como funciona</a>
+        <a href="#squads" class="hide-mobile">Squads</a>
+        <a href="#quickstart" class="hide-mobile">Início rápido</a>
+        <a href="/docs/" class="hide-mobile" style="color:var(--primary);font-weight:600;">Docs</a>
+        <a href="/skills/" class="hide-mobile">Skills</a>
+        <a href="/customize/" class="hide-mobile">Personalizar</a>
+        <a href="/" style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted);">🇺🇸 EN</a>
+        <a href="https://github.com/felipeluissalgueiro/hive" class="btn-nav btn">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-badge">Open source · MIT · Feito para o Claude Code</div>
+      <h1>Opere sua empresa<br />com <em>agentes de IA</em></h1>
+      <p class="hero-sub">
+        O HIVE entrega 11 squads especializados — cada um com sua própria persona, memória e skills — orquestrados por um Chief of Staff com IA.
+      </p>
+      <div class="cta-group">
+        <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-download">
+          🐝 Baixar o HIVE
+        </a>
+        <a href="/docs/" class="btn btn-secondary">
+          📖 Ler a documentação
+        </a>
+        <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-secondary">
+          Ver no GitHub
+        </a>
+      </div>
+      <div class="social-proof">
+        <span class="proof-item">11 squads especializados</span>
+        <span class="proof-dot"></span>
+        <span class="proof-item">Memória persistente</span>
+        <span class="proof-dot"></span>
+        <span class="proof-item">9 hooks de automação</span>
+        <span class="proof-dot"></span>
+        <span class="proof-item">Roda no Claude Code</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASES -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">O Problema</div>
+      <h2>A maioria das empresas trava na Fase 2</h2>
+      <p class="section-lead">A alavancagem real está na Fase 3 — mas construir essa infraestrutura do zero leva meses. O HIVE é essa arquitetura, pronta para clonar.</p>
+      <div class="phases">
+        <div class="phase-card">
+          <div class="phase-tag">Fase 1</div>
+          <h3>Usando IA</h3>
+          <p>ChatGPT, prompts, produtividade pessoal. Útil, mas individual e descartável.</p>
+        </div>
+        <div class="phase-card">
+          <div class="phase-tag">Fase 2</div>
+          <h3>Construindo com IA</h3>
+          <p>APIs, automações, workflows pontuais. Ainda reativo, ainda colado com fita.</p>
+        </div>
+        <div class="phase-card active">
+          <div class="phase-badge">Isso é o HIVE</div>
+          <div class="phase-tag">Fase 3</div>
+          <h3>Operando com IA</h3>
+          <p>Sistemas com contexto, memória e agentes especializados que funcionam como um time de verdade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">Arquitetura</div>
+      <h2>Um harness, não um chatbot</h2>
+      <p class="section-lead">O HIVE é uma estrutura de pastas e um conjunto de convenções. Sem lock-in de framework — só Claude Code, markdown e Python.</p>
+      <div class="arch-wrap">
+        <div class="arch-header">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="arch-header-label">hive/</span>
+        </div>
+        <div class="arch-diagram">
+<span class="t-main">hive/</span>
+  <span class="t-file">CLAUDE.md</span>              <span class="t-cmt">← Orquestrador · Stamper Chief of Staff carrega aqui</span>
+  <span class="t-dir">.claude/hooks/</span>          <span class="t-cmt">← 9 hooks: session branches, roteamento, incident lookup</span>
+  <span class="t-dir">_core/</span>                  <span class="t-cmt">← motor: lookup.py · state-aggregator.py · harness.sh</span>
+  <span class="t-dir">squads/</span>
+    <span class="t-orch">orchestrator/</span>         <span class="t-cmt">Stamper — roteia · delega · acompanha o estado da empresa</span>
+    <span class="t-squad">commercial/</span>           <span class="t-cmt">Victor — leads, pipeline, propostas</span>
+    <span class="t-squad">cs/</span>                   <span class="t-cmt">Leah — onboarding, health score, churn</span>
+    <span class="t-squad">marketing/</span>            <span class="t-cmt">Maya — conteúdo, marca, campanhas</span>
+    <span class="t-squad">product/</span>              <span class="t-cmt">Owen — roadmap, stories, priorização</span>
+    <span class="t-squad">finance/</span>              <span class="t-cmt">Clara — DRE, faturamento, fluxo de caixa</span>
+    <span class="t-squad">dev/</span>                  <span class="t-cmt">Ethan — arquitetura, código, code review</span>
+    <span class="t-squad">infra/</span>                <span class="t-cmt">Dean — servidores, monitoramento, CI/CD</span>
+    <span class="t-squad">operations/</span>           <span class="t-cmt">Harper — RH, cultura, OKRs</span>
+    <span class="t-squad">quality/</span>              <span class="t-cmt">Nora — SOPs, auditorias, padrões</span>
+    <span class="t-squad">intelligence/</span>         <span class="t-cmt">Rex — inteligência competitiva, war games</span>
+  <span class="t-dir">skills/</span>                 <span class="t-cmt">← /hive-setup · /status · /open-squad · /close-squad</span>
+  <span class="t-dir">workers/</span>                <span class="t-cmt">← scripts cron determinísticos · sem IA no loop</span>
+  <span class="t-file">memory/</span>                 <span class="t-cmt">← memória global do orquestrador · persiste entre sessões</span>
+        </div>
+      </div>
+      <a href="/docs/#introduction" style="display:inline-flex;align-items:center;gap:6px;margin-top:24px;font-size:14px;font-weight:600;color:var(--primary);">
+        Entender como a arquitetura funciona →
+      </a>
+    </div>
+  </section>
+
+  <!-- SQUADS -->
+  <section id="squads">
+    <div class="container">
+      <div class="section-eyebrow">Squads</div>
+      <h2>11 especialistas. Um comando.</h2>
+      <p class="section-lead">Cada squad é um agente do Claude Code com seu próprio CLAUDE.md, STATE.md, log de decisões e skills reutilizáveis.</p>
+      <div class="squads-grid">
+        <div class="squad-card">
+          <div class="squad-icon sq-orch">🧠</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Orchestrator</span><span class="squad-persona">Stamper</span></div>
+            <div class="squad-scope">Roteia pedidos, delega para squads, acompanha o estado geral da empresa</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-comm">💼</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Commercial</span><span class="squad-persona">Victor</span></div>
+            <div class="squad-scope">Geração de leads, qualificação, propostas, gestão de pipeline</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-cs">🤝</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Customer Success</span><span class="squad-persona">Leah</span></div>
+            <div class="squad-scope">Onboarding, health score, retenção, prevenção de churn</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-mkt">📣</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Marketing</span><span class="squad-persona">Maya</span></div>
+            <div class="squad-scope">Conteúdo, voz da marca, campanhas, alinhamento com ICP</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-prod">🗺️</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Product</span><span class="squad-persona">Owen</span></div>
+            <div class="squad-scope">Roadmap, stories, planejamento de sprint, priorização</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-fin">💰</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Finance</span><span class="squad-persona">Clara</span></div>
+            <div class="squad-scope">DRE, faturamento, projeção de fluxo de caixa, orçamento</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-dev">⌨️</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Dev</span><span class="squad-persona">Ethan</span></div>
+            <div class="squad-scope">Decisões de arquitetura, code review, padrões de teste</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-infra">🖥️</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Infrastructure</span><span class="squad-persona">Dean</span></div>
+            <div class="squad-scope">Servidores, monitoramento, pipelines de CI/CD, segurança</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-ops">⚙️</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Operations</span><span class="squad-persona">Harper</span></div>
+            <div class="squad-scope">RH, cultura, acompanhamento de OKRs, documentação de processos</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-qual">✅</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Quality</span><span class="squad-persona">Nora</span></div>
+            <div class="squad-scope">SOPs, auditorias, stranger test, padrões de conformidade</div>
+          </div>
+        </div>
+        <div class="squad-card">
+          <div class="squad-icon sq-intel">🔍</div>
+          <div class="squad-info">
+            <div class="squad-name-row"><span class="squad-name">Intelligence</span><span class="squad-persona">Rex</span></div>
+            <div class="squad-scope">Inteligência competitiva, bias audits, facilitação de war games</div>
+          </div>
+        </div>
+      </div>
+      <a href="/docs/#squads" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;font-size:14px;font-weight:600;color:var(--primary);">
+        Ver detalhes completos de squads, personas e skills →
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-eyebrow">Como funciona</div>
+      <h2>Quatro primitivos. Um sistema coerente.</h2>
+      <p class="section-lead">Contexto, memória, hooks e skills — os blocos de construção que fazem o HIVE parecer um time, não um chatbot.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h4>Contexto carrega automaticamente</h4>
+          <p>O CLAUDE.md de cada squad define sua persona, escopo e regras. O Claude Code carrega ao navegar para a pasta do squad — sem copiar e colar prompts entre sessões.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h4>Memória persiste entre sessões</h4>
+          <p>O STATE.md armazena o estado operacional em três camadas: L1 (agora), L2 (em andamento), L3 (backlog). Decisões e gotchas ficam registrados indefinidamente.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h4>Hooks automatizam o trabalho de bastidor</h4>
+          <p>9 hooks gerenciam session branches, roteamento de squads, atualizações de estado e buscas de incidentes — sem você precisar gerenciar nada disso manualmente.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h4>Skills são comandos reutilizáveis</h4>
+          <p>Invoque com <code>/nome-da-skill</code>. Vem com <code>/hive-setup</code>, <code>/open-squad</code>, <code>/status</code>, <code>/close-squad</code> — e você escreve as suas para sua empresa.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:36px;align-items:center;">
+        <a href="/docs/" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--primary-bg);border:1.5px solid var(--primary-border);color:var(--primary);font-size:14px;font-weight:600;border-radius:8px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.background='#e0e7ff'" onmouseout="this.style.background='var(--primary-bg)'">
+          📖 Documentação completa
+        </a>
+        <a href="/docs/architecture.md" style="font-size:14px;font-weight:500;color:var(--muted);">Mergulho fundo na arquitetura →</a>
+        <a href="/docs/how-to-customize.md" style="font-size:14px;font-weight:500;color:var(--muted);">Guia de personalização →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICKSTART -->
+  <section id="quickstart">
+    <div class="container">
+      <div class="section-eyebrow">Início Rápido</div>
+      <h2>Rodando em menos de 10 minutos</h2>
+      <p class="section-lead">Clone, abra o Claude Code, rode o onboarding. Esse é o processo de instalação completo.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="code-header-label">terminal</span>
+        </div>
+        <pre><span class="c-cmt"># 1. Clone o repositório</span>
+<span class="c-cmd">git clone</span> <span class="c-url">https://github.com/felipeluissalgueiro/hive.git</span> minha-empresa
+<span class="c-cmd">cd</span> minha-empresa
+
+<span class="c-cmt"># 2. Instale o Claude Code (pule se já tiver)</span>
+<span class="c-cmd">curl</span> <span class="c-url">-fsSL https://claude.ai/install.sh</span> | sh
+
+<span class="c-cmt"># 3. Abra e execute o onboarding guiado (~10 min)</span>
+<span class="c-cmd">claude</span>
+<span class="c-skill">/hive-setup</span>
+
+<span class="c-cmt"># Comece a trabalhar com um squad</span>
+<span class="c-skill">/open-squad commercial</span>
+
+<span class="c-cmt"># Veja o que está acontecendo em todos os squads</span>
+<span class="c-skill">/status</span></pre>
+      </div>
+      <div style="margin-top:24px;padding:18px 20px;background:var(--primary-bg);border:1.5px solid var(--primary-border);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;">Quer entender cada etapa em detalhe?</div>
+          <div style="font-size:13px;color:var(--muted);">A documentação cobre memória, hooks, workers, skills com OpenRouter e personalização.</div>
+        </div>
+        <a href="/docs/" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--primary);color:#fff;font-size:14px;font-weight:600;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0;" onmouseover="this.style.background='#4338CA'" onmouseout="this.style.background='var(--primary)'">
+          📖 Abrir a documentação
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section>
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Sua empresa merece mais do que prompts</h2>
+        <p>Clone o HIVE, rode <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">/hive-setup</code>, e seu time de IA estará pronto em menos de 10 minutos.</p>
+        <div class="cta-group">
+          <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-primary">🐝 Baixar o HIVE</a>
+          <a href="/docs/" class="btn btn-secondary">📖 Ler a documentação</a>
+          <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-secondary">Ver no GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <div class="nav-logo-icon" style="width:22px;height:22px;font-size:12px;">🐝</div>
+            HIVE
+          </a>
+          <p class="footer-desc">Harness open-source para operar uma empresa completa com agentes de IA. Feito para o Claude Code.</p>
+          <div class="footer-socials">
+            <!-- Threads -->
+            <a href="https://www.threads.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="Threads">
+              <svg width="16" height="16" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M141.537 88.988a66.667 66.667 0 0 0-2.518-1.143c-1.482-27.307-16.403-42.94-41.457-43.1h-.34c-14.986 0-27.449 6.396-35.12 18.036l13.779 9.452c5.73-8.695 14.724-10.548 21.348-10.548h.229c8.249.053 14.474 2.452 18.503 7.129 2.932 3.405 4.893 8.111 5.864 14.05-7.314-1.243-15.224-1.626-23.68-1.14-23.82 1.371-39.134 15.264-38.105 34.568.522 9.792 5.4 18.216 13.735 23.719 7.047 4.652 16.124 6.927 25.557 6.412 12.458-.683 22.231-5.436 29.049-14.127 5.178-6.6 8.453-15.153 9.899-25.93 5.937 3.583 10.337 8.298 12.767 13.966 4.132 9.674 4.373 25.581-8.529 38.383C129.221 163.1 113.515 169 95.961 169c-19.951-.14-35.117-6.532-45.088-18.987-9.372-11.713-14.214-28.618-14.399-50.24.185-21.623 5.027-38.527 14.399-50.24C60.844 37.532 76.01 31.14 95.96 31c20.083.14 35.503 6.568 45.833 19.117 5.09 6.23 8.945 14.086 11.501 23.336l16.152-4.312c-3.112-11.42-8.082-21.312-14.883-29.516C138.896 23.345 120.16 14.82 96.1 14.667h-.186c-23.908.152-43.136 8.73-57.157 25.496C26.581 54.426 20.529 74.028 20.333 96.003c.196 21.975 6.248 41.577 18.424 55.84 14.021 16.765 33.249 25.344 57.157 25.496h.186c21.41-.138 39.935-6.604 53.76-20.197 17.621-17.354 17.066-39.14 11.243-52.498-4.246-9.932-12.43-17.88-19.566-21.656Z" fill="currentColor"/></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/felipe-luis-salgueiro" target="_blank" rel="noopener" class="footer-social-link" title="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <!-- TikTok -->
+            <a href="https://www.tiktok.com/@felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <!-- GitHub -->
+            <a href="https://github.com/felipeluissalgueiro" target="_blank" rel="noopener" class="footer-social-link" title="GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- HIVE links -->
+        <div class="footer-col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="https://github.com/felipeluissalgueiro/hive">GitHub</a></li>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/docs/skills.html">Skills Catalog</a></li>
+            <li><a href="/customize/">Customize</a></li>
+            <li><a href="https://claude.ai/code">Claude Code</a></li>
+          </ul>
+        </div>
+
+        <!-- Felipe's projects -->
+        <div class="footer-col">
+          <h4>By Felipe</h4>
+          <ul>
+            <li><a href="https://cadencia.ia.br" target="_blank" rel="noopener">Cadência</a></li>
+            <li><a href="https://insightartificial.ia.br" target="_blank" rel="noopener">Insight Artificial</a></li>
+            <li><a href="#" title="Em breve">felipeluissalgueiro.com</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 HIVE · MIT License · Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+        <span class="footer-copy">Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
