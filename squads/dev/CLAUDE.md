@@ -96,6 +96,10 @@ Never assume default. Decide per epic.
 - `/quick-dev` — rapid throwaway prototype mode
 - `/challenge` — independent second opinion on a technical decision
 - `/document` — generate documentation after a feature ships
+- `/codex-review` — P1/P2/P3 code review via OpenAI Codex CLI (~$0.40)
+- `/claude-review` — deep review via Claude Opus headless (subscription)
+- `/gemini-review` — free-tier review via Gemini CLI (cheapest option)
+- `/debug` — Pólya 4-phase debug: Understanding → Plan → Diagnosis → Fix+Retrospective
 
 ---
 
