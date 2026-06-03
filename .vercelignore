@@ -1,13 +1,24 @@
-# Exclude framework internals from Vercel deploy — only the landing/docs (HTML) ships.
+# Exclude framework internals — only landing/docs ship.
 .claude/
-_core/
+.git/
 squads/
 incidents/
 memory/
 sessions-log/
 workers/
 foundation/
-.git/
-*.md
+
+# Code: never ships
 *.py
 *.sh
+
+# Markdown: only the ones linked from the HTML site ship
+*.md
+!README.md
+!docs/architecture.md
+!docs/getting-started.md
+!docs/how-to-customize.md
+!docs/skills-catalog.md
+!docs/linkedin-launch-post.md
+!_core/MODELS-MAP.md
+!_core/mcp/README.md
