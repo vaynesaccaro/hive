@@ -55,13 +55,20 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Skills landing -->
+  <!-- Skills landing (visual catalog) -->
   <url>
     <loc>https://hive.cadencia.ia.br/skills/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://hive.cadencia.ia.br/skills/"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://hive.cadencia.ia.br/pt/skills/"/>
+  </url>
+
+  <!-- Docs skills visual page (docs/skills.html, different from skills-catalog.md) -->
+  <url>
+    <loc>https://hive.cadencia.ia.br/docs/skills/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Customize landing -->

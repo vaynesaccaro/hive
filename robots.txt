@@ -6,6 +6,12 @@ Allow: /
 Disallow: /.git/
 Disallow: /_build/
 Disallow: /node_modules/
+Disallow: /squads/
+Disallow: /incidents/
+Disallow: /memory/
+Disallow: /sessions-log/
+Disallow: /workers/
+Disallow: /foundation/
 
 # Sitemap
 Sitemap: https://hive.cadencia.ia.br/sitemap.xml
