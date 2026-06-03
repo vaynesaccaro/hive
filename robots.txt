@@ -1,0 +1,11 @@
+# HIVE — Open-source harness for running a company with Claude Code AI squads
+# https://hive.cadencia.ia.br
+
+User-agent: *
+Allow: /
+Disallow: /.git/
+Disallow: /_build/
+Disallow: /node_modules/
+
+# Sitemap
+Sitemap: https://hive.cadencia.ia.br/sitemap.xml
