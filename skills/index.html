@@ -9,6 +9,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
+    /* === Cadencia Design Tokens (added by rebrand) === */
+    :root {
+      --color-primary: #4F46E5;
+      --color-primary-light: #818CF8;
+      --color-primary-dark: #4338CA;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-info: #3B82F6;
+      --color-error: #EF4444;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+      --color-border: #E5E7EB;
+      --color-bg-page: #F9FAFB;
+      --color-bg-card: #FFFFFF;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    /* Icon helpers */
+    .icon { width: 1em; height: 1em; display: inline-flex; vertical-align: -0.15em; stroke-width: 2; }
+    .icon-lg { width: 1.5em; height: 1.5em; }
+    .icon-xl { width: 2em; height: 2em; }
+    .icon-primary { color: var(--color-primary); }
+    /* === end Cadencia tokens === */
+
     :root {
       --indigo: #4F46E5;
       --indigo-light: #EEF2FF;
@@ -570,11 +599,24 @@
   </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="14" rx="5" ry="6"/>
+    <line x1="7.5" y1="12" x2="16.5" y2="12"/>
+    <line x1="7.5" y1="15.5" x2="16.5" y2="15.5"/>
+    <circle cx="12" cy="6.5" r="2.2"/>
+    <path d="M10.7 4.8 L9.3 3"/>
+    <path d="M13.3 4.8 L14.7 3"/>
+    <path d="M7 10 Q3.5 8 5 12"/>
+    <path d="M17 10 Q20.5 8 19 12"/>
+  </symbol>
+</svg>
+
 
 <!-- ── Header ── -->
 <header class="header">
   <a href="/docs/" class="header-brand">
-    <div class="logo">🐝</div>
+    <div class="logo"><svg class="icon"><use href="#i-bee"/></svg></div>
     HIVE
   </a>
   <nav class="header-nav">
@@ -582,7 +624,7 @@
     <a href="/skills/" style="color:var(--indigo);font-weight:600;">Skills</a>
     <a href="/customize/">Customize</a>
     <a href="/_core/MODELS-MAP.md">Models</a>
-    <a href="/pt/skills/" style="background:var(--bg,#F9FAFB);border:1px solid var(--border,#E5E7EB);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted,#6B7280);text-decoration:none;">&#x1F1E7;&#x1F1F7; PT</a>
+    <a href="/pt/skills/" style="background:var(--bg,#F9FAFB);border:1px solid var(--border,#E5E7EB);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted,#6B7280);text-decoration:none;">PT</a>
         <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
       GitHub
@@ -604,23 +646,23 @@
     <div class="sidebar-section">
       <div class="sidebar-label">Skills by Squad</div>
       <a href="#global" class="sidebar-link active">
-        ⚡ Global
+        <i data-lucide="zap" class="icon"></i> Global
         <span class="sidebar-badge">5</span>
       </a>
       <a href="#openrouter" class="sidebar-link">
-        🤖 OpenRouter
+        <i data-lucide="bot" class="icon"></i> OpenRouter
         <span class="sidebar-badge">7</span>
       </a>
       <a href="#orchestrator" class="sidebar-link">
-        🧠 Orchestrator
+        <i data-lucide="brain" class="icon"></i> Orchestrator
         <span class="sidebar-badge">4</span>
       </a>
       <a href="#commercial" class="sidebar-link">
-        💼 Commercial
+        <i data-lucide="briefcase" class="icon"></i> Commercial
         <span class="sidebar-badge">4</span>
       </a>
       <a href="#cs" class="sidebar-link">
-        🤝 Customer Success
+        <i data-lucide="handshake" class="icon"></i> Customer Success
         <span class="sidebar-badge">2</span>
       </a>
       <a href="#dev" class="sidebar-link">
@@ -628,19 +670,19 @@
         <span class="sidebar-badge">8</span>
       </a>
       <a href="#finance" class="sidebar-link">
-        💰 Finance
+        <i data-lucide="wallet" class="icon"></i> Finance
         <span class="sidebar-badge">3</span>
       </a>
       <a href="#infra" class="sidebar-link">
-        🖥️ Infra
+        <i data-lucide="monitor" class="icon"></i> Infra
         <span class="sidebar-badge">4</span>
       </a>
       <a href="#intelligence" class="sidebar-link">
-        🔍 Intelligence
+        <i data-lucide="search" class="icon"></i> Intelligence
         <span class="sidebar-badge">2</span>
       </a>
       <a href="#marketing" class="sidebar-link">
-        📣 Marketing
+        <i data-lucide="megaphone" class="icon"></i> Marketing
         <span class="sidebar-badge">11</span>
       </a>
     </div>
@@ -663,7 +705,7 @@
         <div class="breadcrumb">
           <a href="/docs/">Docs</a> / Skills
         </div>
-        <h1>⚡ Skills Catalog</h1>
+        <h1><i data-lucide="zap" class="icon"></i> Skills Catalog</h1>
         <p>All 50 reusable commands across HIVE. Invoke any skill with <code style="background:var(--indigo-light);color:var(--indigo-dark);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:14px;">/skill-name</code> inside Claude Code.</p>
         <div class="stats-row">
           <div class="stat"><strong>50</strong> total skills</div>
@@ -686,7 +728,7 @@
 
       <!-- ────────────────── GLOBAL ────────────────── -->
       <div class="squad-header" id="global">
-        <div class="squad-icon global">⚡</div>
+        <div class="squad-icon global"><i data-lucide="zap" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Global Skills</h2>
           <p>Available in every squad context — from root or any squad folder</p>
@@ -729,7 +771,7 @@
 
       <!-- ────────────────── OPENROUTER ────────────────── -->
       <div class="squad-header" id="openrouter">
-        <div class="squad-icon openrouter">🤖</div>
+        <div class="squad-icon openrouter"><i data-lucide="bot" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>OpenRouter Skills</h2>
           <p>Multi-model AI queries — Kimi, GPT-5, Grok, Gemini, DeepSeek and more</p>
@@ -810,7 +852,7 @@
 
       <!-- ────────────────── ORCHESTRATOR ────────────────── -->
       <div class="squad-header" id="orchestrator">
-        <div class="squad-icon orch">🧠</div>
+        <div class="squad-icon orch"><i data-lucide="brain" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Orchestrator Skills</h2>
           <p>Stamper — Chief of Staff · Issue and project lifecycle management</p>
@@ -860,7 +902,7 @@
 
       <!-- ────────────────── COMMERCIAL ────────────────── -->
       <div class="squad-header" id="commercial">
-        <div class="squad-icon comm">💼</div>
+        <div class="squad-icon comm"><i data-lucide="briefcase" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Commercial Skills</h2>
           <p>Victor — Head of Sales · Lead pipeline, qualification, and deal closing</p>
@@ -898,7 +940,7 @@
 
       <!-- ────────────────── CS ────────────────── -->
       <div class="squad-header" id="cs">
-        <div class="squad-icon cs">🤝</div>
+        <div class="squad-icon cs"><i data-lucide="handshake" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Customer Success Skills</h2>
           <p>Leah — Head of CS · Onboarding, retention, and success metrics</p>
@@ -1013,7 +1055,7 @@
 
       <!-- ────────────────── FINANCE ────────────────── -->
       <div class="squad-header" id="finance">
-        <div class="squad-icon finance">💰</div>
+        <div class="squad-icon finance"><i data-lucide="wallet" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Finance Skills</h2>
           <p>Clara — CFO · Runway, reporting, and financial health</p>
@@ -1046,7 +1088,7 @@
 
       <!-- ────────────────── INFRA ────────────────── -->
       <div class="squad-header" id="infra">
-        <div class="squad-icon infra">🖥️</div>
+        <div class="squad-icon infra"><i data-lucide="monitor" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Infra Skills</h2>
           <p>Dean — Head of Infra · Servers, monitoring, security, and credential rotation</p>
@@ -1084,7 +1126,7 @@
 
       <!-- ────────────────── INTELLIGENCE ────────────────── -->
       <div class="squad-header" id="intelligence">
-        <div class="squad-icon intel">🔍</div>
+        <div class="squad-icon intel"><i data-lucide="search" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Intelligence Skills</h2>
           <p>Rex — Head of Intelligence · Competitive analysis, bias audit, war games</p>
@@ -1112,7 +1154,7 @@
 
       <!-- ────────────────── MARKETING ────────────────── -->
       <div class="squad-header" id="marketing">
-        <div class="squad-icon mkt">📣</div>
+        <div class="squad-icon mkt"><i data-lucide="megaphone" class="icon"></i></div>
         <div class="squad-header-info">
           <h2>Marketing Skills</h2>
           <p>Maya — Head of Marketing · Content, brand, campaigns, and distribution</p>
@@ -1303,6 +1345,9 @@ description: One-line description
       </div>
     </div>
   </footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
 
 </body>
 </html>

@@ -9,6 +9,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
+    /* === Cadencia Design Tokens (added by rebrand) === */
+    :root {
+      --color-primary: #4F46E5;
+      --color-primary-light: #818CF8;
+      --color-primary-dark: #4338CA;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-info: #3B82F6;
+      --color-error: #EF4444;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+      --color-border: #E5E7EB;
+      --color-bg-page: #F9FAFB;
+      --color-bg-card: #FFFFFF;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    /* Icon helpers */
+    .icon { width: 1em; height: 1em; display: inline-flex; vertical-align: -0.15em; stroke-width: 2; }
+    .icon-lg { width: 1.5em; height: 1.5em; }
+    .icon-xl { width: 2em; height: 2em; }
+    .icon-primary { color: var(--color-primary); }
+    /* === end Cadencia tokens === */
+
     :root {
       --indigo: #4F46E5;
       --indigo-light: #EEF2FF;
@@ -149,17 +178,30 @@
   </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="14" rx="5" ry="6"/>
+    <line x1="7.5" y1="12" x2="16.5" y2="12"/>
+    <line x1="7.5" y1="15.5" x2="16.5" y2="15.5"/>
+    <circle cx="12" cy="6.5" r="2.2"/>
+    <path d="M10.7 4.8 L9.3 3"/>
+    <path d="M13.3 4.8 L14.7 3"/>
+    <path d="M7 10 Q3.5 8 5 12"/>
+    <path d="M17 10 Q20.5 8 19 12"/>
+  </symbol>
+</svg>
+
 
 <header class="header">
   <a href="/" class="header-brand">
-    <div class="logo">🐝</div>
+    <div class="logo"><svg class="icon"><use href="#i-bee"/></svg></div>
     HIVE
   </a>
   <nav class="header-nav">
     <a href="/docs/">Docs</a>
     <a href="/skills/">Skills</a>
     <a href="/customize/" style="color:var(--indigo);font-weight:600;">Customize</a>
-    <a href="/pt/customize/" style="background:var(--bg,#F9FAFB);border:1px solid var(--border,#E5E7EB);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted,#6B7280);text-decoration:none;">&#x1F1E7;&#x1F1F7; PT</a>
+    <a href="/pt/customize/" style="background:var(--bg,#F9FAFB);border:1px solid var(--border,#E5E7EB);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted,#6B7280);text-decoration:none;">PT</a>
         <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
       GitHub
@@ -193,28 +235,28 @@
 
       <div class="page-hero">
         <div class="breadcrumb"><a href="/docs/">Docs</a> / Customize</div>
-        <h1>✏️ Customizing HIVE</h1>
+        <h1><i data-lucide="pencil" class="icon"></i> Customizing HIVE</h1>
         <p>HIVE is designed to be forked. Everything is editable — squads, personas, skills, memory schema, and workers. This guide covers all the common adaptations.</p>
       </div>
 
       <div class="nav-cards">
         <a href="#squads" class="nav-card">
-          <span class="nav-card-emoji">🏗️</span>
+          <span class="nav-card-emoji"><i data-lucide="hard-hat" class="icon"></i></span>
           <div class="nav-card-title">Create a squad</div>
           <div class="nav-card-desc">New specialist agent from scratch</div>
         </a>
         <a href="#sub-squads" class="nav-card">
-          <span class="nav-card-emoji">🌿</span>
+          <span class="nav-card-emoji"><i data-lucide="sprout" class="icon"></i></span>
           <div class="nav-card-title">Sub-squads</div>
           <div class="nav-card-desc">Nest squads for specialization</div>
         </a>
         <a href="#personas" class="nav-card">
-          <span class="nav-card-emoji">🎭</span>
+          <span class="nav-card-emoji"><i data-lucide="drama" class="icon"></i></span>
           <div class="nav-card-title">Rename personas</div>
           <div class="nav-card-desc">Match your company culture</div>
         </a>
         <a href="#skills" class="nav-card">
-          <span class="nav-card-emoji">⚡</span>
+          <span class="nav-card-emoji"><i data-lucide="zap" class="icon"></i></span>
           <div class="nav-card-title">Custom skills</div>
           <div class="nav-card-desc">Add /commands for your workflows</div>
         </a>
@@ -224,7 +266,7 @@
 
       <!-- ── CREATE SQUAD ── -->
       <div class="section" id="squads">
-        <h2>🏗️ Creating a new squad</h2>
+        <h2><i data-lucide="hard-hat" class="icon"></i> Creating a new squad</h2>
         <p>A squad is a folder with a <code>CLAUDE.md</code>, a <code>memory/</code> directory, and optionally <code>foundation/</code>, <code>skills/</code>, and <code>workers/</code>. Claude Code loads it when you navigate to that folder.</p>
 
         <h3>Step 1 — Create the folder structure</h3>
@@ -308,7 +350,7 @@ Asks "what does the data say?" before forming opinions.]</span>
 
       <!-- ── SUB-SQUADS ── -->
       <div class="section" id="sub-squads">
-        <h2>🌿 Adding sub-squads</h2>
+        <h2><i data-lucide="sprout" class="icon"></i> Adding sub-squads</h2>
         <p>Sub-squads are nested folders inside a parent squad. Use them when a squad needs specialization — multiple products under Product, multiple regions under CS, multiple clients under Operations.</p>
 
         <p>Claude Code's <code>CLAUDE.md</code> cascade means opening a sub-squad loads <strong>three</strong> contexts: root + parent + sub-squad.</p>
@@ -363,7 +405,7 @@ This squad has two specializations. Navigate to the right one:
 
       <!-- ── REMOVE SQUAD ── -->
       <div class="section" id="remove-squad">
-        <h2>🗑️ Removing a squad</h2>
+        <h2><i data-lucide="trash-2" class="icon"></i> Removing a squad</h2>
         <p>If you don't need a squad (e.g., no Dev squad because you're non-technical, no Finance squad at early stage):</p>
 
         <ul class="step-list">
@@ -393,7 +435,7 @@ This squad has two specializations. Navigate to the right one:
 
       <!-- ── PERSONAS ── -->
       <div class="section" id="personas">
-        <h2>🎭 Renaming personas</h2>
+        <h2><i data-lucide="drama" class="icon"></i> Renaming personas</h2>
         <p>The default personas (Victor, Leah, Maya, Ethan…) are generic placeholders. Replace them with names that fit your company culture, or use role titles instead of names.</p>
 
         <p>Edit the persona section at the top of <code>squads/&lt;name&gt;/CLAUDE.md</code>:</p>
@@ -430,7 +472,7 @@ Bias to action. Will push back on "let's wait and see".</pre></div>
 
       <!-- ── CUSTOM SKILLS ── -->
       <div class="section" id="skills">
-        <h2>⚡ Writing custom skills</h2>
+        <h2><i data-lucide="zap" class="icon"></i> Writing custom skills</h2>
         <p>Skills are markdown files that define a repeatable behavior. Any squad member invokes them with <code>/skill-name</code> in Claude Code.</p>
 
         <h3>Where to put them</h3>
@@ -498,7 +540,7 @@ If missing → ask the user.</span>
 
       <!-- ── WORKERS ── -->
       <div class="section" id="workers">
-        <h2>⚙️ Custom workers</h2>
+        <h2><i data-lucide="settings" class="icon"></i> Custom workers</h2>
         <p>Workers are Python scripts that run on a schedule and update squad state — no AI in the loop. They pull data from your tools and write to <code>STATE.md</code>.</p>
 
         <h3>Create a worker</h3>
@@ -543,7 +585,7 @@ run_worker <span class="str">"workers/weekly-report.py"</span>   <span class="st
 
       <!-- ── MEMORY SCHEMA ── -->
       <div class="section" id="memory">
-        <h2>🧠 Customizing the memory schema</h2>
+        <h2><i data-lucide="brain" class="icon"></i> Customizing the memory schema</h2>
         <p>Each squad's <code>## Memory schema</code> section in <code>CLAUDE.md</code> tells the agent what to track in L1, L2, and L3. Change this to match what actually matters for your squad.</p>
 
         <div class="code-block"><pre><span class="comment"># Default (generic)</span>
@@ -573,7 +615,7 @@ run_worker <span class="str">"workers/weekly-report.py"</span>   <span class="st
 
       <!-- ── PM TOOL ── -->
       <div class="section" id="pm-tool">
-        <h2>🔧 Switching project management tools</h2>
+        <h2><i data-lucide="wrench" class="icon"></i> Switching project management tools</h2>
         <p>HIVE ships with <strong>Linear</strong> as default because its Claude Code MCP integration is the deepest available. Here's how to switch.</p>
 
         <h3>GitHub Issues</h3>
@@ -603,7 +645,7 @@ Use <span class="str">`gh`</span> CLI to create and update issues.</pre></div>
 
       <!-- ── UPSTREAM ── -->
       <div class="section" id="upstream">
-        <h2>🔄 Pulling upstream HIVE updates</h2>
+        <h2><i data-lucide="refresh-cw" class="icon"></i> Pulling upstream HIVE updates</h2>
         <p>If you forked HIVE and want framework improvements without losing your customizations:</p>
 
         <div class="code-block"><pre><span class="comment"># Add upstream remote (once)</span>
@@ -630,7 +672,7 @@ Use <span class="str">`gh`</span> CLI to create and update issues.</pre></div>
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          <div class="footer-logo-icon">🐝</div>
+          <div class="footer-logo-icon"><svg class="icon"><use href="#i-bee"/></svg></div>
           HIVE
         </a>
         <p class="footer-desc">Open-source harness for running a full company with AI agents. Built for Claude Code.</p>
@@ -684,6 +726,9 @@ Use <span class="str">`gh`</span> CLI to create and update issues.</pre></div>
     links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
   }, { passive: true });
 </script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
 
 </body>
 </html>

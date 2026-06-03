@@ -13,6 +13,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    /* === Cadencia Design Tokens (added by rebrand) === */
+    :root {
+      --color-primary: #4F46E5;
+      --color-primary-light: #818CF8;
+      --color-primary-dark: #4338CA;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-info: #3B82F6;
+      --color-error: #EF4444;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+      --color-border: #E5E7EB;
+      --color-bg-page: #F9FAFB;
+      --color-bg-card: #FFFFFF;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    /* Icon helpers */
+    .icon { width: 1em; height: 1em; display: inline-flex; vertical-align: -0.15em; stroke-width: 2; }
+    .icon-lg { width: 1.5em; height: 1.5em; }
+    .icon-xl { width: 2em; height: 2em; }
+    .icon-primary { color: var(--color-primary); }
+    /* === end Cadencia tokens === */
+
     :root {
       --primary:       #4F46E5;
       --primary-light: #818CF8;
@@ -644,12 +673,25 @@
   </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="14" rx="5" ry="6"/>
+    <line x1="7.5" y1="12" x2="16.5" y2="12"/>
+    <line x1="7.5" y1="15.5" x2="16.5" y2="15.5"/>
+    <circle cx="12" cy="6.5" r="2.2"/>
+    <path d="M10.7 4.8 L9.3 3"/>
+    <path d="M13.3 4.8 L14.7 3"/>
+    <path d="M7 10 Q3.5 8 5 12"/>
+    <path d="M17 10 Q20.5 8 19 12"/>
+  </symbol>
+</svg>
+
 
   <!-- NAV -->
   <nav>
     <div class="container nav-inner">
       <a href="/" class="nav-logo" style="text-decoration:none;">
-        <div class="nav-logo-icon">🐝</div>
+        <div class="nav-logo-icon"><svg class="icon icon-lg" style="color:#fff"><use href="#i-bee"/></svg></div>
         HIVE
       </a>
       <div class="nav-links">
@@ -659,7 +701,7 @@
         <a href="/docs/" class="hide-mobile" style="color:var(--primary);font-weight:600;">Docs</a>
         <a href="/skills/" class="hide-mobile">Skills</a>
         <a href="/customize/" class="hide-mobile">Personalizar</a>
-        <a href="/" style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted);">🇺🇸 EN</a>
+        <a href="/" style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text-muted);">EN</a>
         <a href="https://github.com/felipeluissalgueiro/hive" class="btn-nav btn">GitHub</a>
       </div>
     </div>
@@ -675,10 +717,10 @@
       </p>
       <div class="cta-group">
         <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-download">
-          🐝 Baixar o HIVE
+          <svg class="icon"><use href="#i-bee"/></svg> Baixar o HIVE
         </a>
         <a href="/docs/" class="btn btn-secondary">
-          📖 Ler a documentação
+          <i data-lucide="book-open" class="icon"></i> Ler a documentação
         </a>
         <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-secondary">
           Ver no GitHub
@@ -772,42 +814,42 @@
       <p class="section-lead">Cada squad é um agente do Claude Code com seu próprio CLAUDE.md, STATE.md, log de decisões e skills reutilizáveis.</p>
       <div class="squads-grid">
         <div class="squad-card">
-          <div class="squad-icon sq-orch">🧠</div>
+          <div class="squad-icon sq-orch"><i data-lucide="brain" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Orchestrator</span><span class="squad-persona">Stamper</span></div>
             <div class="squad-scope">Roteia pedidos, delega para squads, acompanha o estado geral da empresa</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-comm">💼</div>
+          <div class="squad-icon sq-comm"><i data-lucide="briefcase" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Commercial</span><span class="squad-persona">Victor</span></div>
             <div class="squad-scope">Geração de leads, qualificação, propostas, gestão de pipeline</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-cs">🤝</div>
+          <div class="squad-icon sq-cs"><i data-lucide="handshake" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Customer Success</span><span class="squad-persona">Leah</span></div>
             <div class="squad-scope">Onboarding, health score, retenção, prevenção de churn</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-mkt">📣</div>
+          <div class="squad-icon sq-mkt"><i data-lucide="megaphone" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Marketing</span><span class="squad-persona">Maya</span></div>
             <div class="squad-scope">Conteúdo, voz da marca, campanhas, alinhamento com ICP</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-prod">🗺️</div>
+          <div class="squad-icon sq-prod"><i data-lucide="map" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Product</span><span class="squad-persona">Owen</span></div>
             <div class="squad-scope">Roadmap, stories, planejamento de sprint, priorização</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-fin">💰</div>
+          <div class="squad-icon sq-fin"><i data-lucide="wallet" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Finance</span><span class="squad-persona">Clara</span></div>
             <div class="squad-scope">DRE, faturamento, projeção de fluxo de caixa, orçamento</div>
@@ -821,28 +863,28 @@
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-infra">🖥️</div>
+          <div class="squad-icon sq-infra"><i data-lucide="monitor" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Infrastructure</span><span class="squad-persona">Dean</span></div>
             <div class="squad-scope">Servidores, monitoramento, pipelines de CI/CD, segurança</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-ops">⚙️</div>
+          <div class="squad-icon sq-ops"><i data-lucide="settings" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Operations</span><span class="squad-persona">Harper</span></div>
             <div class="squad-scope">RH, cultura, acompanhamento de OKRs, documentação de processos</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-qual">✅</div>
+          <div class="squad-icon sq-qual"><i data-lucide="check-circle-2" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Quality</span><span class="squad-persona">Nora</span></div>
             <div class="squad-scope">SOPs, auditorias, stranger test, padrões de conformidade</div>
           </div>
         </div>
         <div class="squad-card">
-          <div class="squad-icon sq-intel">🔍</div>
+          <div class="squad-icon sq-intel"><i data-lucide="search" class="icon"></i></div>
           <div class="squad-info">
             <div class="squad-name-row"><span class="squad-name">Intelligence</span><span class="squad-persona">Rex</span></div>
             <div class="squad-scope">Inteligência competitiva, bias audits, facilitação de war games</div>
@@ -885,7 +927,7 @@
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:36px;align-items:center;">
         <a href="/docs/" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--primary-bg);border:1.5px solid var(--primary-border);color:var(--primary);font-size:14px;font-weight:600;border-radius:8px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.background='#e0e7ff'" onmouseout="this.style.background='var(--primary-bg)'">
-          📖 Documentação completa
+          <i data-lucide="book-open" class="icon"></i> Documentação completa
         </a>
         <a href="/docs/architecture.md" style="font-size:14px;font-weight:500;color:var(--muted);">Mergulho fundo na arquitetura →</a>
         <a href="/docs/how-to-customize.md" style="font-size:14px;font-weight:500;color:var(--muted);">Guia de personalização →</a>
@@ -929,7 +971,7 @@
           <div style="font-size:13px;color:var(--muted);">A documentação cobre memória, hooks, workers, skills com OpenRouter e personalização.</div>
         </div>
         <a href="/docs/" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--primary);color:#fff;font-size:14px;font-weight:600;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0;" onmouseover="this.style.background='#4338CA'" onmouseout="this.style.background='var(--primary)'">
-          📖 Abrir a documentação
+          <i data-lucide="book-open" class="icon"></i> Abrir a documentação
         </a>
       </div>
     </div>
@@ -942,8 +984,8 @@
         <h2>Sua empresa merece mais do que prompts</h2>
         <p>Clone o HIVE, rode <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">/hive-setup</code>, e seu time de IA estará pronto em menos de 10 minutos.</p>
         <div class="cta-group">
-          <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-primary">🐝 Baixar o HIVE</a>
-          <a href="/docs/" class="btn btn-secondary">📖 Ler a documentação</a>
+          <a href="https://github.com/felipeluissalgueiro/hive/archive/refs/heads/main.zip" class="btn btn-primary"><svg class="icon"><use href="#i-bee"/></svg> Baixar o HIVE</a>
+          <a href="/docs/" class="btn btn-secondary"><i data-lucide="book-open" class="icon"></i> Ler a documentação</a>
           <a href="https://github.com/felipeluissalgueiro/hive" class="btn btn-secondary">Ver no GitHub</a>
         </div>
       </div>
@@ -958,7 +1000,7 @@
         <!-- Brand -->
         <div class="footer-brand">
           <a href="#" class="footer-logo">
-            <div class="nav-logo-icon" style="width:22px;height:22px;font-size:12px;">🐝</div>
+            <div class="nav-logo-icon" style="width:22px;height:22px;font-size:12px;"><svg class="icon icon-lg" style="color:#fff"><use href="#i-bee"/></svg></div>
             HIVE
           </a>
           <p class="footer-desc">Harness open-source para operar uma empresa completa com agentes de IA. Feito para o Claude Code.</p>
@@ -1012,6 +1054,9 @@
       </div>
     </div>
   </footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
 
 </body>
 </html>
