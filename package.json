@@ -1,0 +1,11 @@
+{
+  "name": "hive-docs-build",
+  "private": true,
+  "scripts": {
+    "build": "node _build/build-docs.js"
+  },
+  "dependencies": {
+    "marked": "^14.0.0",
+    "highlight.js": "^11.10.0"
+  }
+}
