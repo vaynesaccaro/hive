@@ -468,14 +468,7 @@
       line-height: 1.5;
     }
 
-    .feature-list li::before {
-      content: '<i data-lucide="check" class="icon"></i>';
-      color: var(--indigo);
-      font-weight: 700;
-      font-size: 14px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .feature-list li svg.icon, .feature-list li i { color: var(--color-primary); flex-shrink: 0; margin-top: 2px; }
 
     /* ── Squads table ── */
     .squads-grid {
@@ -795,14 +788,14 @@
       <p>Cada squad tem sua própria persona Claude, memória persistente (STATE.md), documentos de fundação, skills e workers. Quando você abre a pasta de um squad, o especialista correto carrega automaticamente.</p>
 
       <ul class="feature-list">
-        <li>11 squads pré-configurados (Comercial, Dev, Marketing, CS, Infra, Financeiro, Produto, Operacional, Qualidade, Inteligência, Orquestrador)</li>
-        <li>Memória persistente — estado L1/L2/L3 por squad, sobrevive entre sessões</li>
-        <li>9 hooks de automação — branches de sessão, busca de conhecimento, sincronização de estado</li>
-        <li>50+ skills reutilizáveis — de gestão de issues a revisões multi-modelo com IA</li>
-        <li>Workers determinísticos — scripts cron que atualizam o estado dos squads sem chamadas a LLM</li>
-        <li>Multi-modelo via OpenRouter — segunda opinião, consenso, comparação de custo</li>
-        <li>Zero dependência de nuvem — roda totalmente local, git é a única camada de sincronização</li>
-        <li>Fork e adapte — renomeie personas, adicione squads, personalize por empresa</li>
+        <li><i data-lucide="check" class="icon"></i> 11 squads pré-configurados (Comercial, Dev, Marketing, CS, Infra, Financeiro, Produto, Operacional, Qualidade, Inteligência, Orquestrador)</li>
+        <li><i data-lucide="check" class="icon"></i> Memória persistente — estado L1/L2/L3 por squad, sobrevive entre sessões</li>
+        <li><i data-lucide="check" class="icon"></i> 9 hooks de automação — branches de sessão, busca de conhecimento, sincronização de estado</li>
+        <li><i data-lucide="check" class="icon"></i> 50+ skills reutilizáveis — de gestão de issues a revisões multi-modelo com IA</li>
+        <li><i data-lucide="check" class="icon"></i> Workers determinísticos — scripts cron que atualizam o estado dos squads sem chamadas a LLM</li>
+        <li><i data-lucide="check" class="icon"></i> Multi-modelo via OpenRouter — segunda opinião, consenso, comparação de custo</li>
+        <li><i data-lucide="check" class="icon"></i> Zero dependência de nuvem — roda totalmente local, git é a única camada de sincronização</li>
+        <li><i data-lucide="check" class="icon"></i> Fork e adapte — renomeie personas, adicione squads, personalize por empresa</li>
       </ul>
 
       <hr class="divider" />
