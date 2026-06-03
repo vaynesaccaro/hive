@@ -1,6 +1,7 @@
 # Exclude framework internals — only landing/docs ship.
 .claude/
 .git/
+_build/
 squads/
 incidents/
 memory/
