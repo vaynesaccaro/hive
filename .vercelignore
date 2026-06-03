@@ -8,7 +8,6 @@ sessions-log/
 workers/
 foundation/
 .git/
-docs/
 *.md
 *.py
 *.sh
