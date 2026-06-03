@@ -468,14 +468,7 @@
       line-height: 1.5;
     }
 
-    .feature-list li::before {
-      content: '<i data-lucide="check" class="icon"></i>';
-      color: var(--indigo);
-      font-weight: 700;
-      font-size: 14px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .feature-list li svg.icon, .feature-list li i { color: var(--color-primary); flex-shrink: 0; margin-top: 2px; }
 
     /* ── Squads table ── */
     .squads-grid {
@@ -795,14 +788,14 @@
       <p>Each squad has its own Claude persona, persistent memory (STATE.md), foundation docs, skills, and workers. When you open a squad folder, the right specialist loads automatically.</p>
 
       <ul class="feature-list">
-        <li>11 pre-built squads (Commercial, Dev, Marketing, CS, Infra, Finance, Product, Operations, Quality, Intelligence, Orchestrator)</li>
-        <li>Persistent memory — L1/L2/L3 state per squad, survives sessions</li>
-        <li>9 automation hooks — session branches, knowledge lookup, state sync</li>
-        <li>50+ reusable skills — from issue management to multi-model AI reviews</li>
-        <li>Deterministic workers — cron scripts that update squad state without LLM calls</li>
-        <li>Multi-model via OpenRouter — second opinion, consensus, cost comparison</li>
-        <li>Zero cloud dependency — runs fully local, git is the only sync layer</li>
-        <li>Fork and adapt — rename personas, add squads, customize per company</li>
+        <li><i data-lucide="check" class="icon"></i> 11 pre-built squads (Commercial, Dev, Marketing, CS, Infra, Finance, Product, Operations, Quality, Intelligence, Orchestrator)</li>
+        <li><i data-lucide="check" class="icon"></i> Persistent memory — L1/L2/L3 state per squad, survives sessions</li>
+        <li><i data-lucide="check" class="icon"></i> 5 automation hooks — session branches, knowledge lookup, state sync</li>
+        <li><i data-lucide="check" class="icon"></i> 50+ reusable skills — from issue management to multi-model AI reviews</li>
+        <li><i data-lucide="check" class="icon"></i> Deterministic workers — cron scripts that update squad state without LLM calls</li>
+        <li><i data-lucide="check" class="icon"></i> Multi-model via OpenRouter — second opinion, consensus, cost comparison</li>
+        <li><i data-lucide="check" class="icon"></i> Zero cloud dependency — runs fully local, git is the only sync layer</li>
+        <li><i data-lucide="check" class="icon"></i> Fork and adapt — rename personas, add squads, customize per company</li>
       </ul>
 
       <hr class="divider" />
@@ -1102,7 +1095,7 @@ python _core/lookup.py <span class="str">"supabase"</span> --json --top 5</pre>
       <section id="hooks">
         <div class="section-header">
           <h2>Hooks</h2>
-          <p>9 automation hooks handle session management, state sync, and safety checks.</p>
+          <p>5 automation hooks handle session management, state sync, and safety checks.</p>
         </div>
 
         <table>
