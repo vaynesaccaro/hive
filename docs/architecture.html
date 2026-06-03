@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIVE Architecture — HIVE</title>
+  <meta name="description" content="HIVE Architecture — HIVE documentation. Claude Code harness with persistent memory, squads and reusable skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css" />
+  <style>
+    /* === Cadencia Design Tokens === */
+    :root {
+      --color-primary: #4F46E5;
+      --color-primary-light: #818CF8;
+      --color-primary-dark: #4338CA;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-info: #3B82F6;
+      --color-error: #EF4444;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+      --color-border: #E5E7EB;
+      --color-bg-page: #F9FAFB;
+      --color-bg-card: #FFFFFF;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,0.15);
+      --indigo: #4F46E5;
+      --indigo-light: #EEF2FF;
+      --indigo-dark: #3730A3;
+      --bg: #F9FAFB;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --radius: 12px;
+      --header-h: 60px;
+    }
+
+    .icon { width: 1em; height: 1em; display: inline-flex; vertical-align: -0.15em; stroke-width: 2; }
+    .icon-lg { width: 1.5em; height: 1.5em; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    a { color: var(--color-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    a:hover { border-bottom-color: var(--color-primary); }
+
+    /* Header */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; color: var(--text);
+      border-bottom: none;
+    }
+    .header-brand:hover { border-bottom: none; }
+    .header-brand .logo {
+      width: 32px; height: 32px;
+      background: var(--indigo);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+    .header-nav { display: flex; align-items: center; gap: 8px; }
+    .header-nav a {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: none;
+      transition: all 0.15s;
+    }
+    .header-nav a:hover {
+      background: var(--bg); color: var(--text);
+      border-bottom: none;
+    }
+    .header-nav .btn-github { background: var(--text); color: #fff; padding: 6px 14px; }
+    .header-nav .btn-github:hover { background: #374151; color: #fff; }
+    .header-nav .lang-pill {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 10px; font-size: 13px; font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Layout */
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: calc(var(--header-h) + 32px) 32px 80px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: var(--text-muted); border-bottom: none; }
+    .breadcrumb a:hover { color: var(--color-primary); border-bottom: none; }
+    .breadcrumb .crumb-sep { margin: 0 6px; color: var(--text-light); }
+    .breadcrumb .crumb-current { color: var(--text); font-weight: 500; }
+
+    .page-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title {
+      font-size: 36px; font-weight: 700; line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .edit-link {
+      flex-shrink: 0; margin-top: 8px;
+      font-size: 13px; color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      transition: all 0.15s;
+    }
+    .edit-link:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: var(--indigo-light);
+    }
+
+    .doc-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* TOC sidebar */
+    .toc {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      max-height: calc(100vh - var(--header-h) - 48px);
+      overflow-y: auto;
+      font-size: 13px;
+      padding-right: 8px;
+    }
+    .toc-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-item { padding: 4px 0; }
+    .toc-item a { color: var(--text-muted); border-bottom: none; line-height: 1.4; }
+    .toc-item a:hover { color: var(--color-primary); border-bottom: none; }
+    .toc-item-h3 { padding-left: 14px; font-size: 12px; }
+    .toc-empty { color: var(--text-light); font-style: italic; }
+
+    .toc-mobile { display: none; }
+
+    /* Markdown content */
+    .content {
+      max-width: 760px;
+      min-width: 0;
+    }
+    .content h1, .content h2, .content h3, .content h4 {
+      letter-spacing: -0.01em;
+      scroll-margin-top: calc(var(--header-h) + 16px);
+      position: relative;
+    }
+    .content h1 { font-size: 32px; font-weight: 700; margin: 40px 0 16px; }
+    .content h2 { font-size: 24px; font-weight: 600; margin: 40px 0 14px; padding-top: 8px; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 28px 0 10px; }
+    .content h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+
+    .content .anchor {
+      position: absolute; left: -22px; top: 0;
+      color: var(--text-light); border-bottom: none;
+      opacity: 0; transition: opacity 0.15s;
+      text-decoration: none; font-weight: 400;
+    }
+    .content h1:hover .anchor,
+    .content h2:hover .anchor,
+    .content h3:hover .anchor,
+    .content h4:hover .anchor { opacity: 1; }
+    .content .anchor:hover { color: var(--color-primary); border-bottom: none; }
+
+    .content p { margin: 12px 0; }
+    .content ul, .content ol { margin: 12px 0; padding-left: 26px; }
+    .content li { margin: 4px 0; }
+    .content li > ul, .content li > ol { margin: 4px 0; }
+
+    .content code {
+      background: #F3F4F6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      color: #1F2937;
+    }
+    .content pre {
+      background: #111827;
+      color: #E5E7EB;
+      padding: 16px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .content pre code {
+      background: transparent; padding: 0; border-radius: 0;
+      color: inherit; font-size: inherit;
+    }
+    /* override hljs light theme inside dark <pre> */
+    .content pre code.hljs { background: transparent; color: #E5E7EB; padding: 0; }
+    .content pre code.hljs .hljs-comment,
+    .content pre code.hljs .hljs-quote { color: #9CA3AF; }
+    .content pre code.hljs .hljs-keyword,
+    .content pre code.hljs .hljs-selector-tag,
+    .content pre code.hljs .hljs-built_in { color: #A5B4FC; }
+    .content pre code.hljs .hljs-string,
+    .content pre code.hljs .hljs-title.class_,
+    .content pre code.hljs .hljs-attr { color: #86EFAC; }
+    .content pre code.hljs .hljs-number,
+    .content pre code.hljs .hljs-literal { color: #FCD34D; }
+    .content pre code.hljs .hljs-variable,
+    .content pre code.hljs .hljs-template-variable,
+    .content pre code.hljs .hljs-name { color: #FCA5A5; }
+    .content pre code.hljs .hljs-title.function_ { color: #93C5FD; }
+
+    .content blockquote {
+      border-left: 4px solid var(--color-primary);
+      padding: 4px 16px;
+      color: var(--color-text-secondary);
+      margin: 16px 0;
+      background: var(--indigo-light);
+      border-radius: 0 6px 6px 0;
+    }
+    .content blockquote p { margin: 8px 0; }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .content th {
+      background: var(--indigo-light);
+      color: var(--indigo-dark);
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .content td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .content tr:nth-child(even) td { background: #F9FAFB; }
+    .content tr:last-child td { border-bottom: none; }
+
+    .content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .content img { max-width: 100%; height: auto; border-radius: 6px; }
+
+    .content a { color: var(--color-primary); border-bottom: 1px solid transparent; }
+    .content a:hover { border-bottom-color: var(--color-primary); }
+
+    /* Footer */
+    .site-footer {
+      background: var(--text);
+      color: #D1D5DB;
+      margin-top: 80px;
+      padding: 40px 24px 28px;
+    }
+    .footer-inner { max-width: 1240px; margin: 0 auto; }
+    .footer-row {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center; justify-content: space-between;
+      font-size: 13px;
+    }
+    .footer-row a { color: #A5B4FC; border-bottom: none; }
+    .footer-row a:hover { color: #C7D2FE; border-bottom: none; }
+    .footer-brand-mini {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; color: #fff;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .page { padding: calc(var(--header-h) + 24px) 20px 60px; }
+      .doc-layout { grid-template-columns: 1fr; gap: 16px; }
+      .toc { display: none; }
+      .toc-mobile {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin-bottom: 24px;
+      }
+      .toc-mobile summary {
+        font-weight: 600; font-size: 14px;
+        color: var(--text); cursor: pointer;
+      }
+      .toc-mobile[open] summary { margin-bottom: 12px; }
+      .toc-mobile .toc-list { padding: 0; }
+      .toc-mobile .toc-item { padding: 5px 0; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .page-title { font-size: 28px; }
+      .header-nav a:not(.btn-github):not(.lang-pill) { display: none; }
+      .header-nav a.nav-docs, .header-nav a.nav-skills { display: flex; }
+    }
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="14" rx="5" ry="6"/>
+    <line x1="7.5" y1="12" x2="16.5" y2="12"/>
+    <line x1="7.5" y1="15.5" x2="16.5" y2="15.5"/>
+    <circle cx="12" cy="6.5" r="2.2"/>
+    <path d="M10.7 4.8 L9.3 3"/>
+    <path d="M13.3 4.8 L14.7 3"/>
+    <path d="M7 10 Q3.5 8 5 12"/>
+    <path d="M17 10 Q20.5 8 19 12"/>
+  </symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+  </symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+  </symbol>
+</svg>
+
+<header class="header">
+  <a href="/docs/" class="header-brand">
+    <div class="logo"><svg class="icon"><use href="#i-bee"/></svg></div>
+    HIVE
+  </a>
+  <nav class="header-nav">
+    <a href="/" class="nav-home">Home</a>
+    <a href="/docs/" class="nav-docs">Docs</a>
+    <a href="/skills/" class="nav-skills">Skills</a>
+    <a href="/customize/" class="nav-customize">Customize</a>
+    <a href="/pt/" class="lang-pill">PT</a>
+    <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="breadcrumb"><a href="/">Home</a> <span class="crumb-sep">/</span> <a href="/docs/">Docs</a> <span class="crumb-sep">/</span> <span class="crumb-current">HIVE Architecture</span></div>
+
+  <div class="page-header">
+    <h1 class="page-title">HIVE Architecture</h1>
+    <a class="edit-link" href="https://github.com/felipeluissalgueiro/hive/blob/main/docs/architecture.md" target="_blank" rel="noopener">
+      <svg class="icon"><use href="#i-pencil"/></svg>
+      Edit on GitHub
+      <svg class="icon"><use href="#i-arrow-up-right"/></svg>
+    </a>
+  </div>
+
+  <details class="toc-mobile">
+    <summary>On this page</summary>
+    <ul class="toc-list">
+<li class="toc-item"><a href="#overview">Overview</a></li>
+<li class="toc-item"><a href="#how-claude-code-loads-context">How Claude Code loads context</a></li>
+<li class="toc-item"><a href="#memory-system">Memory system</a></li>
+<li class="toc-item toc-item-h3"><a href="#3-layer-statemd">3-layer STATE.md</a></li>
+<li class="toc-item toc-item-h3"><a href="#memory-files">Memory files</a></li>
+<li class="toc-item toc-item-h3"><a href="#global-vs-squad-memory">Global vs. squad memory</a></li>
+<li class="toc-item"><a href="#hooks">Hooks</a></li>
+<li class="toc-item toc-item-h3"><a href="#pretooluse-session-branch">PreToolUse — session branch</a></li>
+<li class="toc-item toc-item-h3"><a href="#posttooluse-state-dirty-flag">PostToolUse — state dirty flag</a></li>
+<li class="toc-item toc-item-h3"><a href="#stop-session-merge">Stop — session merge</a></li>
+<li class="toc-item toc-item-h3"><a href="#userpromptsubmit-squad-routing">UserPromptSubmit — squad routing</a></li>
+<li class="toc-item toc-item-h3"><a href="#userpromptsubmit-knowledge-lookup">UserPromptSubmit — knowledge lookup</a></li>
+<li class="toc-item toc-item-h3"><a href="#userpromptsubmit-session-recovery">UserPromptSubmit — session recovery</a></li>
+<li class="toc-item"><a href="#core-scripts">_core/ scripts</a></li>
+<li class="toc-item toc-item-h3"><a href="#lookuppy">lookup.py</a></li>
+<li class="toc-item toc-item-h3"><a href="#state-aggregatorpy">state-aggregator.py</a></li>
+<li class="toc-item toc-item-h3"><a href="#harnesssh">harness.sh</a></li>
+<li class="toc-item toc-item-h3"><a href="#memory-schemamd">memory-schema.md</a></li>
+<li class="toc-item"><a href="#skills">Skills</a></li>
+<li class="toc-item toc-item-h3"><a href="#global-skills-skills">Global skills (skills/)</a></li>
+<li class="toc-item toc-item-h3"><a href="#squad-specific-skills-squadsnameskills">Squad-specific skills (squads/&lt;name&gt;/skills/)</a></li>
+<li class="toc-item"><a href="#workers">Workers</a></li>
+<li class="toc-item"><a href="#context-files">Context files</a></li>
+<li class="toc-item"><a href="#security-model">Security model</a></li>
+</ul>
+  </details>
+
+  <div class="doc-layout">
+    <aside class="toc">
+      <div class="toc-label">On this page</div>
+      <ul class="toc-list">
+<li class="toc-item"><a href="#overview">Overview</a></li>
+<li class="toc-item"><a href="#how-claude-code-loads-context">How Claude Code loads context</a></li>
+<li class="toc-item"><a href="#memory-system">Memory system</a></li>
+<li class="toc-item toc-item-h3"><a href="#3-layer-statemd">3-layer STATE.md</a></li>
+<li class="toc-item toc-item-h3"><a href="#memory-files">Memory files</a></li>
+<li class="toc-item toc-item-h3"><a href="#global-vs-squad-memory">Global vs. squad memory</a></li>
+<li class="toc-item"><a href="#hooks">Hooks</a></li>
+<li class="toc-item toc-item-h3"><a href="#pretooluse-session-branch">PreToolUse — session branch</a></li>
+<li class="toc-item toc-item-h3"><a href="#posttooluse-state-dirty-flag">PostToolUse — state dirty flag</a></li>
+<li class="toc-item toc-item-h3"><a href="#stop-session-merge">Stop — session merge</a></li>
+<li class="toc-item toc-item-h3"><a href="#userpromptsubmit-squad-routing">UserPromptSubmit — squad routing</a></li>
+<li class="toc-item toc-item-h3"><a href="#userpromptsubmit-knowledge-lookup">UserPromptSubmit — knowledge lookup</a></li>
+<li class="toc-item toc-item-h3"><a href="#userpromptsubmit-session-recovery">UserPromptSubmit — session recovery</a></li>
+<li class="toc-item"><a href="#core-scripts">_core/ scripts</a></li>
+<li class="toc-item toc-item-h3"><a href="#lookuppy">lookup.py</a></li>
+<li class="toc-item toc-item-h3"><a href="#state-aggregatorpy">state-aggregator.py</a></li>
+<li class="toc-item toc-item-h3"><a href="#harnesssh">harness.sh</a></li>
+<li class="toc-item toc-item-h3"><a href="#memory-schemamd">memory-schema.md</a></li>
+<li class="toc-item"><a href="#skills">Skills</a></li>
+<li class="toc-item toc-item-h3"><a href="#global-skills-skills">Global skills (skills/)</a></li>
+<li class="toc-item toc-item-h3"><a href="#squad-specific-skills-squadsnameskills">Squad-specific skills (squads/&lt;name&gt;/skills/)</a></li>
+<li class="toc-item"><a href="#workers">Workers</a></li>
+<li class="toc-item"><a href="#context-files">Context files</a></li>
+<li class="toc-item"><a href="#security-model">Security model</a></li>
+</ul>
+    </aside>
+    <article class="content">
+      <h2 id="overview"><a class="anchor" href="#overview" aria-label="anchor">#</a>Overview</h2>
+<p>HIVE is a folder structure + conventions that makes Claude Code behave like a team of specialists. No framework lock-in — just markdown files, Python scripts, and git.</p>
+<pre><code class="hljs">hive<span class="hljs-symbol">/</span>
+  CLAUDE.md              ← Root <span class="hljs-params">context:</span> Stamper persona <span class="hljs-operator">+</span> squad table <span class="hljs-operator">+</span> rules
+  .claude<span class="hljs-symbol">/</span>
+    settings.json        ← Hook event wiring
+    hooks<span class="hljs-symbol">/</span>               ← <span class="hljs-number">9</span> automation hooks (Python)
+  _core<span class="hljs-symbol">/</span>                 ← Framework engine
+  squads<span class="hljs-symbol">/</span>                ← <span class="hljs-number">11</span> specialized agents
+  skills<span class="hljs-symbol">/</span>                ← Global reusable commands
+  memory<span class="hljs-symbol">/</span>                ← Global orchestrator memory
+  workers<span class="hljs-symbol">/</span>               ← Deterministic cron scripts
+  incidents<span class="hljs-symbol">/</span>             ← Incident log hub
+  sessions-log<span class="hljs-symbol">/</span>          ← Session history
+  docs<span class="hljs-symbol">/</span>                  ← This folder</code></pre>
+<hr>
+<h2 id="how-claude-code-loads-context"><a class="anchor" href="#how-claude-code-loads-context" aria-label="anchor">#</a>How Claude Code loads context</h2>
+<p>Claude Code reads <code>CLAUDE.md</code> files in cascade — starting from the current working directory up to the repo root. HIVE exploits this:</p>
+<ul>
+<li>Open <code>hive/</code> → loads root <code>CLAUDE.md</code> (Stamper)</li>
+<li>Open <code>hive/squads/commercial/</code> → loads both root + <code>squads/commercial/CLAUDE.md</code> (Stamper + Victor)</li>
+<li>Open <code>hive/squads/dev/</code> → loads both root + <code>squads/dev/CLAUDE.md</code> (Stamper + Ethan)</li>
+</ul>
+<p>Each squad&#39;s <code>CLAUDE.md</code> defines:</p>
+<ul>
+<li><strong>Persona</strong> — name, role, operating principles</li>
+<li><strong>Scope</strong> — what this squad owns vs. what it defers</li>
+<li><strong>Foundation table</strong> — which files to read before working</li>
+<li><strong>Memory schema</strong> — what L1/L2/L3 contains for this squad</li>
+<li><strong>Absolute rules</strong> — non-negotiable behaviors</li>
+</ul>
+<hr>
+<h2 id="memory-system"><a class="anchor" href="#memory-system" aria-label="anchor">#</a>Memory system</h2>
+<h3 id="3-layer-statemd"><a class="anchor" href="#3-layer-statemd" aria-label="anchor">#</a>3-layer STATE.md</h3>
+<p>Every squad maintains <code>memory/STATE.md</code> with three layers:</p>
+<pre><code class="hljs">[L1]
+Current status — what&#x27;s happening right now. <span class="hljs-number">1</span>-<span class="hljs-number">3</span> lines.
+Stamper reads this <span class="hljs-keyword">when</span> aggregating /status.
+
+[L2]
+In progress — active tasks, current work, pending reviews.
+
+[L3]
+Backlog — queued items, <span class="hljs-keyword">not</span> started, low urgency.</code></pre>
+<p>L1 is designed to be machine-readable for aggregation. Keep it factual, not narrative.</p>
+<h3 id="memory-files"><a class="anchor" href="#memory-files" aria-label="anchor">#</a>Memory files</h3>
+<p>Each squad&#39;s <code>memory/</code> folder contains:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>STATE.md</code></td>
+<td>Live operational state (L1/L2/L3)</td>
+</tr>
+<tr>
+<td><code>decisions.md</code></td>
+<td>Architectural and operational decisions log</td>
+</tr>
+<tr>
+<td><code>gotchas.md</code></td>
+<td>Known pitfalls, lessons learned, edge cases</td>
+</tr>
+<tr>
+<td><code>MEMORY.md</code></td>
+<td>Index of all saved memory files</td>
+</tr>
+</tbody></table>
+<p>Additional memory files can be added as needed — project context, reference data, historical records.</p>
+<h3 id="global-vs-squad-memory"><a class="anchor" href="#global-vs-squad-memory" aria-label="anchor">#</a>Global vs. squad memory</h3>
+<ul>
+<li><strong>Global memory</strong> (<code>memory/</code> at root) — Stamper&#39;s cross-squad context, company-level decisions</li>
+<li><strong>Squad memory</strong> (<code>squads/&lt;name&gt;/memory/</code>) — isolated per squad, only loaded when that squad is open</li>
+</ul>
+<hr>
+<h2 id="hooks"><a class="anchor" href="#hooks" aria-label="anchor">#</a>Hooks</h2>
+<p>9 hooks automate operational housekeeping. All are Python scripts in <code>.claude/hooks/</code>.</p>
+<h3 id="pretooluse-session-branch"><a class="anchor" href="#pretooluse-session-branch" aria-label="anchor">#</a>PreToolUse — session branch</h3>
+<pre><code class="hljs language-python"><span class="hljs-comment"># Fires before any tool call that writes files</span>
+<span class="hljs-comment"># Creates session/YYYY-MM-DD-HHMM branch on first edit</span>
+<span class="hljs-comment"># Prevents direct commits to main during a session</span></code></pre>
+<h3 id="posttooluse-state-dirty-flag"><a class="anchor" href="#posttooluse-state-dirty-flag" aria-label="anchor">#</a>PostToolUse — state dirty flag</h3>
+<pre><code class="hljs language-python"><span class="hljs-comment"># Fires after tool calls that modify squad files</span>
+<span class="hljs-comment"># Marks STATE.md as dirty when squad context changes</span>
+<span class="hljs-comment"># Used by stop hook to decide what to commit</span></code></pre>
+<h3 id="stop-session-merge"><a class="anchor" href="#stop-session-merge" aria-label="anchor">#</a>Stop — session merge</h3>
+<pre><code class="hljs language-python"><span class="hljs-comment"># Fires when Claude Code session ends</span>
+<span class="hljs-comment"># Auto-commits modified files on the session branch</span>
+<span class="hljs-comment"># Merges session/* back to main</span>
+<span class="hljs-comment"># Cleans up the session branch</span></code></pre>
+<h3 id="userpromptsubmit-squad-routing"><a class="anchor" href="#userpromptsubmit-squad-routing" aria-label="anchor">#</a>UserPromptSubmit — squad routing</h3>
+<pre><code class="hljs language-python"><span class="hljs-comment"># Fires on every user message</span>
+<span class="hljs-comment"># Detects squad keywords (commercial, dev, infra...)</span>
+<span class="hljs-comment"># Loads squad context if not already loaded</span>
+<span class="hljs-comment"># Prevents context loss across long sessions</span></code></pre>
+<h3 id="userpromptsubmit-knowledge-lookup"><a class="anchor" href="#userpromptsubmit-knowledge-lookup" aria-label="anchor">#</a>UserPromptSubmit — knowledge lookup</h3>
+<pre><code class="hljs language-python"><span class="hljs-comment"># Fires before sensitive operations (deploy, DNS, drop, migration)</span>
+<span class="hljs-comment"># Runs _core/lookup.py against incidents + sessions + memory</span>
+<span class="hljs-comment"># Surfaces relevant past incidents before action</span></code></pre>
+<h3 id="userpromptsubmit-session-recovery"><a class="anchor" href="#userpromptsubmit-session-recovery" aria-label="anchor">#</a>UserPromptSubmit — session recovery</h3>
+<pre><code class="hljs language-python"><span class="hljs-comment"># Fires on session start</span>
+<span class="hljs-comment"># Checks if previous session ended mid-work</span>
+<span class="hljs-comment"># Recovers unfinished session context if found</span></code></pre>
+<hr>
+<h2 id="core-scripts"><a class="anchor" href="#core-scripts" aria-label="anchor">#</a>_core/ scripts</h2>
+<h3 id="lookuppy"><a class="anchor" href="#lookuppy" aria-label="anchor">#</a>lookup.py</h3>
+<p>Knowledge search across all memory sources:</p>
+<pre><code class="hljs language-bash">python _core/lookup.py <span class="hljs-string">&quot;deploy vercel&quot;</span>
+python _core/lookup.py <span class="hljs-string">&quot;ghl webhook&quot;</span> --<span class="hljs-built_in">source</span> incidents
+python _core/lookup.py <span class="hljs-string">&quot;auth&quot;</span> --<span class="hljs-built_in">source</span> sessions --since 2026-01-01
+python _core/lookup.py <span class="hljs-string">&quot;supabase&quot;</span> --json --top 5</code></pre>
+<p>Covers: <code>incidents/</code>, <code>sessions-log/</code>, <code>memory/</code>, squad <code>memory/</code> files.</p>
+<h3 id="state-aggregatorpy"><a class="anchor" href="#state-aggregatorpy" aria-label="anchor">#</a>state-aggregator.py</h3>
+<p>Reads L1 from all squad STATE.md files and returns an aggregate:</p>
+<pre><code class="hljs language-bash">python _core/state-aggregator.py squads/
+<span class="hljs-comment"># Output: timestamped L1 snapshot per squad</span></code></pre>
+<p>Used by <code>/status</code> skill.</p>
+<h3 id="harnesssh"><a class="anchor" href="#harnesssh" aria-label="anchor">#</a>harness.sh</h3>
+<p>Worker runner. Executes Python scripts in <code>workers/</code> on a schedule:</p>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># Add workers to harness.sh:</span>
+<span class="hljs-comment"># run_worker &quot;workers/daily-report.py&quot; &quot;09:00&quot;</span>
+<span class="hljs-comment"># run_worker &quot;workers/health-check.py&quot; &quot;every:1h&quot;</span></code></pre>
+<p>Designed to run as a cron job on a server. No AI in the loop — workers are deterministic.</p>
+<h3 id="memory-schemamd"><a class="anchor" href="#memory-schemamd" aria-label="anchor">#</a>memory-schema.md</h3>
+<p>Documents the STATE.md format, naming conventions, and aggregation rules. The source of truth for how memory works.</p>
+<hr>
+<h2 id="skills"><a class="anchor" href="#skills" aria-label="anchor">#</a>Skills</h2>
+<p>Skills are markdown files that define reusable behaviors. Invoked with <code>/skill-name</code> in Claude Code.</p>
+<h3 id="global-skills-skills"><a class="anchor" href="#global-skills-skills" aria-label="anchor">#</a>Global skills (<code>skills/</code>)</h3>
+<p>Available to all squads:</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/hive-setup</code></td>
+<td><code>skills/hive-setup.md</code></td>
+<td>First-time company onboarding</td>
+</tr>
+<tr>
+<td><code>/open-squad</code></td>
+<td><code>skills/open-squad.md</code></td>
+<td>Load squad context + STATE</td>
+</tr>
+<tr>
+<td><code>/close-squad</code></td>
+<td><code>skills/close-squad.md</code></td>
+<td>Update STATE + propagate L1</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td><code>skills/status.md</code></td>
+<td>Aggregate L1 from all squads</td>
+</tr>
+</tbody></table>
+<h3 id="squad-specific-skills-squadsnameskills"><a class="anchor" href="#squad-specific-skills-squadsnameskills" aria-label="anchor">#</a>Squad-specific skills (<code>squads/&lt;name&gt;/skills/</code>)</h3>
+<p>Only available when that squad is open. Add your own here.</p>
+<hr>
+<h2 id="workers"><a class="anchor" href="#workers" aria-label="anchor">#</a>Workers</h2>
+<p>Workers are Python scripts that run on a schedule, independent of the AI.</p>
+<p>Design rules:</p>
+<ol>
+<li><strong>Deterministic</strong> — same input, same output. No LLM calls.</li>
+<li><strong>Write to STATE.md</strong> — workers update squad state, never CLAUDE.md or skills.</li>
+<li><strong>Idempotent</strong> — safe to run multiple times.</li>
+<li><strong>Fail loudly</strong> — log errors, don&#39;t swallow exceptions silently.</li>
+</ol>
+<p>Example workers:</p>
+<ul>
+<li>Daily revenue summary → Finance STATE.md L1</li>
+<li>Weekly competitor mentions scan → Intelligence STATE.md L2</li>
+<li>Health score recalculation → CS STATE.md L1</li>
+</ul>
+<hr>
+<h2 id="context-files"><a class="anchor" href="#context-files" aria-label="anchor">#</a>Context files</h2>
+<p>Each squad has <code>context/squad-context.md</code> — company-specific data filled during <code>/hive-setup</code>. This is what makes HIVE feel personalized vs. generic.</p>
+<p>The root <code>squads/orchestrator/context/user-profile.md</code> tells Stamper who you are — your role, working style, preferences, and anti-patterns.</p>
+<hr>
+<h2 id="security-model"><a class="anchor" href="#security-model" aria-label="anchor">#</a>Security model</h2>
+<ol>
+<li><strong>Credentials never in files</strong> — use a secrets manager (1Password, Vault, AWS Secrets Manager). <code>.env</code> only for non-sensitive config.</li>
+<li><strong>Workers are read-only for everything except STATE.md</strong> — no workers modify CLAUDE.md, skills, or foundation docs.</li>
+<li><strong>Destructive operations require explicit confirmation</strong> — hardcoded in absolute rules, enforced in hooks.</li>
+<li><strong>Session branches</strong> — main is never written to directly during a session.</li>
+</ol>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-row">
+      <span class="footer-brand-mini">
+        <svg class="icon" style="color:#A5B4FC"><use href="#i-bee"/></svg>
+        HIVE
+      </span>
+      <span>&copy; 2026 HIVE &middot; MIT License &middot; Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+      <span>Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

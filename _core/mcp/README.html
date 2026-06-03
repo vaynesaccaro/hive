@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenRouter MCP — Setup Guide — HIVE</title>
+  <meta name="description" content="OpenRouter MCP — Setup Guide — HIVE documentation. Claude Code harness with persistent memory, squads and reusable skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css" />
+  <style>
+    /* === Cadencia Design Tokens === */
+    :root {
+      --color-primary: #4F46E5;
+      --color-primary-light: #818CF8;
+      --color-primary-dark: #4338CA;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-info: #3B82F6;
+      --color-error: #EF4444;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+      --color-border: #E5E7EB;
+      --color-bg-page: #F9FAFB;
+      --color-bg-card: #FFFFFF;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,0.15);
+      --indigo: #4F46E5;
+      --indigo-light: #EEF2FF;
+      --indigo-dark: #3730A3;
+      --bg: #F9FAFB;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --radius: 12px;
+      --header-h: 60px;
+    }
+
+    .icon { width: 1em; height: 1em; display: inline-flex; vertical-align: -0.15em; stroke-width: 2; }
+    .icon-lg { width: 1.5em; height: 1.5em; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    a { color: var(--color-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    a:hover { border-bottom-color: var(--color-primary); }
+
+    /* Header */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; color: var(--text);
+      border-bottom: none;
+    }
+    .header-brand:hover { border-bottom: none; }
+    .header-brand .logo {
+      width: 32px; height: 32px;
+      background: var(--indigo);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+    .header-nav { display: flex; align-items: center; gap: 8px; }
+    .header-nav a {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: none;
+      transition: all 0.15s;
+    }
+    .header-nav a:hover {
+      background: var(--bg); color: var(--text);
+      border-bottom: none;
+    }
+    .header-nav .btn-github { background: var(--text); color: #fff; padding: 6px 14px; }
+    .header-nav .btn-github:hover { background: #374151; color: #fff; }
+    .header-nav .lang-pill {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 10px; font-size: 13px; font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Layout */
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: calc(var(--header-h) + 32px) 32px 80px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: var(--text-muted); border-bottom: none; }
+    .breadcrumb a:hover { color: var(--color-primary); border-bottom: none; }
+    .breadcrumb .crumb-sep { margin: 0 6px; color: var(--text-light); }
+    .breadcrumb .crumb-current { color: var(--text); font-weight: 500; }
+
+    .page-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title {
+      font-size: 36px; font-weight: 700; line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .edit-link {
+      flex-shrink: 0; margin-top: 8px;
+      font-size: 13px; color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      transition: all 0.15s;
+    }
+    .edit-link:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: var(--indigo-light);
+    }
+
+    .doc-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* TOC sidebar */
+    .toc {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      max-height: calc(100vh - var(--header-h) - 48px);
+      overflow-y: auto;
+      font-size: 13px;
+      padding-right: 8px;
+    }
+    .toc-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-item { padding: 4px 0; }
+    .toc-item a { color: var(--text-muted); border-bottom: none; line-height: 1.4; }
+    .toc-item a:hover { color: var(--color-primary); border-bottom: none; }
+    .toc-item-h3 { padding-left: 14px; font-size: 12px; }
+    .toc-empty { color: var(--text-light); font-style: italic; }
+
+    .toc-mobile { display: none; }
+
+    /* Markdown content */
+    .content {
+      max-width: 760px;
+      min-width: 0;
+    }
+    .content h1, .content h2, .content h3, .content h4 {
+      letter-spacing: -0.01em;
+      scroll-margin-top: calc(var(--header-h) + 16px);
+      position: relative;
+    }
+    .content h1 { font-size: 32px; font-weight: 700; margin: 40px 0 16px; }
+    .content h2 { font-size: 24px; font-weight: 600; margin: 40px 0 14px; padding-top: 8px; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 28px 0 10px; }
+    .content h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+
+    .content .anchor {
+      position: absolute; left: -22px; top: 0;
+      color: var(--text-light); border-bottom: none;
+      opacity: 0; transition: opacity 0.15s;
+      text-decoration: none; font-weight: 400;
+    }
+    .content h1:hover .anchor,
+    .content h2:hover .anchor,
+    .content h3:hover .anchor,
+    .content h4:hover .anchor { opacity: 1; }
+    .content .anchor:hover { color: var(--color-primary); border-bottom: none; }
+
+    .content p { margin: 12px 0; }
+    .content ul, .content ol { margin: 12px 0; padding-left: 26px; }
+    .content li { margin: 4px 0; }
+    .content li > ul, .content li > ol { margin: 4px 0; }
+
+    .content code {
+      background: #F3F4F6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      color: #1F2937;
+    }
+    .content pre {
+      background: #111827;
+      color: #E5E7EB;
+      padding: 16px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .content pre code {
+      background: transparent; padding: 0; border-radius: 0;
+      color: inherit; font-size: inherit;
+    }
+    /* override hljs light theme inside dark <pre> */
+    .content pre code.hljs { background: transparent; color: #E5E7EB; padding: 0; }
+    .content pre code.hljs .hljs-comment,
+    .content pre code.hljs .hljs-quote { color: #9CA3AF; }
+    .content pre code.hljs .hljs-keyword,
+    .content pre code.hljs .hljs-selector-tag,
+    .content pre code.hljs .hljs-built_in { color: #A5B4FC; }
+    .content pre code.hljs .hljs-string,
+    .content pre code.hljs .hljs-title.class_,
+    .content pre code.hljs .hljs-attr { color: #86EFAC; }
+    .content pre code.hljs .hljs-number,
+    .content pre code.hljs .hljs-literal { color: #FCD34D; }
+    .content pre code.hljs .hljs-variable,
+    .content pre code.hljs .hljs-template-variable,
+    .content pre code.hljs .hljs-name { color: #FCA5A5; }
+    .content pre code.hljs .hljs-title.function_ { color: #93C5FD; }
+
+    .content blockquote {
+      border-left: 4px solid var(--color-primary);
+      padding: 4px 16px;
+      color: var(--color-text-secondary);
+      margin: 16px 0;
+      background: var(--indigo-light);
+      border-radius: 0 6px 6px 0;
+    }
+    .content blockquote p { margin: 8px 0; }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .content th {
+      background: var(--indigo-light);
+      color: var(--indigo-dark);
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .content td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .content tr:nth-child(even) td { background: #F9FAFB; }
+    .content tr:last-child td { border-bottom: none; }
+
+    .content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .content img { max-width: 100%; height: auto; border-radius: 6px; }
+
+    .content a { color: var(--color-primary); border-bottom: 1px solid transparent; }
+    .content a:hover { border-bottom-color: var(--color-primary); }
+
+    /* Footer */
+    .site-footer {
+      background: var(--text);
+      color: #D1D5DB;
+      margin-top: 80px;
+      padding: 40px 24px 28px;
+    }
+    .footer-inner { max-width: 1240px; margin: 0 auto; }
+    .footer-row {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center; justify-content: space-between;
+      font-size: 13px;
+    }
+    .footer-row a { color: #A5B4FC; border-bottom: none; }
+    .footer-row a:hover { color: #C7D2FE; border-bottom: none; }
+    .footer-brand-mini {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; color: #fff;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .page { padding: calc(var(--header-h) + 24px) 20px 60px; }
+      .doc-layout { grid-template-columns: 1fr; gap: 16px; }
+      .toc { display: none; }
+      .toc-mobile {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin-bottom: 24px;
+      }
+      .toc-mobile summary {
+        font-weight: 600; font-size: 14px;
+        color: var(--text); cursor: pointer;
+      }
+      .toc-mobile[open] summary { margin-bottom: 12px; }
+      .toc-mobile .toc-list { padding: 0; }
+      .toc-mobile .toc-item { padding: 5px 0; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .page-title { font-size: 28px; }
+      .header-nav a:not(.btn-github):not(.lang-pill) { display: none; }
+      .header-nav a.nav-docs, .header-nav a.nav-skills { display: flex; }
+    }
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="14" rx="5" ry="6"/>
+    <line x1="7.5" y1="12" x2="16.5" y2="12"/>
+    <line x1="7.5" y1="15.5" x2="16.5" y2="15.5"/>
+    <circle cx="12" cy="6.5" r="2.2"/>
+    <path d="M10.7 4.8 L9.3 3"/>
+    <path d="M13.3 4.8 L14.7 3"/>
+    <path d="M7 10 Q3.5 8 5 12"/>
+    <path d="M17 10 Q20.5 8 19 12"/>
+  </symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+  </symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+  </symbol>
+</svg>
+
+<header class="header">
+  <a href="/docs/" class="header-brand">
+    <div class="logo"><svg class="icon"><use href="#i-bee"/></svg></div>
+    HIVE
+  </a>
+  <nav class="header-nav">
+    <a href="/" class="nav-home">Home</a>
+    <a href="/docs/" class="nav-docs">Docs</a>
+    <a href="/skills/" class="nav-skills">Skills</a>
+    <a href="/customize/" class="nav-customize">Customize</a>
+    <a href="/pt/" class="lang-pill">PT</a>
+    <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="breadcrumb"><a href="/">Home</a> <span class="crumb-sep">/</span> <span>_core</span> <span class="crumb-sep">/</span> <span>mcp</span> <span class="crumb-sep">/</span> <span class="crumb-current">OpenRouter MCP — Setup Guide</span></div>
+
+  <div class="page-header">
+    <h1 class="page-title">OpenRouter MCP — Setup Guide</h1>
+    <a class="edit-link" href="https://github.com/felipeluissalgueiro/hive/blob/main/_core/mcp/README.md" target="_blank" rel="noopener">
+      <svg class="icon"><use href="#i-pencil"/></svg>
+      Edit on GitHub
+      <svg class="icon"><use href="#i-arrow-up-right"/></svg>
+    </a>
+  </div>
+
+  <details class="toc-mobile">
+    <summary>On this page</summary>
+    <ul class="toc-list">
+<li class="toc-item"><a href="#how-it-works">How it works</a></li>
+<li class="toc-item"><a href="#setup-5-minutes">Setup (5 minutes)</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-1-get-an-openrouter-api-key">Step 1 — Get an OpenRouter API key</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-2-set-the-env-variable">Step 2 — Set the env variable</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-3-run-the-install-script">Step 3 — Run the install script</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-4-test-it">Step 4 — Test it</a></li>
+<li class="toc-item"><a href="#the-7-multi-model-skills">The 7 multi-model skills</a></li>
+<li class="toc-item"><a href="#model-selection">Model selection</a></li>
+<li class="toc-item"><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+  </details>
+
+  <div class="doc-layout">
+    <aside class="toc">
+      <div class="toc-label">On this page</div>
+      <ul class="toc-list">
+<li class="toc-item"><a href="#how-it-works">How it works</a></li>
+<li class="toc-item"><a href="#setup-5-minutes">Setup (5 minutes)</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-1-get-an-openrouter-api-key">Step 1 — Get an OpenRouter API key</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-2-set-the-env-variable">Step 2 — Set the env variable</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-3-run-the-install-script">Step 3 — Run the install script</a></li>
+<li class="toc-item toc-item-h3"><a href="#step-4-test-it">Step 4 — Test it</a></li>
+<li class="toc-item"><a href="#the-7-multi-model-skills">The 7 multi-model skills</a></li>
+<li class="toc-item"><a href="#model-selection">Model selection</a></li>
+<li class="toc-item"><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+    </aside>
+    <article class="content">
+      <p>HIVE ships with 7 multi-model skills that let you query any model on OpenRouter (Kimi, GPT-5, Grok, Gemini, Qwen, DeepSeek, and more) without leaving Claude Code.</p>
+<hr>
+<h2 id="how-it-works"><a class="anchor" href="#how-it-works" aria-label="anchor">#</a>How it works</h2>
+<p>The MCP server (<code>religa/multi_mcp</code>) runs locally and exposes 5 tools to Claude Code:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mcp__multi__chat</code></td>
+<td>Single model query</td>
+</tr>
+<tr>
+<td><code>mcp__multi__codereview</code></td>
+<td>Code review with chosen model</td>
+</tr>
+<tr>
+<td><code>mcp__multi__compare</code></td>
+<td>Same prompt to N models in parallel</td>
+</tr>
+<tr>
+<td><code>mcp__multi__debate</code></td>
+<td>Multi-model consensus with cross-critique</td>
+</tr>
+<tr>
+<td><code>mcp__multi__models</code></td>
+<td>List available aliases and IDs</td>
+</tr>
+</tbody></table>
+<p>The <code>.mcp.json</code> file at the HIVE root wires everything up — Claude Code loads it automatically when you open any HIVE directory.</p>
+<hr>
+<h2 id="setup-5-minutes"><a class="anchor" href="#setup-5-minutes" aria-label="anchor">#</a>Setup (5 minutes)</h2>
+<h3 id="step-1-get-an-openrouter-api-key"><a class="anchor" href="#step-1-get-an-openrouter-api-key" aria-label="anchor">#</a>Step 1 — Get an OpenRouter API key</h3>
+<ol>
+<li>Create a free account at <a href="https://openrouter.ai">openrouter.ai</a></li>
+<li>Go to <a href="https://openrouter.ai/settings/keys">Settings → Keys</a></li>
+<li>Create a key — copy it (<code>sk-or-...</code>)</li>
+<li>Add credits if you want to use paid models (free tier models are available, see <code>_core/MODELS-MAP.md</code>)</li>
+</ol>
+<h3 id="step-2-set-the-env-variable"><a class="anchor" href="#step-2-set-the-env-variable" aria-label="anchor">#</a>Step 2 — Set the env variable</h3>
+<p><strong>Mac / Linux — add to <code>~/.bashrc</code> or <code>~/.zshrc</code>:</strong></p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">export</span> OPENROUTER_API_KEY=<span class="hljs-string">&quot;sk-or-your-key-here&quot;</span></code></pre>
+<p>Then reload: <code>source ~/.bashrc</code></p>
+<p><strong>Windows — add to PowerShell profile (<code>$PROFILE</code>):</strong></p>
+<pre><code class="hljs language-powershell"><span class="hljs-variable">$env:OPENROUTER_API_KEY</span> = <span class="hljs-string">&quot;sk-or-your-key-here&quot;</span></code></pre>
+<p>Or set it permanently via System → Environment Variables.</p>
+<h3 id="step-3-run-the-install-script"><a class="anchor" href="#step-3-run-the-install-script" aria-label="anchor">#</a>Step 3 — Run the install script</h3>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># Mac / Linux</span>
+<span class="hljs-built_in">export</span> OPENROUTER_API_KEY=<span class="hljs-string">&quot;sk-or-...&quot;</span>
+bash _core/mcp/install.sh
+
+<span class="hljs-comment"># Windows (Git Bash or WSL)</span>
+<span class="hljs-built_in">export</span> OPENROUTER_API_KEY=<span class="hljs-string">&quot;sk-or-...&quot;</span>
+bash _core/mcp/install.sh</code></pre>
+<p>The script:</p>
+<ol>
+<li>Validates Python 3.11+ and git</li>
+<li>Clones <code>religa/multi_mcp</code> into <code>~/.local/share/hive/multi_mcp</code></li>
+<li>Creates a virtualenv and installs dependencies</li>
+<li>Runs a smoke test with Kimi K2.6 (~$0.001)</li>
+</ol>
+<h3 id="step-4-test-it"><a class="anchor" href="#step-4-test-it" aria-label="anchor">#</a>Step 4 — Test it</h3>
+<p>Open Claude Code in your HIVE directory:</p>
+<pre><code class="hljs">claude
+/<span class="hljs-keyword">second</span>-opinion kimi <span class="hljs-string">&quot;what is the capital of France?&quot;</span></code></pre>
+<p>You should see Kimi&#39;s raw response inside a delimited block.</p>
+<hr>
+<h2 id="the-7-multi-model-skills"><a class="anchor" href="#the-7-multi-model-skills" aria-label="anchor">#</a>The 7 multi-model skills</h2>
+<p>All skills are global — available in every squad context.</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Second opinion</td>
+<td><code>/second-opinion</code></td>
+<td>You want one model&#39;s perspective on a question</td>
+</tr>
+<tr>
+<td>Consensus</td>
+<td><code>/consensus</code></td>
+<td>You want N models on the same question + synthesis</td>
+</tr>
+<tr>
+<td>Anti-bubble</td>
+<td><code>/anti-bubble</code></td>
+<td>You want an outsider to read an asset (no company context)</td>
+</tr>
+<tr>
+<td>ICP check</td>
+<td><code>/icp-check</code></td>
+<td>You want to simulate your ICP reading a piece of copy</td>
+</tr>
+<tr>
+<td>DoD check</td>
+<td><code>/dod-check</code></td>
+<td>You want a cheap model to validate a PR against acceptance criteria</td>
+</tr>
+<tr>
+<td>Cost compare</td>
+<td><code>/cost-compare</code></td>
+<td>You want to find the cheapest model that does the job for a worker</td>
+</tr>
+<tr>
+<td>Code review model</td>
+<td><code>/code-review-model</code></td>
+<td>You want a code review from any OpenRouter model</td>
+</tr>
+</tbody></table>
+<p>All skills:</p>
+<ul>
+<li>Ask which model to use if not passed as argument</li>
+<li>Accept friendly aliases (<code>kimi</code>, <code>gpt5.5</code>, <code>grok</code>) or raw OpenRouter IDs</li>
+<li>Deliver model responses raw (copy-paste, zero editing)</li>
+<li>Apply the reasoning model max_tokens rule automatically (see MODELS-MAP)</li>
+</ul>
+<hr>
+<h2 id="model-selection"><a class="anchor" href="#model-selection" aria-label="anchor">#</a>Model selection</h2>
+<p>Skills ask which model to use. Zero defaults — you always choose.</p>
+<p>Quick reference for common use cases:</p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Suggested models</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Code review</td>
+<td><code>kimi</code>, <code>gpt5codex</code>, <code>qwencoder</code></td>
+</tr>
+<tr>
+<td>Reasoning / analysis</td>
+<td><code>gpt5.5</code>, <code>grok</code>, <code>kimi-think</code></td>
+</tr>
+<tr>
+<td>Marketing / copy feedback</td>
+<td><code>gemini-pro</code>, <code>gpt5.5</code>, <code>kimi</code></td>
+</tr>
+<tr>
+<td>Anti-bubble (diverse corpus)</td>
+<td><code>gemini-pro</code>, <code>kimi</code>, <code>glm5.1</code></td>
+</tr>
+<tr>
+<td>Cheap workers</td>
+<td><code>dsflash</code>, <code>qwenflash</code>, <code>granite</code></td>
+</tr>
+<tr>
+<td>Free tier</td>
+<td><code>kimi-free</code>, <code>dsflash-free</code>, <code>qwencoder-free</code></td>
+</tr>
+</tbody></table>
+<p>Full catalog with prices, context windows, and benchmarks: <code>_core/MODELS-MAP.md</code></p>
+<hr>
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting" aria-label="anchor">#</a>Troubleshooting</h2>
+<p><strong>MCP &quot;multi&quot; not showing in Claude Code:</strong></p>
+<ul>
+<li>Check that <code>.mcp.json</code> exists in the HIVE root</li>
+<li>Verify <code>OPENROUTER_API_KEY</code> is set: <code>echo $OPENROUTER_API_KEY</code></li>
+<li>Restart Claude Code</li>
+</ul>
+<p><strong><code>mcp__multi__chat</code> returns an error:</strong></p>
+<ul>
+<li>Check OpenRouter credits: <a href="https://openrouter.ai/settings/credits">openrouter.ai/settings/credits</a></li>
+<li>Verify the model ID is valid: <code>curl -s https://openrouter.ai/api/v1/models | python3 -c &quot;import json,sys; [print(m[&#39;id&#39;]) for m in json.load(sys.stdin)[&#39;data&#39;]]&quot; | grep kimi</code></li>
+</ul>
+<p><strong>Reasoning model returns empty response:</strong></p>
+<ul>
+<li>This is the <code>max_tokens</code> gotcha — skills handle this automatically with retry</li>
+<li>If it persists, pass <code>--max-tokens 6000</code> explicitly</li>
+</ul>
+<p><strong>Re-run install after update:</strong></p>
+<pre><code class="hljs language-bash">bash _core/mcp/install.sh</code></pre>
+<p>The script is idempotent — safe to run multiple times.</p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-row">
+      <span class="footer-brand-mini">
+        <svg class="icon" style="color:#A5B4FC"><use href="#i-bee"/></svg>
+        HIVE
+      </span>
+      <span>&copy; 2026 HIVE &middot; MIT License &middot; Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+      <span>Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

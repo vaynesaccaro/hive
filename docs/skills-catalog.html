@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIVE Skills Catalog — HIVE</title>
+  <meta name="description" content="HIVE Skills Catalog — HIVE documentation. Claude Code harness with persistent memory, squads and reusable skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css" />
+  <style>
+    /* === Cadencia Design Tokens === */
+    :root {
+      --color-primary: #4F46E5;
+      --color-primary-light: #818CF8;
+      --color-primary-dark: #4338CA;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-info: #3B82F6;
+      --color-error: #EF4444;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+      --color-border: #E5E7EB;
+      --color-bg-page: #F9FAFB;
+      --color-bg-card: #FFFFFF;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,0.15);
+      --indigo: #4F46E5;
+      --indigo-light: #EEF2FF;
+      --indigo-dark: #3730A3;
+      --bg: #F9FAFB;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --radius: 12px;
+      --header-h: 60px;
+    }
+
+    .icon { width: 1em; height: 1em; display: inline-flex; vertical-align: -0.15em; stroke-width: 2; }
+    .icon-lg { width: 1.5em; height: 1.5em; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    a { color: var(--color-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    a:hover { border-bottom-color: var(--color-primary); }
+
+    /* Header */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; color: var(--text);
+      border-bottom: none;
+    }
+    .header-brand:hover { border-bottom: none; }
+    .header-brand .logo {
+      width: 32px; height: 32px;
+      background: var(--indigo);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+    .header-nav { display: flex; align-items: center; gap: 8px; }
+    .header-nav a {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: none;
+      transition: all 0.15s;
+    }
+    .header-nav a:hover {
+      background: var(--bg); color: var(--text);
+      border-bottom: none;
+    }
+    .header-nav .btn-github { background: var(--text); color: #fff; padding: 6px 14px; }
+    .header-nav .btn-github:hover { background: #374151; color: #fff; }
+    .header-nav .lang-pill {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 10px; font-size: 13px; font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Layout */
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: calc(var(--header-h) + 32px) 32px 80px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: var(--text-muted); border-bottom: none; }
+    .breadcrumb a:hover { color: var(--color-primary); border-bottom: none; }
+    .breadcrumb .crumb-sep { margin: 0 6px; color: var(--text-light); }
+    .breadcrumb .crumb-current { color: var(--text); font-weight: 500; }
+
+    .page-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title {
+      font-size: 36px; font-weight: 700; line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .edit-link {
+      flex-shrink: 0; margin-top: 8px;
+      font-size: 13px; color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      transition: all 0.15s;
+    }
+    .edit-link:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: var(--indigo-light);
+    }
+
+    .doc-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* TOC sidebar */
+    .toc {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      max-height: calc(100vh - var(--header-h) - 48px);
+      overflow-y: auto;
+      font-size: 13px;
+      padding-right: 8px;
+    }
+    .toc-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-item { padding: 4px 0; }
+    .toc-item a { color: var(--text-muted); border-bottom: none; line-height: 1.4; }
+    .toc-item a:hover { color: var(--color-primary); border-bottom: none; }
+    .toc-item-h3 { padding-left: 14px; font-size: 12px; }
+    .toc-empty { color: var(--text-light); font-style: italic; }
+
+    .toc-mobile { display: none; }
+
+    /* Markdown content */
+    .content {
+      max-width: 760px;
+      min-width: 0;
+    }
+    .content h1, .content h2, .content h3, .content h4 {
+      letter-spacing: -0.01em;
+      scroll-margin-top: calc(var(--header-h) + 16px);
+      position: relative;
+    }
+    .content h1 { font-size: 32px; font-weight: 700; margin: 40px 0 16px; }
+    .content h2 { font-size: 24px; font-weight: 600; margin: 40px 0 14px; padding-top: 8px; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 28px 0 10px; }
+    .content h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+
+    .content .anchor {
+      position: absolute; left: -22px; top: 0;
+      color: var(--text-light); border-bottom: none;
+      opacity: 0; transition: opacity 0.15s;
+      text-decoration: none; font-weight: 400;
+    }
+    .content h1:hover .anchor,
+    .content h2:hover .anchor,
+    .content h3:hover .anchor,
+    .content h4:hover .anchor { opacity: 1; }
+    .content .anchor:hover { color: var(--color-primary); border-bottom: none; }
+
+    .content p { margin: 12px 0; }
+    .content ul, .content ol { margin: 12px 0; padding-left: 26px; }
+    .content li { margin: 4px 0; }
+    .content li > ul, .content li > ol { margin: 4px 0; }
+
+    .content code {
+      background: #F3F4F6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      color: #1F2937;
+    }
+    .content pre {
+      background: #111827;
+      color: #E5E7EB;
+      padding: 16px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .content pre code {
+      background: transparent; padding: 0; border-radius: 0;
+      color: inherit; font-size: inherit;
+    }
+    /* override hljs light theme inside dark <pre> */
+    .content pre code.hljs { background: transparent; color: #E5E7EB; padding: 0; }
+    .content pre code.hljs .hljs-comment,
+    .content pre code.hljs .hljs-quote { color: #9CA3AF; }
+    .content pre code.hljs .hljs-keyword,
+    .content pre code.hljs .hljs-selector-tag,
+    .content pre code.hljs .hljs-built_in { color: #A5B4FC; }
+    .content pre code.hljs .hljs-string,
+    .content pre code.hljs .hljs-title.class_,
+    .content pre code.hljs .hljs-attr { color: #86EFAC; }
+    .content pre code.hljs .hljs-number,
+    .content pre code.hljs .hljs-literal { color: #FCD34D; }
+    .content pre code.hljs .hljs-variable,
+    .content pre code.hljs .hljs-template-variable,
+    .content pre code.hljs .hljs-name { color: #FCA5A5; }
+    .content pre code.hljs .hljs-title.function_ { color: #93C5FD; }
+
+    .content blockquote {
+      border-left: 4px solid var(--color-primary);
+      padding: 4px 16px;
+      color: var(--color-text-secondary);
+      margin: 16px 0;
+      background: var(--indigo-light);
+      border-radius: 0 6px 6px 0;
+    }
+    .content blockquote p { margin: 8px 0; }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .content th {
+      background: var(--indigo-light);
+      color: var(--indigo-dark);
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .content td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .content tr:nth-child(even) td { background: #F9FAFB; }
+    .content tr:last-child td { border-bottom: none; }
+
+    .content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .content img { max-width: 100%; height: auto; border-radius: 6px; }
+
+    .content a { color: var(--color-primary); border-bottom: 1px solid transparent; }
+    .content a:hover { border-bottom-color: var(--color-primary); }
+
+    /* Footer */
+    .site-footer {
+      background: var(--text);
+      color: #D1D5DB;
+      margin-top: 80px;
+      padding: 40px 24px 28px;
+    }
+    .footer-inner { max-width: 1240px; margin: 0 auto; }
+    .footer-row {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center; justify-content: space-between;
+      font-size: 13px;
+    }
+    .footer-row a { color: #A5B4FC; border-bottom: none; }
+    .footer-row a:hover { color: #C7D2FE; border-bottom: none; }
+    .footer-brand-mini {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; color: #fff;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .page { padding: calc(var(--header-h) + 24px) 20px 60px; }
+      .doc-layout { grid-template-columns: 1fr; gap: 16px; }
+      .toc { display: none; }
+      .toc-mobile {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin-bottom: 24px;
+      }
+      .toc-mobile summary {
+        font-weight: 600; font-size: 14px;
+        color: var(--text); cursor: pointer;
+      }
+      .toc-mobile[open] summary { margin-bottom: 12px; }
+      .toc-mobile .toc-list { padding: 0; }
+      .toc-mobile .toc-item { padding: 5px 0; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .page-title { font-size: 28px; }
+      .header-nav a:not(.btn-github):not(.lang-pill) { display: none; }
+      .header-nav a.nav-docs, .header-nav a.nav-skills { display: flex; }
+    }
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="14" rx="5" ry="6"/>
+    <line x1="7.5" y1="12" x2="16.5" y2="12"/>
+    <line x1="7.5" y1="15.5" x2="16.5" y2="15.5"/>
+    <circle cx="12" cy="6.5" r="2.2"/>
+    <path d="M10.7 4.8 L9.3 3"/>
+    <path d="M13.3 4.8 L14.7 3"/>
+    <path d="M7 10 Q3.5 8 5 12"/>
+    <path d="M17 10 Q20.5 8 19 12"/>
+  </symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+  </symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+  </symbol>
+</svg>
+
+<header class="header">
+  <a href="/docs/" class="header-brand">
+    <div class="logo"><svg class="icon"><use href="#i-bee"/></svg></div>
+    HIVE
+  </a>
+  <nav class="header-nav">
+    <a href="/" class="nav-home">Home</a>
+    <a href="/docs/" class="nav-docs">Docs</a>
+    <a href="/skills/" class="nav-skills">Skills</a>
+    <a href="/customize/" class="nav-customize">Customize</a>
+    <a href="/pt/" class="lang-pill">PT</a>
+    <a href="https://github.com/felipeluissalgueiro/hive" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="breadcrumb"><a href="/">Home</a> <span class="crumb-sep">/</span> <a href="/docs/">Docs</a> <span class="crumb-sep">/</span> <span class="crumb-current">HIVE Skills Catalog</span></div>
+
+  <div class="page-header">
+    <h1 class="page-title">HIVE Skills Catalog</h1>
+    <a class="edit-link" href="https://github.com/felipeluissalgueiro/hive/blob/main/docs/skills-catalog.md" target="_blank" rel="noopener">
+      <svg class="icon"><use href="#i-pencil"/></svg>
+      Edit on GitHub
+      <svg class="icon"><use href="#i-arrow-up-right"/></svg>
+    </a>
+  </div>
+
+  <details class="toc-mobile">
+    <summary>On this page</summary>
+    <ul class="toc-list">
+<li class="toc-item"><a href="#global-skills">Global Skills</a></li>
+<li class="toc-item"><a href="#multi-model-skills-openrouter">Multi-Model Skills (OpenRouter)</a></li>
+<li class="toc-item"><a href="#orchestrator-skills">Orchestrator Skills</a></li>
+<li class="toc-item"><a href="#commercial-skills">Commercial Skills</a></li>
+<li class="toc-item"><a href="#cs-skills">CS Skills</a></li>
+<li class="toc-item"><a href="#dev-skills">Dev Skills</a></li>
+<li class="toc-item toc-item-h3"><a href="#code-review-pipeline">Code Review Pipeline</a></li>
+<li class="toc-item toc-item-h3"><a href="#development">Development</a></li>
+<li class="toc-item toc-item-h3"><a href="#debugging">Debugging</a></li>
+<li class="toc-item"><a href="#finance-skills">Finance Skills</a></li>
+<li class="toc-item"><a href="#infra-skills">Infra Skills</a></li>
+<li class="toc-item"><a href="#intelligence-skills">Intelligence Skills</a></li>
+<li class="toc-item"><a href="#marketing-skills">Marketing Skills</a></li>
+<li class="toc-item toc-item-h3"><a href="#brand-strategy">Brand &amp; Strategy</a></li>
+<li class="toc-item toc-item-h3"><a href="#content-creation">Content Creation</a></li>
+<li class="toc-item toc-item-h3"><a href="#analysis-improvement">Analysis &amp; Improvement</a></li>
+<li class="toc-item"><a href="#skill-count-summary">Skill Count Summary</a></li>
+<li class="toc-item"><a href="#adding-custom-skills">Adding Custom Skills</a></li>
+</ul>
+  </details>
+
+  <div class="doc-layout">
+    <aside class="toc">
+      <div class="toc-label">On this page</div>
+      <ul class="toc-list">
+<li class="toc-item"><a href="#global-skills">Global Skills</a></li>
+<li class="toc-item"><a href="#multi-model-skills-openrouter">Multi-Model Skills (OpenRouter)</a></li>
+<li class="toc-item"><a href="#orchestrator-skills">Orchestrator Skills</a></li>
+<li class="toc-item"><a href="#commercial-skills">Commercial Skills</a></li>
+<li class="toc-item"><a href="#cs-skills">CS Skills</a></li>
+<li class="toc-item"><a href="#dev-skills">Dev Skills</a></li>
+<li class="toc-item toc-item-h3"><a href="#code-review-pipeline">Code Review Pipeline</a></li>
+<li class="toc-item toc-item-h3"><a href="#development">Development</a></li>
+<li class="toc-item toc-item-h3"><a href="#debugging">Debugging</a></li>
+<li class="toc-item"><a href="#finance-skills">Finance Skills</a></li>
+<li class="toc-item"><a href="#infra-skills">Infra Skills</a></li>
+<li class="toc-item"><a href="#intelligence-skills">Intelligence Skills</a></li>
+<li class="toc-item"><a href="#marketing-skills">Marketing Skills</a></li>
+<li class="toc-item toc-item-h3"><a href="#brand-strategy">Brand &amp; Strategy</a></li>
+<li class="toc-item toc-item-h3"><a href="#content-creation">Content Creation</a></li>
+<li class="toc-item toc-item-h3"><a href="#analysis-improvement">Analysis &amp; Improvement</a></li>
+<li class="toc-item"><a href="#skill-count-summary">Skill Count Summary</a></li>
+<li class="toc-item"><a href="#adding-custom-skills">Adding Custom Skills</a></li>
+</ul>
+    </aside>
+    <article class="content">
+      <p>Complete reference for all 43 skills across HIVE. Invoke any skill with <code>/skill-name</code> inside Claude Code.</p>
+<hr>
+<h2 id="global-skills"><a class="anchor" href="#global-skills" aria-label="anchor">#</a>Global Skills</h2>
+<p>Available in every squad context.</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HIVE onboarding</td>
+<td><code>/hive-setup</code></td>
+<td>First-time company setup — fills all squad contexts with your company data</td>
+</tr>
+<tr>
+<td>Open squad</td>
+<td><code>/open-squad &lt;name&gt;</code></td>
+<td>git pull + load CLAUDE.md + STATE.md; aggregates L1 if squad has children</td>
+</tr>
+<tr>
+<td>Close squad</td>
+<td><code>/close-squad &lt;name&gt;</code></td>
+<td>Update STATE.md + decisions log + propagate L1 to parent</td>
+</tr>
+<tr>
+<td>Company status</td>
+<td><code>/status</code></td>
+<td>Aggregate L1 from all active squads in one view</td>
+</tr>
+<tr>
+<td>Log incident</td>
+<td><code>/log-incident</code></td>
+<td>Create incident record in <code>incidents/</code> hub + update INDEX.md</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="multi-model-skills-openrouter"><a class="anchor" href="#multi-model-skills-openrouter" aria-label="anchor">#</a>Multi-Model Skills (OpenRouter)</h2>
+<blockquote>
+<p><strong>Requires setup:</strong> <code>OPENROUTER_API_KEY</code> env var + <code>bash _core/mcp/install.sh</code>
+See <code>_core/mcp/README.md</code> for the full guide.</p>
+</blockquote>
+<p>These skills let you query any model outside Anthropic — Kimi, GPT-5, Grok, Gemini, Qwen, DeepSeek, and more — without leaving Claude Code. All skills ask which model to use (zero defaults). Model responses are always delivered raw, copy-paste, no editing.</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Second opinion</td>
+<td><code>/second-opinion</code></td>
+<td>Single model query — raw response, zero editing</td>
+</tr>
+<tr>
+<td>Consensus</td>
+<td><code>/consensus</code></td>
+<td>Same prompt to N models in parallel + overlap/divergence synthesis</td>
+</tr>
+<tr>
+<td>Anti-bubble</td>
+<td><code>/anti-bubble</code></td>
+<td>Neutral model reads asset with no company context — outsider reading</td>
+</tr>
+<tr>
+<td>ICP check</td>
+<td><code>/icp-check</code></td>
+<td>2-3 models simulate your ICP reading a piece of copy</td>
+</tr>
+<tr>
+<td>DoD check</td>
+<td><code>/dod-check</code></td>
+<td>Cheap model validates PR diff vs Linear acceptance criteria</td>
+</tr>
+<tr>
+<td>Cost compare</td>
+<td><code>/cost-compare</code></td>
+<td>Matrix: same task across cheap→top models, choose &quot;cheap enough&quot;</td>
+</tr>
+<tr>
+<td>Code review (model)</td>
+<td><code>/code-review-model</code></td>
+<td>Code review from any OpenRouter model, same P1/P2/P3 output as <code>/codex-review</code></td>
+</tr>
+</tbody></table>
+<p><strong>Quick model reference:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Good choices</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Code review</td>
+<td><code>kimi</code>, <code>gpt5codex</code>, <code>qwencoder</code></td>
+</tr>
+<tr>
+<td>Reasoning / analysis</td>
+<td><code>gpt5.5</code>, <code>grok</code>, <code>kimi-think</code></td>
+</tr>
+<tr>
+<td>Anti-bubble / ICP (diverse corpus)</td>
+<td><code>gemini-pro</code>, <code>kimi</code>, <code>glm5.1</code></td>
+</tr>
+<tr>
+<td>Cheap workers</td>
+<td><code>dsflash</code>, <code>qwenflash</code>, <code>granite</code></td>
+</tr>
+<tr>
+<td>Free tier</td>
+<td><code>kimi-free</code>, <code>dsflash-free</code></td>
+</tr>
+</tbody></table>
+<p>Full catalog with prices, benchmarks, and context windows: <code>_core/MODELS-MAP.md</code></p>
+<hr>
+<h2 id="orchestrator-skills"><a class="anchor" href="#orchestrator-skills" aria-label="anchor">#</a>Orchestrator Skills</h2>
+<blockquote>
+<p><strong>Stamper — Chief of Staff.</strong> Issue and project lifecycle management.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Create issue</td>
+<td><code>/create-issue</code></td>
+<td>Guided issue creation: title, description, acceptance criteria, squad, priority</td>
+</tr>
+<tr>
+<td>Plan issue</td>
+<td><code>/plan-issue</code></td>
+<td>Break issue into technical plan with file list + approval gate before coding starts</td>
+</tr>
+<tr>
+<td>Start issue</td>
+<td><code>/start-issue</code></td>
+<td>Checkout branch from Linear branchName + mark issue In Progress</td>
+</tr>
+<tr>
+<td>Close issue</td>
+<td><code>/close-issue</code></td>
+<td>Quality cycle (review → build → test) + merge + mark Done in Linear</td>
+</tr>
+</tbody></table>
+<p><strong>Workflow order:</strong> <code>/create-issue</code> → <code>/plan-issue</code> → <code>/start-issue</code> → (implement) → <code>/close-issue</code></p>
+<hr>
+<h2 id="commercial-skills"><a class="anchor" href="#commercial-skills" aria-label="anchor">#</a>Commercial Skills</h2>
+<blockquote>
+<p><strong>Victor — Head of Sales.</strong> Lead pipeline, qualification, and deal closing.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sales call</td>
+<td><code>/sales-call</code></td>
+<td>7-part Challenger Sale framework: Warm-up → Reframing → Urgency → Emotional → New Path → Solution → Closing</td>
+</tr>
+<tr>
+<td>Handle objection</td>
+<td><code>/handle-objection</code></td>
+<td>Surface-to-real objection mapping, diagnostic flow, non-fit signal detection</td>
+</tr>
+<tr>
+<td>Follow up</td>
+<td><code>/follow-up</code></td>
+<td>D+0/D+2/D+7/D+14 sequence + breakup email template</td>
+</tr>
+<tr>
+<td>Commercial debate</td>
+<td><code>/commercial-debate</code></td>
+<td>Multi-perspective roundtable: Sales vs CS vs Finance vs Devil&#39;s Advocate</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="cs-skills"><a class="anchor" href="#cs-skills" aria-label="anchor">#</a>CS Skills</h2>
+<blockquote>
+<p><strong>Leah — Head of CS.</strong> Onboarding, retention, and success metrics.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CS debate</td>
+<td><code>/cs-debate</code></td>
+<td>Roundtable on customer success decisions with multiple perspectives</td>
+</tr>
+<tr>
+<td>Log KPI</td>
+<td><code>/log-kpi</code></td>
+<td>Record customer KPI snapshot in <code>data/kpis.md</code> with timestamp</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="dev-skills"><a class="anchor" href="#dev-skills" aria-label="anchor">#</a>Dev Skills</h2>
+<blockquote>
+<p><strong>Ethan — Tech Lead.</strong> Architecture, code review, debugging, and documentation.</p>
+</blockquote>
+<h3 id="code-review-pipeline"><a class="anchor" href="#code-review-pipeline" aria-label="anchor">#</a>Code Review Pipeline</h3>
+<p>Run cheapest → most expensive. Stop when issues are found and fixed.</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>Cost</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Gemini review</td>
+<td><code>/gemini-review</code></td>
+<td>Free</td>
+<td>Gemini 2.5 Flash via OAuth CLI — structural review, P1/P2/P3</td>
+</tr>
+<tr>
+<td>Codex review</td>
+<td><code>/codex-review</code></td>
+<td>~$0.40</td>
+<td>OpenAI Codex CLI — security, logic, performance classification</td>
+</tr>
+<tr>
+<td>Claude review</td>
+<td><code>/claude-review</code></td>
+<td>Subscription</td>
+<td>Claude Opus headless — deep architectural review, final gate</td>
+</tr>
+</tbody></table>
+<p><strong>Classification used across all reviews:</strong></p>
+<ul>
+<li><strong>P1</strong> — blocks merge (security hole, broken logic, data loss risk)</li>
+<li><strong>P2</strong> — must fix before next deploy (performance, error handling, test gap)</li>
+<li><strong>P3</strong> — fix in follow-up (naming, style, minor edge case)</li>
+</ul>
+<p><strong>When to use which:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Change type</th>
+<th>Reviews</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Trivial (copy, isolated CSS)</td>
+<td>None required</td>
+</tr>
+<tr>
+<td>New feature code</td>
+<td><code>/codex-review</code></td>
+</tr>
+<tr>
+<td>Logic/functional change</td>
+<td><code>/codex-review</code> + <code>/claude-review</code></td>
+</tr>
+<tr>
+<td>Critical (auth, billing, migration, deploy)</td>
+<td>All three + senior approval</td>
+</tr>
+</tbody></table>
+<h3 id="development"><a class="anchor" href="#development" aria-label="anchor">#</a>Development</h3>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dev debate</td>
+<td><code>/dev-debate</code></td>
+<td>Architecture roundtable with multiple tech personas</td>
+</tr>
+<tr>
+<td>Quick dev</td>
+<td><code>/quick-dev</code></td>
+<td>Rapid throwaway prototype mode — builds fast, documents nothing</td>
+</tr>
+<tr>
+<td>Challenge</td>
+<td><code>/challenge</code></td>
+<td>Independent second opinion on a technical decision</td>
+</tr>
+<tr>
+<td>Document</td>
+<td><code>/document</code></td>
+<td>Generate documentation after a feature ships (updates code docs + wiki)</td>
+</tr>
+</tbody></table>
+<h3 id="debugging"><a class="anchor" href="#debugging" aria-label="anchor">#</a>Debugging</h3>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Debug</td>
+<td><code>/debug</code></td>
+<td>Pólya 4-phase framework: Understanding → Investigation Plan → Diagnosis → Fix + Retrospective</td>
+</tr>
+</tbody></table>
+<p><strong>Triage levels:</strong></p>
+<ul>
+<li><strong>TRIVIAL</strong> — fix immediately, minimal validation</li>
+<li><strong>MEDIUM</strong> — full Pólya cycle, user validates fix</li>
+<li><strong>CRITICAL</strong> — mandatory retrospective + root cause + prevention</li>
+</ul>
+<hr>
+<h2 id="finance-skills"><a class="anchor" href="#finance-skills" aria-label="anchor">#</a>Finance Skills</h2>
+<blockquote>
+<p><strong>Clara — CFO.</strong> Runway, reporting, and financial health.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Finance debate</td>
+<td><code>/finance-debate</code></td>
+<td>CFO roundtable on financial decisions</td>
+</tr>
+<tr>
+<td>Runway</td>
+<td><code>/runway</code></td>
+<td>Calculate burn rate + months of runway from current data</td>
+</tr>
+<tr>
+<td>Monthly report</td>
+<td><code>/monthly-report</code></td>
+<td>Generate monthly P&amp;L summary from squad data</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="infra-skills"><a class="anchor" href="#infra-skills" aria-label="anchor">#</a>Infra Skills</h2>
+<blockquote>
+<p><strong>Dean — Head of Infra.</strong> Servers, monitoring, security, and credential rotation.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Infra debate</td>
+<td><code>/infra-debate</code></td>
+<td>Infrastructure decision roundtable</td>
+</tr>
+<tr>
+<td>Hardening check</td>
+<td><code>/hardening-check</code></td>
+<td>Security checklist: ports, SSH keys, firewall, TLS, env vars</td>
+</tr>
+<tr>
+<td>Restart service</td>
+<td><code>/restart-service</code></td>
+<td>Safe service restart with health check before and after</td>
+</tr>
+<tr>
+<td>Rotate credential</td>
+<td><code>/rotate-credential</code></td>
+<td>Guided credential rotation: generate → update services → verify → archive old</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="intelligence-skills"><a class="anchor" href="#intelligence-skills" aria-label="anchor">#</a>Intelligence Skills</h2>
+<blockquote>
+<p><strong>Rex — Head of Intelligence.</strong> Competitive analysis, bias audit, war games.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Competitive analysis</td>
+<td><code>/competitive-analysis</code></td>
+<td>Research competitor, map positioning, identify gaps and threats</td>
+</tr>
+<tr>
+<td>War game</td>
+<td><code>/war-game</code></td>
+<td>Simulate competitor moves and your counter-moves</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="marketing-skills"><a class="anchor" href="#marketing-skills" aria-label="anchor">#</a>Marketing Skills</h2>
+<blockquote>
+<p><strong>Maya — Head of Marketing.</strong> Content, brand, campaigns, and distribution.</p>
+</blockquote>
+<h3 id="brand-strategy"><a class="anchor" href="#brand-strategy" aria-label="anchor">#</a>Brand &amp; Strategy</h3>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Marketing debate</td>
+<td><code>/marketing-debate</code></td>
+<td>Multi-persona roundtable on marketing decisions</td>
+</tr>
+<tr>
+<td>Lookup brand</td>
+<td><code>/lookup-brand</code></td>
+<td>Answer brand questions: colors, tone, archetypes, anti-patterns</td>
+</tr>
+<tr>
+<td>Content ideas</td>
+<td><code>/content-ideas</code></td>
+<td>Generate content ideas aligned with ICP, brand voice, and trends</td>
+</tr>
+</tbody></table>
+<h3 id="content-creation"><a class="anchor" href="#content-creation" aria-label="anchor">#</a>Content Creation</h3>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Write headline</td>
+<td><code>/write-headline</code></td>
+<td>Generate headline + subheadline + hook (4 patterns)</td>
+</tr>
+<tr>
+<td>Write caption</td>
+<td><code>/write-caption</code></td>
+<td>Short caption for Instagram/TikTok + LinkedIn variant</td>
+</tr>
+<tr>
+<td>LinkedIn post</td>
+<td><code>/linkedin-post</code></td>
+<td>Executive LinkedIn format: hook → bullets → data point → CTA</td>
+</tr>
+<tr>
+<td>Write thread</td>
+<td><code>/write-thread</code></td>
+<td>Twitter/Threads thread with reply map</td>
+</tr>
+<tr>
+<td>YouTube script</td>
+<td><code>/youtube-script</code></td>
+<td>Full YouTube script with hook, retention cliffhangers, CTA</td>
+</tr>
+<tr>
+<td>Email reactivation</td>
+<td><code>/email-reactivation</code></td>
+<td>SOAP-format reactivation sequence for cold leads</td>
+</tr>
+</tbody></table>
+<h3 id="analysis-improvement"><a class="anchor" href="#analysis-improvement" aria-label="anchor">#</a>Analysis &amp; Improvement</h3>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Invocation</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Analyze post</td>
+<td><code>/analyze-post</code></td>
+<td>Diagnose post performance with composite score</td>
+</tr>
+<tr>
+<td>Improve post</td>
+<td><code>/improve-post</code></td>
+<td>Critical revision with ready-to-use copy suggestions</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="skill-count-summary"><a class="anchor" href="#skill-count-summary" aria-label="anchor">#</a>Skill Count Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Squad</th>
+<th>Skills</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Global</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Multi-model (OpenRouter)</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Orchestrator</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Commercial</td>
+<td>4</td>
+</tr>
+<tr>
+<td>CS</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Dev</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Finance</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Infra</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Intelligence</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Marketing</td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>50</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="adding-custom-skills"><a class="anchor" href="#adding-custom-skills" aria-label="anchor">#</a>Adding Custom Skills</h2>
+<p>Place new skill files in the appropriate squad&#39;s <code>skills/</code> folder:</p>
+<pre><code class="hljs language-bash">squads/&lt;squad-name&gt;/skills/&lt;skill-name&gt;.md</code></pre>
+<p>Or in <code>skills/</code> for global skills available everywhere.</p>
+<p>Skill file structure:</p>
+<pre><code class="hljs language-markdown">---
+name: my-skill
+<span class="hljs-section">description: One-line description of what this skill does
+---</span>
+
+<span class="hljs-section"># /my-skill</span>
+
+<span class="hljs-section">## When to use</span>
+...
+
+<span class="hljs-section">## Inputs</span>
+...
+
+<span class="hljs-section">## Process</span>
+...
+
+<span class="hljs-section">## Output format</span>
+...</code></pre>
+<p>After adding, register the skill in the squad&#39;s <code>CLAUDE.md</code> under <code>## Skills</code>.</p>
+<p>See <a href="how-to-customize.md">how-to-customize.md</a> for the full guide.</p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-row">
+      <span class="footer-brand-mini">
+        <svg class="icon" style="color:#A5B4FC"><use href="#i-bee"/></svg>
+        HIVE
+      </span>
+      <span>&copy; 2026 HIVE &middot; MIT License &middot; Built by <a href="https://github.com/felipeluissalgueiro">Felipe Luis Salgueiro</a></span>
+      <span>Powered by <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
