@@ -1,7 +1,7 @@
 # Marketing STATE
 
 [L1]
-Squad not yet activated. Run `/hive-setup` to configure Maya with your company's brand and audience context.
+Squad inactive — not selected during /hive-setup. Activate via /hive-setup.
 
 [L2]
 - [ ] Complete /hive-setup

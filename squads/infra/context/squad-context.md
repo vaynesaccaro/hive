@@ -23,4 +23,4 @@
 
 ## Active Priorities
 
-<!-- What Dean should focus on right now -->
+<!-- Configurado via /hive-setup (2026-06-18). Sem infraestrutura definida ainda. -->

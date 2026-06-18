@@ -24,4 +24,5 @@
 
 ## Active Priorities
 
-<!-- What Ethan should focus on right now -->
+<!-- Configurado via /hive-setup (2026-06-18). Empresa pré-receita, sem stack
+     definido ainda. Existem alguns fluxos de n8n, mas nenhum trabalho ativo. -->
