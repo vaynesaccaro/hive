@@ -1,12 +1,14 @@
 # Orchestrator STATE
 
 [L1]
-HIVE freshly installed. Onboarding not yet completed. Run `/hive-setup` to personalize squads for your company.
+HIVE configured. Company: Nuero Code | Industry: Consultoria | Stage: Pré-receita
+Active squads: Dev, Infra, Quality
+Last setup: 2026-06-18
 
 [L2]
-- [ ] Complete /hive-setup — define company, activate squads, set user profile
+- [ ] Populate foundation/ docs for active squads
+- [ ] Configure PM tool (default: Linear — see docs/how-to-customize.md)
 
 [L3]
-- Populate foundation/ docs per squad
-- Configure Linear integration
-- Set up first workers
+- Set up workers for recurring tasks
+- Run first /status after populating foundation/

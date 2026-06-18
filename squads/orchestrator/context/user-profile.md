@@ -6,23 +6,23 @@
 
 ## Identity
 
-- **Name:** [Your name]
-- **Role:** [Founder / CEO / Solo operator / etc]
-- **Company:** [Company name]
-- **Industry:** [Industry]
+- **Name:** Vayne
+- **Role:** CEO
+- **Company:** Nuero Code
+- **Industry:** Consultoria (IA)
 
 ## Working style
 
-- **Peak hours:** [When you do your best work]
-- **Off limits:** [When you don't work — family time, evenings, etc]
-- **Preferred communication:** [Direct / detailed / bullet points / etc]
-- **Decision style:** [Fast and iterative / slow and deliberate / etc]
+- **Peak hours:** 08:00–19:00
+- **Off limits:** 22:00–06:00
+- **Preferred communication:** 
+- **Decision style:** 
 
 ## Context
 
-- **Team:** [Who works with you — humans and AI squads]
-- **Current focus:** [What matters most right now]
-- **What drains you:** [Tasks or interactions that cost the most energy]
+- **Team:** Vayne + AI squads
+- **Current focus:** Empresa pré-receita, recém iniciada. Possui alguns fluxos de n8n existentes, sem trabalho ativo no momento.
+- **What drains you:** 
 
 ## Anti-patterns (things Stamper should never do)
 
