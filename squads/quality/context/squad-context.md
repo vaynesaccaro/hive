@@ -22,4 +22,4 @@
 
 ## Active Priorities
 
-<!-- What Nora should focus on right now -->
+<!-- Configurado via /hive-setup (2026-06-18). Sem SOPs documentados ainda. -->
